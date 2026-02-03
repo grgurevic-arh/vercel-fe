@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Grgurevic Architecture Frontend
 
-## Getting Started
+Next.js (App Router) application that consumes the Strapi-powered CMS described in `/docs`. The current stage focuses on wiring authenticated data fetching for every site section; UI layers will be added later.
 
-First, run the development server:
+## Prerequisites
+- Node.js 18.17+ (Next.js requirement)
+- npm 9+
+- Access to the Strapi instance with the two API tokens described below
 
+## Environment configuration
+1. Copy the sample file and set the real values provided by the backend team:
+   ```bash
+   cp .env.local.example .env.local
+   ```
+2. Edit `.env.local`:
+   - `STRAPI_BASE_URL` → Strapi host + `/api` (e.g. `https://cms.example.com/api`).
+   - `STRAPI_READ_TOKEN` → read-only token (`frontend-read`) with `find` permissions on all public content types.
+   - `STRAPI_SUBMIT_TOKEN` → token (`research-submit`) limited to creating research submissions.
+3. Restart the dev server after changing env variables so Next.js picks them up.
+
+> The fetch layer (`src/lib/strapi-client.ts`) throws descriptive errors when any of the tokens are missing, so misconfiguration is easy to spot during development.
+
+## Run the app
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
+Navigate to `http://localhost:3000/en` (or `/hr`) to hit the Strapi endpoints. Each page currently renders the raw payload via the `DataDump` helper so data contracts can be verified before visual implementation.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Available scripts
+- `npm run dev` – start the Next.js dev server
+- `npm run build` – production build
+- `npm run start` – run the compiled app
+- `npm run lint` – ESLint
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Reference documentation
+The backend contract, PRD, and integration details live in:
+- `docs/prd.md`
+- `docs/api-design.md`
+- `docs/frontend-integration.md`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Review these documents before changing endpoints or adding new content models to keep both repos in sync.

@@ -1,0 +1,43 @@
+import type { ReactNode } from "react";
+import { notFound } from "next/navigation";
+
+import { SUPPORTED_LOCALES, isLocale } from "@/lib/i18n";
+
+interface LocaleLayoutProps {
+  children: ReactNode;
+  params: Promise<{ locale: string }>;
+}
+
+export function generateStaticParams() {
+  return SUPPORTED_LOCALES.map((locale) => ({ locale }));
+}
+
+export default async function LocaleLayout({
+  children,
+  params,
+}: LocaleLayoutProps) {
+  const { locale } = await params;
+
+  if (!isLocale(locale)) {
+    notFound();
+  }
+
+  return (
+    <div className="min-h-screen bg-zinc-50 text-zinc-900" data-locale={locale}>
+      <div className="mx-auto flex w-full max-w-5xl flex-col gap-6 px-6 py-10">
+        <header className="flex flex-wrap items-center justify-between gap-4 border-b border-zinc-200 pb-4">
+          <div>
+            <p className="text-sm uppercase tracking-wide text-zinc-500">
+              Locale
+            </p>
+            <p className="font-semibold text-zinc-900">{locale}</p>
+          </div>
+          <p className="text-sm text-zinc-500">
+            Data fetching placeholder layout – UI to be implemented later.
+          </p>
+        </header>
+        <main className="flex flex-col gap-8">{children}</main>
+      </div>
+    </div>
+  );
+}
