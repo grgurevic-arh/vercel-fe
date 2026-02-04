@@ -1,7 +1,18 @@
+import Link from "next/link";
 import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
 
 import { SUPPORTED_LOCALES, isLocale } from "@/lib/i18n";
+
+const navigationLinks = [
+  { label: "Homepage", path: "" },
+  { label: "Work", path: "/work" },
+  { label: "EU Projects", path: "/eu-projects" },
+  { label: "News", path: "/news" },
+  { label: "Office", path: "/office" },
+  { label: "Research", path: "/research" },
+  { label: "Legal", path: "/legal" },
+];
 
 interface LocaleLayoutProps {
   children: ReactNode;
@@ -36,6 +47,17 @@ export default async function LocaleLayout({
             Data fetching placeholder layout – UI to be implemented later.
           </p>
         </header>
+        <nav className="flex flex-wrap gap-3 text-sm text-zinc-600">
+          {navigationLinks.map(({ label, path }) => (
+            <Link
+              key={path || label}
+              href={`/${locale}${path}`}
+              className="underline-offset-4 hover:text-zinc-900 hover:underline"
+            >
+              {label}
+            </Link>
+          ))}
+        </nav>
         <main className="flex flex-col gap-8">{children}</main>
       </div>
     </div>

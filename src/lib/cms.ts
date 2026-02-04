@@ -16,6 +16,39 @@ import type {
 
 const populateAll = { populate: "*" };
 
+const emptyCollectionResponse = <T>(
+  page: number,
+  pageSize: number,
+): StrapiCollectionResponse<T> => ({
+  data: [],
+  meta: {
+    pagination: {
+      page,
+      pageSize,
+      pageCount: 0,
+      total: 0,
+    },
+  },
+});
+
+async function fetchCollectionWithFallback<T>(
+  path: string,
+  searchParams: Record<string, string | number | boolean | undefined>,
+  pagination: { page: number; pageSize: number },
+) {
+  try {
+    return await strapiFetch<StrapiCollectionResponse<T>>(path, {
+      searchParams,
+    });
+  } catch (error) {
+    if (error instanceof StrapiRequestError && error.status === 404) {
+      return emptyCollectionResponse<T>(pagination.page, pagination.pageSize);
+    }
+
+    throw error;
+  }
+}
+
 const withLocale = (
   locale: string,
 ): { locale: Locale } => {
@@ -106,20 +139,18 @@ const projectFields =
   "title,slug,year,status,location,size,program,coverImage";
 
 export async function getWorkProjects(locale: string, page = 1, pageSize = 20) {
-  const response = await strapiFetch<StrapiCollectionResponse<ProjectListing>>(
+  return fetchCollectionWithFallback<ProjectListing>(
     "/work-projects",
     {
-      searchParams: {
-        ...withLocale(locale),
-        "fields[work-projects]": projectFields,
-        "populate[coverImage]": "*",
-        "pagination[page]": page,
-        "pagination[pageSize]": pageSize,
-        sort: "year:desc",
-      },
+      ...withLocale(locale),
+      "fields[work-projects]": projectFields,
+      "populate[coverImage]": "*",
+      "pagination[page]": page,
+      "pagination[pageSize]": pageSize,
+      sort: "year:desc",
     },
+    { page, pageSize },
   );
-  return response;
 }
 
 export async function getWorkProjectBySlug(locale: string, slug: string) {
@@ -137,20 +168,18 @@ export async function getWorkProjectBySlug(locale: string, slug: string) {
 }
 
 export async function getEuProjects(locale: string, page = 1, pageSize = 20) {
-  const response = await strapiFetch<StrapiCollectionResponse<ProjectListing>>(
+  return fetchCollectionWithFallback<ProjectListing>(
     "/eu-projects",
     {
-      searchParams: {
-        ...withLocale(locale),
-        "fields[eu-projects]": projectFields,
-        "populate[coverImage]": "*",
-        "pagination[page]": page,
-        "pagination[pageSize]": pageSize,
-        sort: "year:desc",
-      },
+      ...withLocale(locale),
+      "fields[eu-projects]": projectFields,
+      "populate[coverImage]": "*",
+      "pagination[page]": page,
+      "pagination[pageSize]": pageSize,
+      sort: "year:desc",
     },
+    { page, pageSize },
   );
-  return response;
 }
 
 export async function getEuProjectBySlug(locale: string, slug: string) {
@@ -172,20 +201,18 @@ export async function getNewsArticles(
   page = 1,
   pageSize = 12,
 ) {
-  const response = await strapiFetch<StrapiCollectionResponse<NewsArticle>>(
+  return fetchCollectionWithFallback<NewsArticle>(
     "/news-articles",
     {
-      searchParams: {
-        ...withLocale(locale),
-        "fields[news-articles]": "title,slug,summary,publishedAt,author",
-        "pagination[page]": page,
-        "pagination[pageSize]": pageSize,
-        sort: "publishedAt:desc",
-        "populate[heroImage]": "*",
-      },
+      ...withLocale(locale),
+      "fields[news-articles]": "title,slug,summary,publishedAt,author",
+      "pagination[page]": page,
+      "pagination[pageSize]": pageSize,
+      sort: "publishedAt:desc",
+      "populate[heroImage]": "*",
     },
+    { page, pageSize },
   );
-  return response;
 }
 
 export async function getNewsArticleBySlug(locale: string, slug: string) {
