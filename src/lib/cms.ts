@@ -1,6 +1,7 @@
 import { env } from "@/lib/env";
 import { DEFAULT_LOCALE, isLocale, type Locale } from "@/lib/i18n";
 import { StrapiRequestError, strapiFetch } from "@/lib/strapi-client";
+import { buildMediaPopulateParams } from "@/lib/strapi-populate";
 import type {
   Homepage,
   LegalPage,
@@ -14,7 +15,22 @@ import type {
   StrapiSingleResponse,
 } from "@/types/cms";
 
-const populateAll = { populate: "*" };
+const heroImagePopulateParams = buildMediaPopulateParams("heroImage");
+const coverImagePopulateParams = buildMediaPopulateParams("coverImage");
+const teamPortraitPopulateParams = buildMediaPopulateParams([
+  "team",
+  "portrait",
+]);
+const clientsLogoPopulateParams = buildMediaPopulateParams([
+  "clients",
+  "logo",
+]);
+const workProjectNestedMediaPopulate = {
+  ...coverImagePopulateParams,
+  "populate[heroImages][populate]": "image",
+  "populate[siteImages][populate]": "image",
+  "populate[floorPlans][populate]": "plan",
+};
 
 const emptyCollectionResponse = <T>(
   page: number,
@@ -109,8 +125,8 @@ export async function getOfficePage(locale: string) {
     "/office-page",
     locale,
     {
-      "populate[team][populate]": "portrait",
-      "populate[clients][populate]": "logo",
+      ...teamPortraitPopulateParams,
+      ...clientsLogoPopulateParams,
     },
   );
   return response.data;
@@ -135,19 +151,15 @@ export async function getResearchSettings(locale: string) {
   return response.data;
 }
 
-const projectFields =
-  "title,slug,year,status,location,size,program,coverImage";
-
 export async function getWorkProjects(locale: string, page = 1, pageSize = 20) {
   return fetchCollectionWithFallback<ProjectListing>(
     "/work-projects",
     {
       ...withLocale(locale),
-      "fields[work-projects]": projectFields,
-      "populate[coverImage]": "*",
       "pagination[page]": page,
       "pagination[pageSize]": pageSize,
       sort: "year:desc",
+      ...coverImagePopulateParams,
     },
     { page, pageSize },
   );
@@ -159,8 +171,8 @@ export async function getWorkProjectBySlug(locale: string, slug: string) {
     {
       searchParams: {
         ...withLocale(locale),
-        ...populateAll,
         "filters[slug][$eq]": slug,
+        ...workProjectNestedMediaPopulate,
       },
     },
   );
@@ -172,11 +184,10 @@ export async function getEuProjects(locale: string, page = 1, pageSize = 20) {
     "/eu-projects",
     {
       ...withLocale(locale),
-      "fields[eu-projects]": projectFields,
-      "populate[coverImage]": "*",
       "pagination[page]": page,
       "pagination[pageSize]": pageSize,
       sort: "year:desc",
+      ...coverImagePopulateParams,
     },
     { page, pageSize },
   );
@@ -188,8 +199,8 @@ export async function getEuProjectBySlug(locale: string, slug: string) {
     {
       searchParams: {
         ...withLocale(locale),
-        ...populateAll,
         "filters[slug][$eq]": slug,
+        ...workProjectNestedMediaPopulate,
       },
     },
   );
@@ -205,11 +216,10 @@ export async function getNewsArticles(
     "/news-articles",
     {
       ...withLocale(locale),
-      "fields[news-articles]": "title,slug,summary,publishedAt,author",
       "pagination[page]": page,
       "pagination[pageSize]": pageSize,
       sort: "publishedAt:desc",
-      "populate[heroImage]": "*",
+      ...heroImagePopulateParams,
     },
     { page, pageSize },
   );
@@ -221,8 +231,8 @@ export async function getNewsArticleBySlug(locale: string, slug: string) {
     {
       searchParams: {
         ...withLocale(locale),
-        ...populateAll,
         "filters[slug][$eq]": slug,
+        ...heroImagePopulateParams,
       },
     },
   );

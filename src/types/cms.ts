@@ -109,7 +109,7 @@ export interface ProjectDetail extends ProjectListing {
   investmentValue: string | null;
   heroImages: ImageWithCaption[];
   siteImages: Array<{ image: StrapiMedia; description: string | null }>;
-  floorPlans: Array<{ image: StrapiMedia; label: string | null }>;
+  floorPlans: Array<{ plan: StrapiMedia; label: string | null }>;
 }
 
 export interface NewsArticle extends LocalizedEntity {

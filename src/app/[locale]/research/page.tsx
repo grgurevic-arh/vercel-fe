@@ -2,19 +2,14 @@ import { notFound } from "next/navigation";
 
 import { RawDataAccordion } from "@/components/raw-data-accordion";
 import { getResearchSettings } from "@/lib/cms";
-import { isLocale } from "@/lib/i18n";
+import { resolveLocaleParam } from "@/lib/request-helpers";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
 }
 
 export default async function ResearchPage({ params }: PageProps) {
-  const { locale } = await params;
-
-  if (!isLocale(locale)) {
-    notFound();
-  }
-
+  const locale = await resolveLocaleParam(params);
   const research = await getResearchSettings(locale);
 
   if (!research) {

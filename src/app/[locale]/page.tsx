@@ -1,23 +1,32 @@
-import Image from "next/image";
 import { notFound } from "next/navigation";
 
 import { getHomepage } from "@/lib/cms";
-import { isLocale } from "@/lib/i18n";
+import { resolveLocaleParam } from "@/lib/request-helpers";
+import { requireStrapiEntity } from "@/lib/strapi-entity";
 import {
   getStrapiMediaAttributes,
   getStrapiMediaUrl,
 } from "@/lib/strapi-media";
 import { RawDataAccordion } from "@/components/raw-data-accordion";
+import { HeroCarousel } from "@/components/hero-carousel";
 import type {
   Homepage,
   ImageWithCaption,
   StrapiMedia,
   StrapiMediaAttributes,
 } from "@/types/cms";
+import type { HeroCarouselItem } from "@/components/hero-carousel";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
 }
+
+const coerceArray = <T,>(value: T | T[] | null | undefined): T[] => {
+  if (Array.isArray(value)) {
+    return value;
+  }
+  return value ? [value] : [];
+};
 
 const isImageWithCaption = (value: unknown): value is ImageWithCaption => {
   return (
@@ -27,71 +36,51 @@ const isImageWithCaption = (value: unknown): value is ImageWithCaption => {
   );
 };
 
-const isStrapiMedia = (value: unknown): value is StrapiMedia => {
-  return (
-    typeof value === "object" &&
-    value !== null &&
-    "data" in (value as Record<string, unknown>)
-  );
-};
-
-const isStrapiMediaAttributes = (
-  value: unknown,
-): value is StrapiMediaAttributes => {
-  return (
-    typeof value === "object" &&
-    value !== null &&
-    "url" in (value as Record<string, unknown>)
-  );
-};
-
 export default async function LocaleHomepage({ params }: PageProps) {
-  const { locale } = await params;
-
-  if (!isLocale(locale)) {
-    notFound();
-  }
-
+  const locale = await resolveLocaleParam(params);
   const homepage = await getHomepage(locale);
 
   if (!homepage) {
     notFound();
   }
 
-  const homepageAttributes =
-    homepage.attributes ?? (homepage as unknown as Homepage | null);
-
-  if (!homepageAttributes) {
-    notFound();
-  }
+  const homepageAttributes = requireStrapiEntity<Homepage>(
+    homepage,
+    "Homepage entry missing attributes",
+  );
 
   const { heading, content, hero } = homepageAttributes;
-  const heroRaw = hero as unknown;
-  const heroEntries = Array.isArray(heroRaw)
-    ? heroRaw
-    : heroRaw
-      ? [heroRaw]
-      : [];
-  const heroEntry =
-    heroEntries.find((entry) => isImageWithCaption(entry)) ?? heroEntries[0];
-  const heroEntryHasImage = isImageWithCaption(heroEntry);
-  const heroEntryIsMedia = isStrapiMedia(heroEntry);
-  const heroEntryIsMediaAttributes = isStrapiMediaAttributes(heroEntry);
-  const heroMedia: StrapiMedia | StrapiMediaAttributes | null = heroEntryHasImage
-    ? heroEntry.image
-    : heroEntryIsMedia || heroEntryIsMediaAttributes
-      ? (heroEntry as StrapiMedia | StrapiMediaAttributes)
-      : null;
-  const heroImageUrl = getStrapiMediaUrl(heroMedia);
-  const heroMediaAttributes = getStrapiMediaAttributes(heroMedia);
-  const heroWidth = heroMediaAttributes?.width ?? 1600;
-  const heroHeight = heroMediaAttributes?.height ?? 900;
-  const heroAlt =
-    (heroEntryHasImage ? heroEntry.alternativeText : null) ??
-    heroMediaAttributes?.alternativeText ??
-    heading ??
-    "Hero image";
-  const heroDescription = heroEntryHasImage ? heroEntry.description : null;
+  const heroEntries = coerceArray(hero as unknown);
+  const normalizedHeroEntries = heroEntries.reduce<HeroCarouselItem[]>(
+    (acc, entry) => {
+      const entryWithCaption = isImageWithCaption(entry)
+        ? entry
+        : null;
+      const media = entryWithCaption
+        ? entryWithCaption.image
+        : (entry as StrapiMedia | StrapiMediaAttributes | null | undefined);
+      const mediaAttributes = getStrapiMediaAttributes(media);
+      const url = getStrapiMediaUrl(media);
+      if (!url) {
+        return acc;
+      }
+
+      acc.push({
+        url,
+        width: mediaAttributes?.width ?? 1600,
+        height: mediaAttributes?.height ?? 900,
+        alt:
+          entryWithCaption?.alternativeText ??
+          mediaAttributes?.alternativeText ??
+          heading ??
+          "Hero image",
+        description: entryWithCaption?.description ?? null,
+      });
+
+      return acc;
+    },
+    [],
+  );
 
   return (
     <main className="space-y-8 p-6">
@@ -109,22 +98,11 @@ export default async function LocaleHomepage({ params }: PageProps) {
         </h1>
       </section>
 
-      {heroImageUrl ? (
+      {normalizedHeroEntries.length ? (
         <section>
           <p className="text-sm uppercase tracking-wide text-gray-500">Hero</p>
-          <div className="mt-2">
-            <Image
-              src={heroImageUrl}
-              alt={heroAlt}
-              width={heroWidth}
-              height={heroHeight}
-              sizes="(min-width: 768px) 60vw, 100vw"
-              className="h-auto w-full max-w-3xl rounded"
-              priority
-            />
-            {heroDescription ? (
-              <p className="mt-2 text-base text-gray-600">{heroDescription}</p>
-            ) : null}
+          <div className="mt-4">
+            <HeroCarousel items={normalizedHeroEntries} />
           </div>
         </section>
       ) : null}

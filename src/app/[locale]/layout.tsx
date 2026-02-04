@@ -1,8 +1,8 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { notFound } from "next/navigation";
 
-import { SUPPORTED_LOCALES, isLocale } from "@/lib/i18n";
+import { SUPPORTED_LOCALES } from "@/lib/i18n";
+import { resolveLocaleParam } from "@/lib/request-helpers";
 
 const navigationLinks = [
   { label: "Homepage", path: "" },
@@ -27,11 +27,7 @@ export default async function LocaleLayout({
   children,
   params,
 }: LocaleLayoutProps) {
-  const { locale } = await params;
-
-  if (!isLocale(locale)) {
-    notFound();
-  }
+  const locale = await resolveLocaleParam(params);
 
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-900" data-locale={locale}>
