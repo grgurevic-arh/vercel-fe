@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-import { DataDump } from "@/components/data-dump";
+import { RawDataAccordion } from "@/components/raw-data-accordion";
 import { getOfficePage } from "@/lib/cms";
 import { isLocale } from "@/lib/i18n";
 
@@ -22,10 +22,13 @@ export default async function OfficePage({ params }: PageProps) {
   }
 
   return (
-    <DataDump
-      title="Office page"
-      description="Structured content for the office single type."
-      data={office}
-    />
+    <main className="space-y-6 p-6">
+      <RawDataAccordion
+        summary="Office response"
+        title="Office page"
+        description="Structured content for the office single type."
+        data={office}
+      />
+    </main>
   );
 }

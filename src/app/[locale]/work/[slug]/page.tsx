@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-import { DataDump } from "@/components/data-dump";
+import { RawDataAccordion } from "@/components/raw-data-accordion";
 import { getWorkProjectBySlug } from "@/lib/cms";
 import { isLocale } from "@/lib/i18n";
 
@@ -22,10 +22,13 @@ export default async function WorkDetailPage({ params }: PageProps) {
   }
 
   return (
-    <DataDump
-      title={`Work project detail – ${slug}`}
-      description="Detailed payload for an individual work project."
-      data={project}
-    />
+    <main className="space-y-6 p-6">
+      <RawDataAccordion
+        summary="Work response"
+        title={`Work project detail – ${slug}`}
+        description="Detailed payload for an individual work project."
+        data={project}
+      />
+    </main>
   );
 }

@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-import { DataDump } from "@/components/data-dump";
+import { RawDataAccordion } from "@/components/raw-data-accordion";
 import { getLegalPage } from "@/lib/cms";
 import { isLocale } from "@/lib/i18n";
 
@@ -22,10 +22,13 @@ export default async function LegalPage({ params }: PageProps) {
   }
 
   return (
-    <DataDump
-      title="Legal page"
-      description="Structured legal metadata to power the legal page."
-      data={legal}
-    />
+    <main className="space-y-6 p-6">
+      <RawDataAccordion
+        summary="Legal response"
+        title="Legal page"
+        description="Structured legal metadata to power the legal page."
+        data={legal}
+      />
+    </main>
   );
 }

@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-import { DataDump } from "@/components/data-dump";
+import { RawDataAccordion } from "@/components/raw-data-accordion";
 import { getNewsArticleBySlug } from "@/lib/cms";
 import { isLocale } from "@/lib/i18n";
 
@@ -22,10 +22,13 @@ export default async function NewsDetailPage({ params }: PageProps) {
   }
 
   return (
-    <DataDump
-      title={`News article – ${slug}`}
-      description="Full payload for a single news entry."
-      data={article}
-    />
+    <main className="space-y-6 p-6">
+      <RawDataAccordion
+        summary="News response"
+        title={`News article – ${slug}`}
+        description="Full payload for a single news entry."
+        data={article}
+      />
+    </main>
   );
 }

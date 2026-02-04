@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-import { DataDump } from "@/components/data-dump";
+import { RawDataAccordion } from "@/components/raw-data-accordion";
 import { getResearchSettings } from "@/lib/cms";
 import { isLocale } from "@/lib/i18n";
 
@@ -22,10 +22,13 @@ export default async function ResearchPage({ params }: PageProps) {
   }
 
   return (
-    <DataDump
-      title="Research settings"
-      description="Intro copy and dynamic question set feed the future research form."
-      data={research}
-    />
+    <main className="space-y-6 p-6">
+      <RawDataAccordion
+        summary="Research response"
+        title="Research settings"
+        description="Intro copy and dynamic question set feed the future research form."
+        data={research}
+      />
+    </main>
   );
 }

@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-import { DataDump } from "@/components/data-dump";
+import { RawDataAccordion } from "@/components/raw-data-accordion";
 import { getEuProjectBySlug } from "@/lib/cms";
 import { isLocale } from "@/lib/i18n";
 
@@ -22,10 +22,13 @@ export default async function EuProjectDetailPage({ params }: PageProps) {
   }
 
   return (
-    <DataDump
-      title={`EU project detail – ${slug}`}
-      description="Full payload for a single EU project entry."
-      data={project}
-    />
+    <main className="space-y-6 p-6">
+      <RawDataAccordion
+        summary="EU project response"
+        title={`EU project detail – ${slug}`}
+        description="Full payload for a single EU project entry."
+        data={project}
+      />
+    </main>
   );
 }

@@ -1,12 +1,23 @@
-interface DataDumpProps {
+export interface DataDumpProps {
   title: string;
   description?: string;
   data: unknown;
+  variant?: "card" | "plain";
 }
 
-export function DataDump({ title, description, data }: DataDumpProps) {
+export function DataDump({
+  title,
+  description,
+  data,
+  variant = "card",
+}: DataDumpProps) {
+  const containerClassName =
+    variant === "card"
+      ? "rounded-lg border border-zinc-200 bg-white p-6 shadow-sm"
+      : "";
+
   return (
-    <section className="rounded-lg border border-zinc-200 bg-white p-6 shadow-sm">
+    <section className={containerClassName}>
       <div className="mb-4 space-y-1">
         <h2 className="text-lg font-semibold text-zinc-900">{title}</h2>
         {description ? (
