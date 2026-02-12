@@ -35,7 +35,7 @@ export function HomepageFeed({ locale, items }: HomepageFeedProps) {
                   md:text-[20px] md:leading-[28px]
                   lg:text-[26px] lg:leading-[36px] lg:tracking-[1px]
                   xl:text-[28px] xl:leading-[38px]
-                  text-[var(--text-primary)]
+                  text-text-primary
                   group-hover:underline
                 "
               >
@@ -49,7 +49,7 @@ export function HomepageFeed({ locale, items }: HomepageFeedProps) {
                     md:text-[20px] md:leading-[28px]
                     lg:text-[26px] lg:leading-[36px]
                     xl:text-[28px] xl:leading-[38px]
-                    text-[var(--text-primary)]
+                    text-text-primary
                   "
                 >
                   {item.summary}

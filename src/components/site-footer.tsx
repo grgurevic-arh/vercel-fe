@@ -13,8 +13,8 @@ const footerNavLinks = [
 ];
 
 const languages = [
-  { label: "Croatian", locale: "hr", active: false },
-  { label: "English", locale: "en", active: true },
+  { label: "Croatian", locale: "hr" },
+  { label: "English", locale: "en" },
 ];
 
 export function SiteFooter({ locale }: SiteFooterProps) {
@@ -36,9 +36,7 @@ export function SiteFooter({ locale }: SiteFooterProps) {
             >
               <Link
                 href={`/${locale}${path}`}
-                className="
-                  text-[16px] leading-[23px] text-[var(--text-primary)]
-                "
+                className="text-[16px] leading-[23px] text-text-primary"
               >
                 {label === "eu projects" ? (
                   <>
@@ -63,13 +61,13 @@ export function SiteFooter({ locale }: SiteFooterProps) {
         "
       >
         <ul className="space-y-[0]">
-          {languages.map(({ label, locale: langLocale, active }) => (
+          {languages.map(({ label, locale: langLocale }) => (
             <li key={langLocale} className="py-[8px]">
               <Link
                 href={`/${langLocale}`}
                 className={`
-                  text-[16px] leading-[23px] text-[var(--text-primary)] text-right
-                  ${active ? "underline" : ""}
+                  text-[16px] leading-[23px] text-text-primary text-right
+                  ${langLocale === locale ? "underline" : ""}
                 `}
               >
                 {label}
@@ -85,10 +83,10 @@ export function SiteFooter({ locale }: SiteFooterProps) {
           absolute
           left-[12px] md:left-[44px] lg:left-[40px] xl:left-[88px]
           top-[232px] md:top-[32px]
-          text-[16px] leading-[23px] text-[var(--text-primary)]
+          text-[16px] leading-[23px] text-text-primary
         "
       >
-        Grgurević &amp; partneri, 2025
+        Grgurević & partneri, 2025
       </p>
 
       {/* EU funded badge */}
@@ -101,7 +99,7 @@ export function SiteFooter({ locale }: SiteFooterProps) {
         "
       >
         <Image
-          src="/eu-funded-badge.png"
+          src="/eu-funded-badge.svg"
           alt="Funded by the European Union"
           width={193}
           height={36}

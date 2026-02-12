@@ -11,11 +11,7 @@ import { normalizeNewsArticles } from "@/lib/news-helpers";
 import { HomepageCarousel } from "@/components/homepage-carousel";
 import { HomepageFeed } from "@/components/homepage-feed";
 import { ContactInfo } from "@/components/contact-info";
-import type {
-  Homepage,
-  LegalPage,
-  StrapiMedia,
-} from "@/types/cms";
+import type { Homepage, LegalPage, StrapiMedia } from "@/types/cms";
 import type { CarouselSlide } from "@/components/homepage-carousel";
 import type { FeedItem } from "@/components/homepage-feed";
 
@@ -91,19 +87,16 @@ export default async function LocaleHomepage({ params }: PageProps) {
           pb-[24px] md:pb-[38px] lg:pb-[54px] xl:pb-[47px]
         "
       >
-        {homepage.content ? (
-          <p
-            className="
-              text-[16px] leading-[23px]
+        {homepage.heading ? (
+          <h1
+            className="text-[16px] leading-[23px]
               md:text-[20px] md:leading-[28px]
               lg:text-[28px] lg:leading-[38px]
               xl:text-[28px] xl:leading-[38px]
-              text-[var(--text-primary)]
-              max-w-[296px] md:max-w-[506px] lg:max-w-[644px] xl:max-w-[784px]
-            "
+              text-text-primary whitespace-pre-line"
           >
-            {homepage.content}
-          </p>
+            {homepage.heading}
+          </h1>
         ) : null}
       </section>
 
@@ -115,11 +108,38 @@ export default async function LocaleHomepage({ params }: PageProps) {
         <HomepageFeed locale={locale} items={feedItems} />
       </div>
 
+      {/* Content */}
+      <section
+        className="
+          pt-[156px] md:pt-[184px] lg:pt-[178px] xl:pt-[232px]
+          pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[408px]
+          pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
+          pb-[24px] md:pb-[38px] lg:pb-[54px] xl:pb-[47px]
+        "
+      >
+        {homepage.content ? (
+          <p
+            className="
+              text-[16px] leading-[23px]
+              md:text-[20px] md:leading-[28px]
+              lg:text-[28px] lg:leading-[38px]
+              xl:text-[28px] xl:leading-[38px]
+              text-text-primary whitespace-pre-line
+              max-w-[296px] md:max-w-[506px] lg:max-w-[644px] xl:max-w-[784px]
+            "
+          >
+            {homepage.content}
+          </p>
+        ) : null}
+      </section>
+
       {/* Contact Info */}
-      <div className="mt-[60px] md:mt-[60px] lg:mt-[60px] xl:mt-[60px]">
+      <div className="mt-[60px]">
         <ContactInfo
           email={legal?.email ?? null}
           telephone={legal?.telephone ?? null}
+          companyName={legal?.companyName ?? "Grgurević & Partners LTD."}
+          address={legal?.address ?? "Čanićeva 6, Zagreb, HR-10000"}
         />
       </div>
     </main>

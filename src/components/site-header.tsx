@@ -15,7 +15,7 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
     <header
       className="
         flex items-center justify-between
-        border-b-[0.5px] border-[var(--divider)] bg-white
+        border-b-[0.5px] border-divider bg-white
         h-[54px] xl:h-[80px]
         px-[12px] md:px-[44px] lg:px-[40px] xl:px-[88px]
       "
@@ -24,10 +24,10 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
         href={`/${locale}`}
         className="
           text-[16px] leading-[23px] xl:text-[20px] xl:leading-[28px]
-          text-[var(--text-primary)]
+          text-text-primary
         "
       >
-        Grgurević &amp; partneri
+        Grgurević & partneri
       </Link>
 
       {/* Desktop nav (768px+) */}
@@ -38,7 +38,7 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
             href={`/${locale}${path}`}
             className="
               text-[16px] leading-[23px] xl:text-[20px] xl:leading-[28px]
-              text-[var(--text-primary)] py-[8px]
+              text-text-primary py-[8px]
             "
           >
             {label}
@@ -49,9 +49,11 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
       {/* Mobile menu button (< 768px) */}
       <button
         type="button"
+        aria-expanded="false"
+        aria-label="Open menu"
         className="
           md:hidden
-          text-[16px] leading-[23px] text-[var(--text-primary)] py-[8px]
+          text-[16px] leading-[23px] text-text-primary py-[8px]
         "
       >
         Menu

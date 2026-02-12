@@ -60,7 +60,7 @@ export function HomepageCarousel({ slides }: HomepageCarouselProps) {
               aria-label={`Show image ${index + 1}`}
               aria-current={isActive ? "true" : undefined}
               className={`
-                text-[16px] leading-[23px] text-[var(--text-primary)]
+                text-[16px] leading-[23px] text-text-primary
                 w-[46px] md:w-auto
                 text-left
                 ${isActive ? "underline" : ""}

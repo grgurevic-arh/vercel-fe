@@ -8,14 +8,14 @@ interface ContactInfoProps {
 export function ContactInfo({
   email,
   telephone,
-  companyName = "Grgurević & Partners ltd.",
-  address = "Čanićeva 6, Zagreb, hr-10000",
+  companyName,
+  address,
 }: ContactInfoProps) {
   return (
     <section
       className="
         relative bg-white
-        border-t border-b border-[var(--divider)]
+        border-t border-b border-divider
         h-[340px] md:h-[434px] lg:h-[484px] xl:h-[544px]
       "
     >
@@ -28,7 +28,7 @@ export function ContactInfo({
           text-[20px] leading-[28px]
           lg:text-[28px] lg:leading-[38px]
           xl:text-[28px] xl:leading-[38px]
-          text-[var(--text-primary)]
+          text-text-primary
         "
       >
         {email ? <p>{email}</p> : null}
@@ -44,7 +44,7 @@ export function ContactInfo({
           text-[20px] leading-[28px]
           lg:text-[28px] lg:leading-[38px]
           xl:text-[28px] xl:leading-[38px]
-          text-[var(--text-primary)]
+          text-text-primary
         "
       >
         <p>{companyName}</p>
