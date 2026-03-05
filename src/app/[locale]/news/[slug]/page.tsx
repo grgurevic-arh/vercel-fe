@@ -1,16 +1,12 @@
+import Image from "next/image";
 import { notFound } from "next/navigation";
 
-import Image from "next/image";
-
-import { RawDataAccordion } from "@/components/raw-data-accordion";
 import { NewsList } from "@/components/news-list";
+import { Pagination } from "@/components/pagination";
 import { getNewsArticleBySlug, getNewsArticles } from "@/lib/cms";
 import { resolveLocaleParam } from "@/lib/request-helpers";
 import { requireStrapiEntity } from "@/lib/strapi-entity";
-import {
-  formatNewsDate,
-  normalizeNewsArticles,
-} from "@/lib/news-helpers";
+import { normalizeNewsArticles } from "@/lib/news-helpers";
 import {
   getStrapiMediaAttributes,
   getStrapiMediaUrl,
@@ -35,86 +31,114 @@ export default async function NewsDetailPage({ params }: PageProps) {
     notFound();
   }
 
-  const articleAttributes = requireStrapiEntity<NewsArticle>(
+  const data = requireStrapiEntity<NewsArticle>(
     article,
     "News article missing attributes",
   );
 
-  const articleTitle = articleAttributes.title ?? "Untitled article";
-  const publishedDate = formatNewsDate(articleAttributes.publishedAt);
-  const heroImageUrl = getStrapiMediaUrl(articleAttributes.heroImage);
-  const heroImageAttributes = getStrapiMediaAttributes(articleAttributes.heroImage);
+  const articleTitle = data.title ?? "Untitled article";
+  const heroImageUrl = getStrapiMediaUrl(data.heroImage);
+  const heroImageAttributes = getStrapiMediaAttributes(data.heroImage);
   const heroWidth = heroImageAttributes?.width ?? 1600;
   const heroHeight = heroImageAttributes?.height ?? 900;
   const heroAlt =
-    heroImageAttributes?.alternativeText ?? articleTitle ?? "News hero image";
+    heroImageAttributes?.alternativeText ?? articleTitle;
   const heroCaption = heroImageAttributes?.caption;
+
   const otherNews = normalizeNewsArticles(newsResponse.data).filter(
-    (entry) => entry.slug !== articleAttributes.slug,
+    (entry) => entry.slug !== data.slug,
   );
+  const pagination = newsResponse.meta.pagination;
+  const pageCount = pagination?.pageCount ?? 1;
 
   return (
-    <main className="space-y-8 p-6">
-      <RawDataAccordion
-        summary="News response"
-        title={`News article – ${slug}`}
-        description="Full payload for a single news entry."
-        data={article}
-      />
+    <main>
+      {/* Title */}
+      <h1
+        className="
+          pt-[120px] md:pt-[148px] lg:pt-[148px] xl:pt-[180px]
+          pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[248px]
+          pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
+          pb-[24px] md:pb-[32px] lg:pb-[40px]
+          text-[20px] leading-[28px]
+          [font-feature-settings:'onum'_1,'pnum'_1]
+          min-[320px]:text-[28px] min-[320px]:leading-[38px]
+          md:text-[38px] md:leading-[50px]
+          md:[font-feature-settings:normal]
+          text-text-primary
+        "
+      >
+        {articleTitle}
+      </h1>
 
-      <section className="space-y-3">
-        <p className="text-sm uppercase tracking-wide text-gray-500">Title</p>
-        <h1 className="text-3xl font-semibold text-gray-900">{articleTitle}</h1>
-        <p className="text-sm text-gray-600">
-          Published: {publishedDate}
-          {articleAttributes.author ? ` · ${articleAttributes.author}` : null}
-        </p>
-      </section>
+      {/* Body */}
+      {data.body ? (
+        <div
+          className="
+            pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[248px]
+            pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
+            pb-[40px] md:pb-[48px] lg:pb-[56px]
+            text-[16px] leading-[23px]
+            [font-feature-settings:'onum'_1,'pnum'_1]
+            min-[320px]:text-[20px] min-[320px]:leading-[28px]
+            md:text-[22px] md:leading-[32px]
+            lg:text-[28px] lg:leading-[38px]
+            text-text-primary
+            [&_p]:mb-[1em] [&_p:last-child]:mb-0
+          "
+          dangerouslySetInnerHTML={{ __html: data.body }}
+        />
+      ) : null}
 
-      <section className="space-y-3">
-        <p className="text-sm uppercase tracking-wide text-gray-500">Body</p>
-        {articleAttributes.body ? (
-          <div className="whitespace-pre-line text-base leading-relaxed text-gray-900">
-            {articleAttributes.body}
-          </div>
-        ) : (
-          <p className="text-base text-gray-500">No body content provided.</p>
-        )}
-      </section>
+      {/* Hero image */}
+      {heroImageUrl ? (
+        <figure
+          className="
+            pl-[0px] md:pl-[160px] lg:pl-[248px] xl:pl-[248px]
+            pr-[0px] md:pr-[44px] lg:pr-[248px] xl:pr-[248px]
+            min-[320px]:pl-[102px] min-[320px]:pr-[40px]
+            pb-[40px] md:pb-[48px] lg:pb-[56px]
+          "
+        >
+          <Image
+            src={heroImageUrl}
+            alt={heroAlt}
+            width={heroWidth}
+            height={heroHeight}
+            sizes="(min-width: 1024px) 944px, (min-width: 768px) 764px, (min-width: 320px) 622px, 100vw"
+            className="h-auto w-full"
+          />
+          {heroCaption ? (
+            <figcaption
+              className="
+                mt-[8px] md:mt-[12px]
+                text-[16px] leading-[23px]
+                md:leading-[24px]
+                [font-feature-settings:'onum'_1,'pnum'_1]
+                text-text-primary
+              "
+            >
+              {heroCaption}
+            </figcaption>
+          ) : null}
+        </figure>
+      ) : null}
 
-      <section className="space-y-3">
-        <p className="text-sm uppercase tracking-wide text-gray-500">Image</p>
-        {heroImageUrl ? (
-          <figure className="space-y-2">
-            <Image
-              src={heroImageUrl}
-              alt={heroAlt}
-              width={heroWidth}
-              height={heroHeight}
-              sizes="(min-width: 768px) 60vw, 100vw"
-              className="h-auto w-full max-w-3xl rounded"
-            />
-            {heroCaption ? (
-              <figcaption className="text-sm text-gray-600">
-                {heroCaption}
-              </figcaption>
-            ) : null}
-          </figure>
-        ) : (
-          <p className="text-base text-gray-500">No hero image provided.</p>
-        )}
-      </section>
-
-      <section className="space-y-3">
-        <p className="text-sm uppercase tracking-wide text-gray-500">
-          Other news
-        </p>
+      {/* All articles */}
+      <section className="mt-[60px] md:mt-[80px] lg:mt-[120px]">
         <NewsList
           locale={locale}
           articles={otherNews}
           emptyMessage="No additional news available."
         />
       </section>
+
+      {/* Pagination */}
+      <Pagination
+        locale={locale}
+        currentPage={pagination?.page ?? 1}
+        pageCount={pageCount}
+      />
     </main>
   );
 }

@@ -218,7 +218,7 @@ export async function getNewsArticles(
       ...withLocale(locale),
       "pagination[page]": page,
       "pagination[pageSize]": pageSize,
-      sort: "publishedAt:desc",
+      sort: "publishedAtCustom:desc",
       ...heroImagePopulateParams,
     },
     { page, pageSize },

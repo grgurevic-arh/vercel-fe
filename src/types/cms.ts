@@ -118,6 +118,7 @@ export interface NewsArticle extends LocalizedEntity {
   slug: string;
   author: string | null;
   publishedAt: string;
+  publishedAtCustom: string | null;
   body: string | null;
   heroImage: StrapiMedia;
 }
