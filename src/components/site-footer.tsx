@@ -1,0 +1,111 @@
+import Image from "next/image";
+import Link from "next/link";
+
+interface SiteFooterProps {
+  locale: string;
+}
+
+const footerNavLinks = [
+  { label: "Legal", path: "/legal" },
+  { label: "Research", path: "/research" },
+  { label: "eu projects", path: "/eu-projects" },
+  { label: "Privacy policy", path: "/legal" },
+];
+
+const languages = [
+  { label: "Croatian", locale: "hr" },
+  { label: "English", locale: "en" },
+];
+
+export function SiteFooter({ locale }: SiteFooterProps) {
+  return (
+    <footer className="relative bg-white h-[360px] md:h-[240px] xl:h-[300px]">
+      {/* Navigation links */}
+      <div
+        className="
+          absolute
+          left-[12px] md:left-[450px] lg:left-[700px] xl:left-[968px]
+          top-[16px] md:top-[24px]
+        "
+      >
+        <ul className="space-y-[16px] md:space-y-[0]">
+          {footerNavLinks.map(({ label, path }) => (
+            <li
+              key={label}
+              className="py-[8px]"
+            >
+              <Link
+                href={`/${locale}${path}`}
+                className="text-[16px] leading-[23px] text-text-primary"
+              >
+                {label === "eu projects" ? (
+                  <>
+                    <span className="tracking-[0.48px]">eu</span>
+                    {" projects"}
+                  </>
+                ) : (
+                  label
+                )}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Language switcher */}
+      <div
+        className="
+          absolute
+          right-[94px] md:right-[44px] lg:right-[40px] xl:right-[92px]
+          top-[16px] md:top-[24px]
+        "
+      >
+        <ul className="space-y-[0]">
+          {languages.map(({ label, locale: langLocale }) => (
+            <li key={langLocale} className="py-[8px]">
+              <Link
+                href={`/${langLocale}`}
+                className={`
+                  text-[16px] leading-[23px] text-text-primary text-right
+                  ${langLocale === locale ? "underline" : ""}
+                `}
+              >
+                {label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Copyright */}
+      <p
+        className="
+          absolute
+          left-[12px] md:left-[44px] lg:left-[40px] xl:left-[88px]
+          top-[232px] md:top-[32px]
+          text-[16px] leading-[23px] text-text-primary
+        "
+      >
+        Grgurević & partneri, 2025
+      </p>
+
+      {/* EU funded badge */}
+      <div
+        className="
+          absolute
+          left-[12px] md:left-[44px] lg:left-[40px] xl:left-[88px]
+          top-[282px] md:top-[92px] xl:top-[91px]
+          h-[36px] w-[193px]
+        "
+      >
+        <Image
+          src="/eu-funded-badge.svg"
+          alt="Funded by the European Union"
+          width={193}
+          height={36}
+          className="h-full w-auto object-contain"
+        />
+      </div>
+    </footer>
+  );
+}
