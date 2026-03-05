@@ -1,15 +1,18 @@
-import Image from "next/image";
 import { notFound } from "next/navigation";
 
-import { RawDataAccordion } from "@/components/raw-data-accordion";
-import { getOfficePage } from "@/lib/cms";
+import { ContactInfo } from "@/components/contact-info";
+import { getLegalPage, getOfficePage } from "@/lib/cms";
 import { resolveLocaleParam } from "@/lib/request-helpers";
-import { requireStrapiEntity } from "@/lib/strapi-entity";
 import {
-  getStrapiMediaAttributes,
-  getStrapiMediaUrl,
-} from "@/lib/strapi-media";
-import type { ClientPartnerCard, OfficePage, TeamMember } from "@/types/cms";
+  requireStrapiEntity,
+  unwrapStrapiEntity,
+} from "@/lib/strapi-entity";
+import type {
+  ClientPartnerCard,
+  LegalPage,
+  OfficePage,
+  TeamMember,
+} from "@/types/cms";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -17,174 +20,140 @@ interface PageProps {
 
 export default async function OfficePage({ params }: PageProps) {
   const locale = await resolveLocaleParam(params);
-  const office = await getOfficePage(locale);
 
-  if (!office) {
+  const [officeData, legalData] = await Promise.all([
+    getOfficePage(locale),
+    getLegalPage(locale),
+  ]);
+
+  if (!officeData) {
     notFound();
   }
 
-  const officeAttributes = requireStrapiEntity<OfficePage>(
-    office,
+  const data = requireStrapiEntity<OfficePage>(
+    officeData,
     "Office entry missing attributes",
   );
 
-  const description = officeAttributes.description;
-  const teamMembers = (officeAttributes.team ?? []) as TeamMember[];
-  const clientCards = (officeAttributes.clients ?? []) as ClientPartnerCard[];
+  const legal = legalData
+    ? (unwrapStrapiEntity(legalData) as LegalPage | null)
+    : null;
+
+  const teamMembers = (data.team ?? []) as TeamMember[];
+  const clients = (data.clients ?? []) as ClientPartnerCard[];
+
+  const labelClass =
+    "shrink-0 tracking-[0.03em] [font-variant-caps:small-caps] text-[16px] leading-[23px] text-text-primary lg:w-[130px] xl:w-[150px]";
+  const itemClass =
+    "flex flex-col lg:flex-row border-b border-divider py-[12px] md:py-[16px] xl:py-[20px] pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[88px] pr-[12px] md:pr-[20px]";
+  const textClass = "text-[16px] leading-[23px] text-text-primary";
 
   return (
-    <main className="space-y-6 p-6">
-      <RawDataAccordion
-        summary="Office response"
-        title="Office page"
-        description="Structured content for the office single type."
-        data={office}
-      />
-
-      <section className="space-y-3">
-        <p className="text-sm uppercase tracking-wide text-gray-500">
-          Description
-        </p>
-        {description ? (
-          <p className="text-lg leading-relaxed text-gray-900 whitespace-pre-line">
-            {description}
+    <main>
+      {/* Description */}
+      <section
+        className="
+          pt-[156px] md:pt-[184px] lg:pt-[178px] xl:pt-[232px]
+          pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[408px]
+          pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
+          pb-[24px] md:pb-[38px] lg:pb-[54px] xl:pb-[47px]
+        "
+      >
+        {data.description ? (
+          <p
+            className="
+              text-[16px] leading-[23px]
+              md:text-[20px] md:leading-[28px]
+              lg:text-[28px] lg:leading-[38px]
+              text-text-primary whitespace-pre-line
+            "
+          >
+            {data.description}
           </p>
-        ) : (
-          <p className="text-base text-gray-500">No description provided.</p>
-        )}
+        ) : null}
       </section>
 
-      <section className="space-y-4">
-        <p className="text-sm uppercase tracking-wide text-gray-500">Team</p>
-        {teamMembers.length ? (
-          <ul className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {teamMembers.map((member, index) => {
-              const portraitAttributes = getStrapiMediaAttributes(
-                member.portrait,
-              );
-              const portraitUrl = getStrapiMediaUrl(member.portrait);
-              const portraitWidth = portraitAttributes?.width ?? 400;
-              const portraitHeight = portraitAttributes?.height ?? 500;
-              const portraitAlt =
-                portraitAttributes?.alternativeText ??
-                (member.name ? `${member.name} portrait` : null) ??
-                "Team member portrait";
-
-              return (
-                <li
-                  key={`${member.name}-${member.role}-${index}`}
-                  className="flex gap-4 rounded border border-gray-200 bg-white p-4 shadow-sm"
+      {/* Team */}
+      {teamMembers.length > 0 && (
+        <section>
+          <h2
+            className="
+              pt-[80px] md:pt-[120px] lg:pt-[140px] xl:pt-[180px]
+              pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[88px]
+              pb-[24px] md:pb-[32px] xl:pb-[40px]
+              text-[20px] leading-[28px]
+              lg:text-[28px] lg:leading-[38px]
+              text-text-primary
+            "
+          >
+            Team
+          </h2>
+          <div className="border-t border-divider">
+            <div className="grid grid-cols-1 min-[321px]:grid-cols-2">
+              {teamMembers.map((member, i) => (
+                <div
+                  key={`${member.name}-${member.role}-${i}`}
+                  className={itemClass}
                 >
-                  {portraitUrl ? (
-                    <Image
-                      src={portraitUrl}
-                      alt={portraitAlt}
-                      width={portraitWidth}
-                      height={portraitHeight}
-                      sizes="(min-width: 768px) 15vw, 30vw"
-                      className="h-24 w-24 rounded object-cover"
-                    />
-                  ) : (
-                    <div className="flex h-24 w-24 items-center justify-center rounded bg-gray-100 text-xs uppercase tracking-wide text-gray-400">
-                      No photo
-                    </div>
-                  )}
-
-                  <div className="flex flex-1 flex-col justify-center">
-                    <p className="text-lg font-semibold text-gray-900">
-                      {member.name}
-                    </p>
-                    {member.role ? (
-                      <p className="text-sm uppercase tracking-wide text-gray-500">
-                        {member.role}
-                      </p>
-                    ) : null}
+                  <span className={labelClass}>{member.role}</span>
+                  <div>
+                    <p className={textClass}>{member.name}</p>
                     {member.title ? (
-                      <p className="text-sm text-gray-600">{member.title}</p>
+                      <p className={textClass}>{member.title}</p>
                     ) : null}
                   </div>
-                </li>
-              );
-            })}
-          </ul>
-        ) : (
-          <p className="text-base text-gray-500">No team members to show.</p>
-        )}
-      </section>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
-      <section className="space-y-4">
-        <p className="text-sm uppercase tracking-wide text-gray-500">Clients</p>
-        {clientCards.length ? (
-          <ul className="grid gap-6 md:grid-cols-2">
-            {clientCards.map((client, index) => {
-              const logoAttributes = getStrapiMediaAttributes(client.logo);
-              const logoUrl = getStrapiMediaUrl(client.logo);
-              const logoWidth = logoAttributes?.width ?? 240;
-              const logoHeight = logoAttributes?.height ?? 120;
-              const logoAlt =
-                logoAttributes?.alternativeText ??
-                (client.title ? `${client.title} logo` : null) ??
-                "Client logo";
-              const roleLabel =
-                client.role === "partner"
-                  ? "Partner"
-                  : client.role === "client"
-                    ? "Client"
-                    : "";
-
-              return (
-                <li
-                  key={`${client.title}-${client.role}-${index}`}
-                  className="flex flex-col gap-3 rounded border border-gray-200 bg-white p-4 shadow-sm"
+      {/* Clients & partner institutions */}
+      {clients.length > 0 && (
+        <section>
+          <h2
+            className="
+              pt-[80px] md:pt-[120px] lg:pt-[140px] xl:pt-[180px]
+              pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[88px]
+              pb-[24px] md:pb-[32px] xl:pb-[40px]
+              text-[20px] leading-[28px]
+              lg:text-[28px] lg:leading-[38px]
+              text-text-primary
+            "
+          >
+            Clients & partner institutions
+          </h2>
+          <div className="border-t border-divider">
+            <div className="grid grid-cols-1 min-[321px]:grid-cols-2">
+              {clients.map((client, i) => (
+                <div
+                  key={`${client.title}-${client.role}-${i}`}
+                  className={itemClass}
                 >
-                  {logoUrl ? (
-                    <div className="flex h-20 items-center justify-center">
-                      <Image
-                        src={logoUrl}
-                        alt={logoAlt}
-                        width={logoWidth}
-                        height={logoHeight}
-                        sizes="(min-width: 768px) 20vw, 40vw"
-                        className="h-full w-auto object-contain"
-                      />
-                    </div>
-                  ) : (
-                    <div className="flex h-20 items-center justify-center rounded bg-gray-100 text-xs uppercase tracking-wide text-gray-400">
-                      No logo
-                    </div>
-                  )}
-
-                  <div className="space-y-1">
-                    {roleLabel ? (
-                      <p className="text-xs uppercase tracking-wide text-gray-500">
-                        {roleLabel}
-                      </p>
-                    ) : null}
-                    <p className="text-lg font-semibold text-gray-900">
-                      {client.title}
-                    </p>
+                  <span className={labelClass}>{client.role}</span>
+                  <div>
+                    <p className={textClass}>{client.title}</p>
                     {client.subtitle ? (
-                      <p className="text-sm text-gray-600">{client.subtitle}</p>
-                    ) : null}
-                    {client.url ? (
-                      <a
-                        href={client.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-sm font-medium text-blue-600 hover:underline"
-                      >
-                        {client.url}
-                      </a>
+                      <p className={textClass}>{client.subtitle}</p>
                     ) : null}
                   </div>
-                </li>
-              );
-            })}
-          </ul>
-        ) : (
-          <p className="text-base text-gray-500">No clients added yet.</p>
-        )}
-      </section>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Contact Info */}
+      <div className="mt-[60px] md:mt-[80px] lg:mt-[120px] xl:mt-[200px]">
+        <ContactInfo
+          email={legal?.email ?? null}
+          telephone={legal?.telephone ?? null}
+          companyName={"Grgurevi\u0107 & Partners LTD."}
+          address={"\u010Cani\u0107eva 6, Zagreb, HR-10000"}
+        />
+      </div>
     </main>
   );
 }
