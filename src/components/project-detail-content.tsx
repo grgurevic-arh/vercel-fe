@@ -1,32 +1,32 @@
 import Image from "next/image";
 
-import { HeroCarousel, type HeroCarouselItem } from "@/components/hero-carousel";
+import { HomepageCarousel, type CarouselSlide } from "@/components/homepage-carousel";
 import {
   getStrapiMediaAttributes,
   getStrapiMediaUrl,
 } from "@/lib/strapi-media";
-import type { ProjectDetail } from "@/types/cms";
+import type { ProjectDetail, StrapiMedia } from "@/types/cms";
 
 interface ProjectDetailContentProps {
   project: ProjectDetail;
   titleFallback: string;
 }
 
-const buildHeroItems = (project: ProjectDetail): HeroCarouselItem[] => {
-  return (project.heroImages ?? []).reduce<HeroCarouselItem[]>((acc, entry) => {
-    const mediaAttributes = getStrapiMediaAttributes(entry.image);
-    const mediaUrl = getStrapiMediaUrl(entry.image);
-    if (!mediaUrl) {
-      return acc;
-    }
+/* ------------------------------------------------------------------ */
+/*  Hero carousel builder                                             */
+/* ------------------------------------------------------------------ */
+
+const buildHeroSlides = (project: ProjectDetail): CarouselSlide[] => {
+  return (project.heroImages ?? []).reduce<CarouselSlide[]>((acc, entry) => {
+    const attrs = getStrapiMediaAttributes(entry.image);
+    const url = getStrapiMediaUrl(entry.image);
+    if (!url) return acc;
 
     acc.push({
-      url: mediaUrl,
-      alt:
-        mediaAttributes?.alternativeText ??
-        (project.title ? `${project.title} hero` : "Hero image"),
-      width: mediaAttributes?.width ?? 1600,
-      height: mediaAttributes?.height ?? 900,
+      url,
+      alt: attrs?.alternativeText ?? `${project.title ?? "Project"} hero`,
+      width: attrs?.width ?? 1600,
+      height: attrs?.height ?? 900,
       description: entry.description ?? null,
     });
 
@@ -34,156 +34,235 @@ const buildHeroItems = (project: ProjectDetail): HeroCarouselItem[] => {
   }, []);
 };
 
-const buildMetaSections = (project: ProjectDetail) => {
+/* ------------------------------------------------------------------ */
+/*  Meta grid builder                                                 */
+/* ------------------------------------------------------------------ */
+
+const buildMetaPairs = (project: ProjectDetail) => {
   return [
-    { label: "Status", value: project.status },
     { label: "Location", value: project.location },
-    { label: "Year", value: project.year?.toString() },
-    { label: "Size", value: project.size },
+    { label: "Client", value: project.investor },
+    { label: "Status", value: project.status },
+    { label: "Project", value: project.projectCode },
     { label: "Completed", value: project.completed },
-    { label: "Gross area", value: project.grossArea },
-    { label: "Investor", value: project.investor },
-    { label: "Project code", value: project.projectCode },
     { label: "Site area", value: project.siteArea },
+    { label: "Gross area", value: project.grossArea },
     { label: "Investment value", value: project.investmentValue },
-    { label: "Program", value: project.program },
   ].filter((field) => field.value);
 };
+
+/* ------------------------------------------------------------------ */
+/*  Composition image helpers                                         */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Deterministic pseudo-random side based on index and slug.
+ * Returns "left" or "right" — varied but stable across renders.
+ */
+function getImageSide(index: number, slug: string): "left" | "right" {
+  let hash = 0;
+  const seed = `${slug}-${index}`;
+  for (let i = 0; i < seed.length; i++) {
+    hash = ((hash << 5) - hash + seed.charCodeAt(i)) | 0;
+  }
+  return hash % 2 === 0 ? "left" : "right";
+}
+
+function CompositionImage({
+  media,
+  alt,
+  caption,
+  side,
+}: {
+  media: StrapiMedia;
+  alt: string;
+  caption: string | null;
+  side: "left" | "right";
+}) {
+  const attrs = getStrapiMediaAttributes(media);
+  const url = getStrapiMediaUrl(media);
+  if (!url) return null;
+
+  const width = attrs?.width ?? 1600;
+  const height = attrs?.height ?? 900;
+
+  const alignmentClass =
+    side === "left"
+      ? "mr-auto ml-0"
+      : "ml-auto mr-0";
+
+  return (
+    <figure
+      className="
+        px-[12px] md:px-[44px] lg:px-[40px] xl:px-[88px]
+        mb-[40px] md:mb-[60px] lg:mb-[80px]
+      "
+    >
+      <div className={`w-full md:w-[70%] lg:w-[60%] ${alignmentClass}`}>
+        <Image
+          src={url}
+          alt={alt}
+          width={width}
+          height={height}
+          sizes="(min-width: 1024px) 60vw, (min-width: 768px) 70vw, 100vw"
+          className="h-auto w-full"
+        />
+        {caption ? (
+          <figcaption
+            className="
+              mt-[8px] md:mt-[12px]
+              text-[16px] leading-[23px] text-text-primary
+              [font-feature-settings:'onum'_1,'pnum'_1]
+            "
+          >
+            {caption}
+          </figcaption>
+        ) : null}
+      </div>
+    </figure>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Main component                                                    */
+/* ------------------------------------------------------------------ */
 
 export function ProjectDetailContent({
   project,
   titleFallback,
 }: ProjectDetailContentProps) {
-  const heroItems = buildHeroItems(project);
+  const heroSlides = buildHeroSlides(project);
   const heading = project.title ?? titleFallback;
-  const metaSections = buildMetaSections(project);
+  const metaPairs = buildMetaPairs(project);
   const siteImages = project.siteImages ?? [];
   const floorPlans = project.floorPlans ?? [];
+  const slug = project.slug;
 
   return (
     <>
-      {heroItems.length ? (
-        <section className="space-y-4">
-          <p className="text-sm uppercase tracking-wide text-gray-500">
-            Hero images
-          </p>
-          <HeroCarousel items={heroItems} />
-        </section>
+      {/* Hero carousel */}
+      {heroSlides.length ? (
+        <HomepageCarousel slides={heroSlides} />
       ) : null}
 
-      <section className="space-y-2">
-        <p className="text-sm uppercase tracking-wide text-gray-500">Heading</p>
-        <h1 className="text-3xl font-semibold text-gray-900">{heading}</h1>
-      </section>
+      {/* Title */}
+      <h1
+        className="
+          pt-[32px] md:pt-[40px] lg:pt-[48px]
+          pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[408px]
+          pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
+          pb-[24px] md:pb-[32px]
+          text-[20px] leading-[28px]
+          min-[320px]:text-[28px] min-[320px]:leading-[38px]
+          md:text-[38px] md:leading-[50px]
+          text-text-primary
+        "
+      >
+        {heading}
+      </h1>
 
-      <section className="space-y-2">
-        <p className="text-sm uppercase tracking-wide text-gray-500">
-          Description
-        </p>
-        {project.description ? (
-          <div className="whitespace-pre-line text-base leading-relaxed text-gray-900">
-            {project.description}
+      {/* Description */}
+      {project.description ? (
+        <div
+          className="
+            pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[408px]
+            pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
+            pb-[40px] md:pb-[48px] lg:pb-[56px]
+            text-[16px] leading-[23px]
+            [font-feature-settings:'onum'_1,'pnum'_1]
+            min-[320px]:text-[20px] min-[320px]:leading-[28px]
+            md:text-[22px] md:leading-[32px]
+            lg:text-[28px] lg:leading-[38px]
+            text-text-primary
+            whitespace-pre-line
+          "
+        >
+          {project.description}
+        </div>
+      ) : null}
+
+      {/* Meta grid */}
+      {metaPairs.length ? (
+        <section
+          className="
+            px-[12px] md:px-[44px] lg:px-[40px] xl:px-[88px]
+            pb-[40px] md:pb-[60px] lg:pb-[80px]
+          "
+        >
+          <div className="border-t border-divider">
+            {(() => {
+              const rows: Array<typeof metaPairs> = [];
+              for (let i = 0; i < metaPairs.length; i += 2) {
+                rows.push(metaPairs.slice(i, i + 2));
+              }
+              return rows.map((row, rowIndex) => (
+                <div
+                  key={rowIndex}
+                  className="
+                    grid grid-cols-1 md:grid-cols-2
+                    gap-x-[40px] lg:gap-x-[80px]
+                    border-b border-divider
+                    py-[12px] md:py-[16px]
+                  "
+                >
+                  {row.map((pair) => (
+                    <div key={pair.label} className="flex gap-x-[24px] md:gap-x-[40px]">
+                      <span className="shrink-0 w-[120px] md:w-[140px] uppercase text-[16px] leading-[23px] text-text-primary tracking-wide">
+                        {pair.label}
+                      </span>
+                      <span className="text-[16px] leading-[23px] text-text-primary">
+                        {pair.value}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              ));
+            })()}
           </div>
-        ) : (
-          <p className="text-base text-gray-500">No description provided.</p>
-        )}
-      </section>
-
-      {metaSections.length ? (
-        <section className="space-y-4">
-          <p className="text-sm uppercase tracking-wide text-gray-500">
-            Project details
-          </p>
-          <dl className="grid gap-4 md:grid-cols-2">
-            {metaSections.map((field) => (
-              <div key={field.label} className="rounded border border-gray-200 p-4">
-                <dt className="text-xs uppercase tracking-wide text-gray-500">
-                  {field.label}
-                </dt>
-                <dd className="mt-1 text-base text-gray-900">{field.value}</dd>
-              </div>
-            ))}
-          </dl>
         </section>
       ) : null}
 
+      {/* Site images — composition layout */}
       {siteImages.length ? (
-        <section className="space-y-4">
-          <p className="text-sm uppercase tracking-wide text-gray-500">
-            Site images
-          </p>
-          <div className="grid gap-6 md:grid-cols-2">
-            {siteImages.map((siteImage, index) => {
-              const siteMediaAttributes = getStrapiMediaAttributes(siteImage.image);
-              const siteUrl = getStrapiMediaUrl(siteImage.image);
-              if (!siteUrl) {
-                return null;
-              }
+        <section className="mt-[20px] md:mt-[40px]">
+          {siteImages.map((siteImage, index) => {
+            const attrs = getStrapiMediaAttributes(siteImage.image);
+            const alt =
+              attrs?.alternativeText ?? `${heading} site image ${index + 1}`;
+            const side = getImageSide(index, slug);
 
-              const siteAlt =
-                siteMediaAttributes?.alternativeText ??
-                (project.title ? `${project.title} site image` : "Site image");
-
-              return (
-                <figure key={`${siteUrl}-${index}`} className="space-y-2">
-                  <Image
-                    src={siteUrl}
-                    alt={siteAlt}
-                    width={siteMediaAttributes?.width ?? 1600}
-                    height={siteMediaAttributes?.height ?? 900}
-                    sizes="(min-width: 768px) 45vw, 100vw"
-                    className="h-auto w-full rounded"
-                  />
-                  {siteImage.description ? (
-                    <figcaption className="text-sm text-gray-600">
-                      {siteImage.description}
-                    </figcaption>
-                  ) : null}
-                </figure>
-              );
-            })}
-          </div>
+            return (
+              <CompositionImage
+                key={`site-${index}`}
+                media={siteImage.image}
+                alt={alt}
+                caption={siteImage.description}
+                side={side}
+              />
+            );
+          })}
         </section>
       ) : null}
 
+      {/* Floor plans — same composition layout */}
       {floorPlans.length ? (
-        <section className="space-y-4">
-          <p className="text-sm uppercase tracking-wide text-gray-500">
-            Floor plans
-          </p>
-          <div className="grid gap-6 md:grid-cols-2">
-            {floorPlans.map((floorPlan, index) => {
-              const floorMediaAttributes = getStrapiMediaAttributes(
-                floorPlan.plan,
-              );
-              const floorUrl = getStrapiMediaUrl(floorPlan.plan);
-              if (!floorUrl) {
-                return null;
-              }
+        <section className="mt-[20px] md:mt-[40px]">
+          {floorPlans.map((floorPlan, index) => {
+            const attrs = getStrapiMediaAttributes(floorPlan.plan);
+            const alt =
+              attrs?.alternativeText ?? `${heading} floor plan ${index + 1}`;
+            const side = getImageSide(index + siteImages.length, slug);
 
-              const floorAlt =
-                floorMediaAttributes?.alternativeText ??
-                (floorPlan.label ? `${floorPlan.label} floor plan` : "Floor plan");
-
-              return (
-                <figure key={`${floorUrl}-${index}`} className="space-y-2">
-                  <Image
-                    src={floorUrl}
-                    alt={floorAlt}
-                    width={floorMediaAttributes?.width ?? 1600}
-                    height={floorMediaAttributes?.height ?? 900}
-                    sizes="(min-width: 768px) 45vw, 100vw"
-                    className="h-auto w-full rounded"
-                  />
-                  {floorPlan.label ? (
-                    <figcaption className="text-sm text-gray-600">
-                      {floorPlan.label}
-                    </figcaption>
-                  ) : null}
-                </figure>
-              );
-            })}
-          </div>
+            return (
+              <CompositionImage
+                key={`floor-${index}`}
+                media={floorPlan.plan}
+                alt={alt}
+                caption={floorPlan.label}
+                side={side}
+              />
+            );
+          })}
         </section>
       ) : null}
     </>

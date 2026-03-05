@@ -179,6 +179,21 @@ export async function getWorkProjectBySlug(locale: string, slug: string) {
   return response.data[0] ?? null;
 }
 
+export async function getWorkProjectSlugs(locale: string) {
+  const response = await strapiFetch<
+    StrapiCollectionResponse<Pick<ProjectListing, "title" | "slug">>
+  >("/work-projects", {
+    searchParams: {
+      ...withLocale(locale),
+      "fields[0]": "title",
+      "fields[1]": "slug",
+      sort: "year:desc",
+      "pagination[pageSize]": 200,
+    },
+  });
+  return response.data;
+}
+
 export async function getEuProjects(locale: string, page = 1, pageSize = 20) {
   return fetchCollectionWithFallback<ProjectListing>(
     "/eu-projects",

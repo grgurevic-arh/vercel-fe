@@ -1,14 +1,32 @@
 import { notFound } from "next/navigation";
 
-import { RawDataAccordion } from "@/components/raw-data-accordion";
 import { ProjectDetailContent } from "@/components/project-detail-content";
-import { getWorkProjectBySlug } from "@/lib/cms";
+import { ProjectNavigation } from "@/components/project-navigation";
+import { getWorkProjectBySlug, getWorkProjectSlugs } from "@/lib/cms";
 import { resolveLocaleParam } from "@/lib/request-helpers";
-import { requireStrapiEntity } from "@/lib/strapi-entity";
-import type { ProjectDetail } from "@/types/cms";
+import { requireStrapiEntity, unwrapStrapiEntity } from "@/lib/strapi-entity";
+import type { ProjectDetail, ProjectListing } from "@/types/cms";
 
 interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
+}
+
+function getAdjacentSlugs(
+  allSlugs: Array<{ slug: string }>,
+  currentSlug: string,
+) {
+  const index = allSlugs.findIndex((p) => p.slug === currentSlug);
+  if (index === -1 || allSlugs.length < 2) {
+    return { previous: null, next: null };
+  }
+
+  const prevIndex = (index - 1 + allSlugs.length) % allSlugs.length;
+  const nextIndex = (index + 1) % allSlugs.length;
+
+  return {
+    previous: allSlugs[prevIndex].slug,
+    next: allSlugs[nextIndex].slug,
+  };
 }
 
 export default async function WorkDetailPage({ params }: PageProps) {
@@ -16,29 +34,40 @@ export default async function WorkDetailPage({ params }: PageProps) {
   const locale = await resolveLocaleParam(resolvedParams);
   const { slug } = resolvedParams;
 
-  const project = await getWorkProjectBySlug(locale, slug);
+  const [project, allSlugsRaw] = await Promise.all([
+    getWorkProjectBySlug(locale, slug),
+    getWorkProjectSlugs(locale),
+  ]);
 
   if (!project) {
     notFound();
   }
 
-  const projectAttributes = requireStrapiEntity<ProjectDetail>(
+  const data = requireStrapiEntity<ProjectDetail>(
     project,
     "Work project missing attributes",
   );
 
+  const allSlugs = allSlugsRaw
+    .map((entry) => unwrapStrapiEntity(entry))
+    .filter((e): e is Pick<ProjectListing, "title" | "slug"> => !!e?.slug);
+
+  const { previous, next } = getAdjacentSlugs(allSlugs, slug);
+
   return (
-    <main className="space-y-8 p-6">
-      <RawDataAccordion
-        summary="Work response"
-        title={`Work project detail – ${slug}`}
-        description="Detailed payload for an individual work project."
-        data={project}
-      />
+    <main>
       <ProjectDetailContent
-        project={projectAttributes}
+        project={data}
         titleFallback="Untitled project"
       />
+
+      {previous && next ? (
+        <ProjectNavigation
+          locale={locale}
+          previousSlug={previous}
+          nextSlug={next}
+        />
+      ) : null}
     </main>
   );
 }

@@ -8,6 +8,7 @@ export interface CarouselSlide {
   alt: string;
   width: number;
   height: number;
+  description?: string | null;
 }
 
 interface HomepageCarouselProps {
@@ -40,37 +41,54 @@ export function HomepageCarousel({ slides }: HomepageCarouselProps) {
         />
       </div>
 
-      {/* Number pagination */}
-      <nav
+      {/* Caption + Number pagination row */}
+      <div
         className="
-          flex
+          flex items-baseline justify-between
           mt-[16px] md:mt-[28px] lg:mt-[28px] xl:mt-[33px]
-          pl-[12px] md:pl-[44px] lg:pl-[39px] xl:pl-[88px]
-          gap-[34px] md:gap-[35px] lg:gap-[14px] xl:gap-[24px]
+          px-[12px] md:px-[44px] lg:px-[40px] xl:px-[88px]
         "
-        aria-label="Image pagination"
       >
-        {slides.map((_, index) => {
-          const isActive = index === activeIndex;
-          return (
-            <button
-              key={index}
-              type="button"
-              onClick={() => setActiveIndex(index)}
-              aria-label={`Show image ${index + 1}`}
-              aria-current={isActive ? "true" : undefined}
-              className={`
-                text-[16px] leading-[23px] text-text-primary
-                w-[46px] md:w-auto
-                text-left
-                ${isActive ? "underline" : ""}
-              `}
-            >
-              {index + 1}
-            </button>
-          );
-        })}
-      </nav>
+        {current.description ? (
+          <p
+            className="
+              text-[16px] leading-[23px] text-text-primary
+              [font-feature-settings:'onum'_1,'pnum'_1]
+              flex-1 min-w-0 mr-[24px]
+            "
+          >
+            {current.description}
+          </p>
+        ) : (
+          <span />
+        )}
+
+        {slides.length > 1 ? (
+          <nav
+            className="flex shrink-0 gap-[14px] md:gap-[24px]"
+            aria-label="Image pagination"
+          >
+            {slides.map((_, index) => {
+              const isActive = index === activeIndex;
+              return (
+                <button
+                  key={index}
+                  type="button"
+                  onClick={() => setActiveIndex(index)}
+                  aria-label={`Show image ${index + 1}`}
+                  aria-current={isActive ? "true" : undefined}
+                  className={`
+                    text-[16px] leading-[23px] text-text-primary
+                    ${isActive ? "underline" : ""}
+                  `}
+                >
+                  {index + 1}
+                </button>
+              );
+            })}
+          </nav>
+        ) : null}
+      </div>
     </section>
   );
 }
