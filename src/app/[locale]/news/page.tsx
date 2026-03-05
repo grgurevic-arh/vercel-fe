@@ -1,6 +1,6 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { RawDataAccordion } from "@/components/raw-data-accordion";
 import { NewsList } from "@/components/news-list";
 import { Pagination } from "@/components/pagination";
 import { getNewsArticles } from "@/lib/cms";
@@ -29,30 +29,49 @@ export default async function NewsListingPage({
   }
 
   return (
-    <main className="space-y-8 p-6">
-      <RawDataAccordion
-        summary="News response"
-        title="News articles"
-        description="Latest news payload ordered by published date."
-        data={response}
-      />
-
-      <section className="space-y-4">
-        <header>
-          <p className="text-sm uppercase tracking-wide text-gray-500">
-            All news
-          </p>
-          <p className="text-sm text-gray-600">
-            Ordered by published date from newest to oldest.
-          </p>
-        </header>
-        <NewsList locale={locale} articles={newsArticles} />
-        <Pagination
-          locale={locale}
-          currentPage={pagination?.page ?? requestedPage}
-          pageCount={pageCount}
-        />
+    <main>
+      {/* Article titles / headlines section */}
+      <section
+        className="
+          pt-[120px] md:pt-[148px] lg:pt-[148px] xl:pt-[180px]
+          pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[408px]
+          pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
+          pb-[80px] md:pb-[120px] lg:pb-[140px] xl:pb-[180px]
+        "
+      >
+        <ul className="space-y-[20px] md:space-y-[16px] lg:space-y-[20px] xl:space-y-[24px]">
+          {newsArticles.map((article) => (
+            <li key={`headline-${article.slug}-${article.id}`}>
+              <Link
+                href={`/${locale}/news/${article.slug}`}
+                className="
+                  block
+                  text-[20px] leading-[28px]
+                  [font-feature-settings:'onum'_1,'pnum'_1]
+                  min-[320px]:text-[28px] min-[320px]:leading-[38px]
+                  md:text-[38px] md:leading-[50px]
+                  md:[font-feature-settings:normal]
+                  text-text-primary
+                  hover:underline
+                  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black
+                "
+              >
+                {article.title}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </section>
+
+      {/* All articles table */}
+      <NewsList locale={locale} articles={newsArticles} />
+
+      {/* Pagination */}
+      <Pagination
+        locale={locale}
+        currentPage={pagination?.page ?? requestedPage}
+        pageCount={pageCount}
+      />
     </main>
   );
 }

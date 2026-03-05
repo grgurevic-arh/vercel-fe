@@ -54,6 +54,41 @@ export function getNewsYear(value?: string | null) {
   return date.getFullYear().toString();
 }
 
+/**
+ * Format a date as "MM.DD" (e.g., "05.08").
+ * Uses publishedAtCustom if available, falls back to publishedAt.
+ */
+export function formatNewsDayMonth(
+  publishedAtCustom?: string | null,
+  publishedAt?: string | null,
+): string {
+  const value = publishedAtCustom ?? publishedAt;
+  if (!value) return "--";
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "--";
+
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${month}.${day}`;
+}
+
+/**
+ * Extract year from publishedAtCustom (falls back to publishedAt).
+ */
+export function getNewsYearFromCustom(
+  publishedAtCustom?: string | null,
+  publishedAt?: string | null,
+): string {
+  const value = publishedAtCustom ?? publishedAt;
+  if (!value) return "----";
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value.slice(0, 4);
+
+  return date.getFullYear().toString();
+}
+
 export function normalizeNewsArticles(
   entries?: Array<MaybeWrappedNews> | null,
 ): NormalizedNewsArticle[] {

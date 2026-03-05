@@ -1,8 +1,8 @@
 import Link from "next/link";
 
 import {
-  formatNewsDate,
-  getNewsYear,
+  formatNewsDayMonth,
+  getNewsYearFromCustom,
   type NormalizedNewsArticle,
 } from "@/lib/news-helpers";
 
@@ -15,37 +15,55 @@ interface NewsListProps {
 export function NewsList({ locale, articles, emptyMessage }: NewsListProps) {
   if (!articles.length) {
     return (
-      <p className="text-base text-gray-500">
+      <p className="text-[16px] leading-[23px] text-text-primary pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[88px]">
         {emptyMessage ?? "No news entries available."}
       </p>
     );
   }
 
   return (
-    <ul className="space-y-3">
+    <ul className="border-t border-divider">
       {articles.map((article) => {
-        const yearLabel = getNewsYear(article.publishedAt);
-        const dateLabel = formatNewsDate(article.publishedAt);
+        const year = getNewsYearFromCustom(
+          article.publishedAtCustom,
+          article.publishedAt,
+        );
+        const dayMonth = formatNewsDayMonth(
+          article.publishedAtCustom,
+          article.publishedAt,
+        );
         const title = article.title ?? "Untitled article";
-        const summary = article.summary ?? "No summary provided.";
+        const summary = article.summary ?? "";
         const href = `/${locale}/news/${article.slug}`;
 
         return (
           <li
             key={`${article.slug}-${article.id}`}
-            className="rounded border border-gray-200 bg-white shadow-sm"
+            className="border-b border-divider"
           >
             <Link
               href={href}
-              className="block px-4 py-3 text-base text-gray-900 hover:bg-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+              className="
+                flex items-baseline gap-x-[24px] md:gap-x-[40px] lg:gap-x-[48px]
+                text-[16px] leading-[23px] text-text-primary
+                [font-feature-settings:'onum'_1,'pnum'_1]
+                py-[12px] md:py-[14px] xl:py-[16px]
+                pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[88px]
+                pr-[12px] md:pr-[44px] lg:pr-[40px] xl:pr-[88px]
+                hover:bg-gray-50 transition-colors
+                focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black
+              "
             >
-              <span className="font-semibold text-gray-900">{yearLabel}</span>
-              {": "}
-              {dateLabel}
-              {": "}
-              <span className="font-semibold">{title}</span>
-              {": "}
-              <span className="text-gray-700">{summary}</span>
+              <span className="hidden md:inline shrink-0 w-[48px]">
+                {year}
+              </span>
+              <span className="shrink-0 w-[48px]">{dayMonth}</span>
+              <span className="shrink-0 min-w-0 md:w-[200px] lg:w-[240px] xl:w-[280px] truncate">
+                {title}
+              </span>
+              <span className="hidden md:inline flex-1 min-w-0 truncate">
+                {summary}
+              </span>
             </Link>
           </li>
         );
