@@ -130,6 +130,8 @@ export interface OfficePage extends LocalizedEntity {
 }
 
 export interface LegalPage extends LocalizedEntity {
+  companyName: string | null;
+  address: string | null;
   bk: string | null;
   iban: string | null;
   swift: string | null;

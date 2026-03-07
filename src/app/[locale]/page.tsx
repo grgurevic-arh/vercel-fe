@@ -138,6 +138,7 @@ export default async function LocaleHomepage({ params }: PageProps) {
         <ContactInfo
           email={legal?.email ?? null}
           telephone={legal?.telephone ?? null}
+          // TODO: Remove fallbacks once companyName & address are populated in Strapi
           companyName={legal?.companyName ?? "Grgurević & Partners LTD."}
           address={legal?.address ?? "Čanićeva 6, Zagreb, HR-10000"}
         />
