@@ -1,8 +1,22 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import localFont from "next/font/local";
 
 import { DEFAULT_LOCALE } from "@/lib/i18n";
 import "./globals.css";
+
+const untitledSerif = localFont({
+  src: [
+    { path: "../fonts/untitled-serif-regular.woff2", weight: "400", style: "normal" },
+    { path: "../fonts/untitled-serif-regular-italic.woff2", weight: "400", style: "italic" },
+    { path: "../fonts/untitled-serif-medium.woff2", weight: "500", style: "normal" },
+    { path: "../fonts/untitled-serif-medium-italic.woff2", weight: "500", style: "italic" },
+    { path: "../fonts/untitled-serif-bold.woff2", weight: "700", style: "normal" },
+    { path: "../fonts/untitled-serif-bold-italic.woff2", weight: "700", style: "italic" },
+  ],
+  variable: "--font-untitled-serif",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Grgurević & partneri",
@@ -13,7 +27,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang={DEFAULT_LOCALE}>
+    <html lang={DEFAULT_LOCALE} className={untitledSerif.variable}>
       <body className="antialiased">
         {children}
       </body>

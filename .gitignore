@@ -36,6 +36,9 @@ yarn-error.log*
 /docs
 /tokens.md
 
+# worktrees
+.worktrees/
+
 # vercel
 .vercel
 
