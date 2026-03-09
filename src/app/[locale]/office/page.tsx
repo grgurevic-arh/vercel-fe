@@ -1,7 +1,9 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { ContactInfo } from "@/components/contact-info";
 import { getFooter, getOfficePage } from "@/lib/cms";
+import { SUPPORTED_LOCALES } from "@/lib/i18n";
 import { resolveLocaleParam } from "@/lib/request-helpers";
 import {
   requireStrapiEntity,
@@ -13,6 +15,27 @@ import type {
   OfficePage,
   TeamMember,
 } from "@/types/cms";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const locale = await resolveLocaleParam(params);
+
+  return {
+    title: locale === "hr" ? "Ured" : "Office",
+    description:
+      locale === "hr"
+        ? "Upoznajte naš tim arhitekata i partnera."
+        : "Meet our team of architects and partners.",
+    alternates: {
+      languages: Object.fromEntries(
+        SUPPORTED_LOCALES.map((l) => [l, `/${l}/office`]),
+      ),
+    },
+  };
+}
 
 interface PageProps {
   params: Promise<{ locale: string }>;

@@ -1,11 +1,30 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { CompanyMetadata } from "@/components/company-metadata";
 import { ContactInfo } from "@/components/contact-info";
 import { getFooter, getLegalPage } from "@/lib/cms";
+import { SUPPORTED_LOCALES } from "@/lib/i18n";
 import { resolveLocaleParam } from "@/lib/request-helpers";
 import { requireStrapiEntity, unwrapStrapiEntity } from "@/lib/strapi-entity";
 import type { Footer, LegalPage } from "@/types/cms";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const locale = await resolveLocaleParam(params);
+
+  return {
+    title: locale === "hr" ? "Pravne informacije" : "Legal",
+    alternates: {
+      languages: Object.fromEntries(
+        SUPPORTED_LOCALES.map((l) => [l, `/${l}/legal`]),
+      ),
+    },
+  };
+}
 
 interface PageProps {
   params: Promise<{ locale: string }>;

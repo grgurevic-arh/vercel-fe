@@ -1,8 +1,27 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { RawDataAccordion } from "@/components/raw-data-accordion";
 import { getResearchSettings } from "@/lib/cms";
+import { SUPPORTED_LOCALES } from "@/lib/i18n";
 import { resolveLocaleParam } from "@/lib/request-helpers";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const locale = await resolveLocaleParam(params);
+
+  return {
+    title: locale === "hr" ? "Istraživanje" : "Research",
+    alternates: {
+      languages: Object.fromEntries(
+        SUPPORTED_LOCALES.map((l) => [l, `/${l}/research`]),
+      ),
+    },
+  };
+}
 
 interface PageProps {
   params: Promise<{ locale: string }>;
