@@ -13,7 +13,8 @@ interface ProjectGalleryProps {
 }
 
 function isLandscape(project: NormalizedProjectListing): boolean {
-  const attrs = getStrapiMediaAttributes(project.coverImage);
+  const heroMedia = project.heroImages?.[0]?.image;
+  const attrs = getStrapiMediaAttributes(heroMedia);
   if (!attrs?.width || !attrs?.height) return true;
   return attrs.width / attrs.height > 1.2;
 }
@@ -50,8 +51,10 @@ function GalleryItem({
   project: NormalizedProjectListing;
   locale: string;
 }) {
-  const coverAttributes = getStrapiMediaAttributes(project.coverImage);
-  const coverUrl = getStrapiMediaUrl(project.coverImage);
+  const firstHero = project.heroImages?.[0];
+  const heroMedia = firstHero?.image;
+  const coverAttributes = getStrapiMediaAttributes(heroMedia);
+  const coverUrl = getStrapiMediaUrl(heroMedia);
   const coverWidth = coverAttributes?.width ?? 1200;
   const coverHeight = coverAttributes?.height ?? 900;
   const coverAlt =
