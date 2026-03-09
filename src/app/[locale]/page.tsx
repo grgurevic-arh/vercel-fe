@@ -12,6 +12,7 @@ import {
 import { HomepageCarousel } from "@/components/homepage-carousel";
 import { BlocksRenderer } from "@/components/blocks-renderer";
 import { ContactInfo } from "@/components/contact-info";
+import { JsonLd } from "@/components/json-ld";
 import type { Homepage, Footer, StrapiMedia } from "@/types/cms";
 import type { CarouselSlide } from "@/components/homepage-carousel";
 
@@ -145,6 +146,21 @@ export default async function LocaleHomepage({ params }: PageProps) {
           address={footer?.address ?? undefined}
         />
       </div>
+
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Grgurević & partneri",
+          description:
+            "Architecture and urban planning studio based in Zagreb.",
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "Zagreb",
+            addressCountry: "HR",
+          },
+        }}
+      />
     </main>
   );
 }
