@@ -2,10 +2,10 @@ import { notFound } from "next/navigation";
 
 import { CompanyMetadata } from "@/components/company-metadata";
 import { ContactInfo } from "@/components/contact-info";
-import { getLegalPage } from "@/lib/cms";
+import { getFooter, getLegalPage } from "@/lib/cms";
 import { resolveLocaleParam } from "@/lib/request-helpers";
-import { requireStrapiEntity } from "@/lib/strapi-entity";
-import type { LegalPage } from "@/types/cms";
+import { requireStrapiEntity, unwrapStrapiEntity } from "@/lib/strapi-entity";
+import type { Footer, LegalPage } from "@/types/cms";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -13,7 +13,10 @@ interface PageProps {
 
 export default async function LegalPage({ params }: PageProps) {
   const locale = await resolveLocaleParam(params);
-  const legal = await getLegalPage(locale);
+  const [legal, footerData] = await Promise.all([
+    getLegalPage(locale),
+    getFooter(locale),
+  ]);
 
   if (!legal) {
     notFound();
@@ -23,6 +26,10 @@ export default async function LegalPage({ params }: PageProps) {
     legal,
     "Legal entry missing attributes",
   );
+
+  const footer = footerData
+    ? (unwrapStrapiEntity(footerData) as Footer | null)
+    : null;
 
   return (
     <main>
@@ -61,10 +68,10 @@ export default async function LegalPage({ params }: PageProps) {
       {/* Contact Info */}
       <div className="mt-[60px] md:mt-[80px] lg:mt-[120px] xl:mt-[200px]">
         <ContactInfo
-          email={data.email ?? null}
-          telephone={data.telephone ?? null}
-          companyName={"Grgurevi\u0107 & Partners LTD."}
-          address={"\u010Cani\u0107eva 6, Zagreb, HR-10000"}
+          email={footer?.email ?? null}
+          telephone={footer?.phoneNumber ?? null}
+          companyName={footer?.companyName ?? undefined}
+          address={footer?.address ?? undefined}
         />
       </div>
     </main>
