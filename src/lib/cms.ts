@@ -28,7 +28,6 @@ const clientsLogoPopulateParams = buildMediaPopulateParams([
   "logo",
 ]);
 const workProjectNestedMediaPopulate = {
-  ...coverImagePopulateParams,
   "populate[heroImages][populate]": "image",
   "populate[siteImages][populate]": "image",
   "populate[floorPlans][populate]": "plan",
@@ -166,7 +165,7 @@ export async function getResearchSettings(locale: string) {
   return response.data;
 }
 
-export async function getWorkProjects(locale: string, page = 1, pageSize = 20) {
+export async function getWorkProjects(locale: string, page = 1, pageSize = 10) {
   return fetchCollectionWithFallback<ProjectListing>(
     "/work-projects",
     {
@@ -174,7 +173,7 @@ export async function getWorkProjects(locale: string, page = 1, pageSize = 20) {
       "pagination[page]": page,
       "pagination[pageSize]": pageSize,
       sort: "year:desc",
-      ...coverImagePopulateParams,
+      "populate[heroImages][populate][0]": "image",
     },
     { page, pageSize },
   );
