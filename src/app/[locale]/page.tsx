@@ -10,6 +10,7 @@ import {
 import { normalizeNewsArticles } from "@/lib/news-helpers";
 import { HomepageCarousel } from "@/components/homepage-carousel";
 import { HomepageFeed } from "@/components/homepage-feed";
+import { BlocksRenderer } from "@/components/blocks-renderer";
 import { ContactInfo } from "@/components/contact-info";
 import type { Homepage, LegalPage, StrapiMedia } from "@/types/cms";
 import type { CarouselSlide } from "@/components/homepage-carousel";
@@ -117,8 +118,9 @@ export default async function LocaleHomepage({ params }: PageProps) {
           pb-[24px] md:pb-[38px] lg:pb-[54px] xl:pb-[47px]
         "
       >
-        {homepage.content ? (
-          <p
+        {homepage.content?.length ? (
+          <BlocksRenderer
+            content={homepage.content}
             className="
               text-[16px] leading-[23px]
               md:text-[20px] md:leading-[28px]
@@ -127,9 +129,7 @@ export default async function LocaleHomepage({ params }: PageProps) {
               text-text-primary whitespace-pre-line
               max-w-[296px] md:max-w-[506px] lg:max-w-[644px] xl:max-w-[784px]
             "
-          >
-            {homepage.content}
-          </p>
+          />
         ) : null}
       </section>
 
