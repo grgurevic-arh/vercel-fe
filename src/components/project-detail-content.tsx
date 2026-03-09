@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import { BlocksRenderer } from "@/components/blocks-renderer";
 import { HomepageCarousel, type CarouselSlide } from "@/components/homepage-carousel";
 import {
   getStrapiMediaAttributes,
@@ -9,6 +10,7 @@ import type { ProjectDetail, StrapiMedia } from "@/types/cms";
 
 interface ProjectDetailContentProps {
   project: ProjectDetail;
+  locale: string;
   titleFallback: string;
 }
 
@@ -38,16 +40,17 @@ const buildHeroSlides = (project: ProjectDetail): CarouselSlide[] => {
 /*  Meta grid builder                                                 */
 /* ------------------------------------------------------------------ */
 
-const buildMetaPairs = (project: ProjectDetail) => {
+const buildMetaPairs = (project: ProjectDetail, locale: string) => {
+  const hr = locale === "hr";
   return [
-    { label: "Location", value: project.location },
-    { label: "Client", value: project.investor },
-    { label: "Status", value: project.status },
-    { label: "Project", value: project.projectCode },
-    { label: "Completed", value: project.completed },
-    { label: "Site area", value: project.siteArea },
-    { label: "Gross area", value: project.grossArea },
-    { label: "Investment value", value: project.investmentValue },
+    { label: hr ? "Lokacija" : "Location", value: project.location },
+    { label: "Status", value: project.projectStatus },
+    { label: hr ? "Završeno" : "Completed", value: project.completed },
+    { label: hr ? "Veličina" : "Size", value: project.size },
+    { label: hr ? "Investitor" : "Investor", value: project.investor },
+    { label: hr ? "Trajanje" : "Duration", value: project.projectLength },
+    { label: hr ? "Površina" : "Site Area", value: project.siteArea },
+    { label: hr ? "Investicija" : "Investment", value: project.investmentValue },
   ].filter((field) => field.value);
 };
 
@@ -129,11 +132,12 @@ function CompositionImage({
 
 export function ProjectDetailContent({
   project,
+  locale,
   titleFallback,
 }: ProjectDetailContentProps) {
   const heroSlides = buildHeroSlides(project);
   const heading = project.title ?? titleFallback;
-  const metaPairs = buildMetaPairs(project);
+  const metaPairs = buildMetaPairs(project, locale);
   const siteImages = project.siteImages ?? [];
   const floorPlans = project.floorPlans ?? [];
   const slug = project.slug;
@@ -161,23 +165,41 @@ export function ProjectDetailContent({
         {heading}
       </h1>
 
+      {/* Project code */}
+      {project.projectCode ? (
+        <p
+          className="
+            pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[408px]
+            pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
+            pb-[16px] md:pb-[20px]
+            text-[16px] leading-[23px] text-text-primary uppercase tracking-wide
+          "
+        >
+          {project.projectCode}
+        </p>
+      ) : null}
+
       {/* Description */}
-      {project.description ? (
+      {project.description && Array.isArray(project.description) && project.description.length > 0 ? (
         <div
           className="
             pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[408px]
             pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
             pb-[40px] md:pb-[48px] lg:pb-[56px]
-            text-[16px] leading-[23px]
-            [font-feature-settings:'onum'_1,'pnum'_1]
-            min-[320px]:text-[20px] min-[320px]:leading-[28px]
-            md:text-[22px] md:leading-[32px]
-            lg:text-[28px] lg:leading-[38px]
-            text-text-primary
-            whitespace-pre-line
           "
         >
-          {project.description}
+          <BlocksRenderer
+            content={project.description}
+            className="
+              text-[16px] leading-[23px]
+              [font-feature-settings:'onum'_1,'pnum'_1]
+              min-[320px]:text-[20px] min-[320px]:leading-[28px]
+              md:text-[22px] md:leading-[32px]
+              lg:text-[28px] lg:leading-[38px]
+              text-text-primary
+              [&>p]:mb-[16px] [&>p:last-child]:mb-0
+            "
+          />
         </div>
       ) : null}
 
