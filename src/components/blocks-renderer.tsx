@@ -13,6 +13,7 @@ function renderTextNode(node: BlockText, index: number) {
 }
 
 function renderChildren(children: BlockText[]) {
+  if (!Array.isArray(children)) return null;
   return children.map((child, i) => renderTextNode(child, i));
 }
 
@@ -22,6 +23,7 @@ interface BlocksRendererProps {
 }
 
 export function BlocksRenderer({ content, className }: BlocksRendererProps) {
+  if (!Array.isArray(content)) return null;
   return (
     <div className={className}>
       {content.map((block, index) => {
