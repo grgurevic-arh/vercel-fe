@@ -1,14 +1,52 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { ProjectDetailContent } from "@/components/project-detail-content";
 import { ProjectNavigation } from "@/components/project-navigation";
 import { getWorkProjectBySlug, getWorkProjectSlugs } from "@/lib/cms";
+import { SUPPORTED_LOCALES, DEFAULT_LOCALE } from "@/lib/i18n";
+import type { Locale } from "@/lib/i18n";
 import { resolveLocaleParam } from "@/lib/request-helpers";
 import { requireStrapiEntity, unwrapStrapiEntity } from "@/lib/strapi-entity";
+import { getStrapiMediaUrl } from "@/lib/strapi-media";
 import type { ProjectDetail, ProjectListing } from "@/types/cms";
 
 interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const validLocale = SUPPORTED_LOCALES.includes(locale as Locale)
+    ? (locale as Locale)
+    : DEFAULT_LOCALE;
+  const project = await getWorkProjectBySlug(validLocale, slug);
+
+  if (!project) return {};
+
+  const data = unwrapStrapiEntity(project) as ProjectDetail | null;
+  if (!data) return {};
+
+  const ogImage = data.coverImage
+    ? getStrapiMediaUrl(data.coverImage)
+    : undefined;
+
+  return {
+    title: data.title,
+    description: [data.program, data.location, data.year]
+      .filter(Boolean)
+      .join(" \u00b7 "),
+    openGraph: ogImage ? { images: [ogImage] } : undefined,
+    alternates: {
+      languages: Object.fromEntries(
+        SUPPORTED_LOCALES.map((l) => [l, `/${l}/work/${slug}`]),
+      ),
+    },
+  };
 }
 
 function getAdjacentSlugs(

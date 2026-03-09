@@ -1,11 +1,30 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { ProjectGallery } from "@/components/project-gallery";
 import { ProjectList } from "@/components/project-list";
 import { Pagination } from "@/components/pagination";
 import { getWorkProjects } from "@/lib/cms";
+import { SUPPORTED_LOCALES } from "@/lib/i18n";
 import { resolveLocaleParam, resolvePageParam } from "@/lib/request-helpers";
 import { normalizeProjectListings } from "@/lib/project-helpers";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const locale = await resolveLocaleParam(params);
+
+  return {
+    title: locale === "hr" ? "Projekti" : "Work",
+    alternates: {
+      languages: Object.fromEntries(
+        SUPPORTED_LOCALES.map((l) => [l, `/${l}/work`]),
+      ),
+    },
+  };
+}
 
 const FEATURED_COUNT = 4;
 
