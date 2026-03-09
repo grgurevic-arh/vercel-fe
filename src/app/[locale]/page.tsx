@@ -1,6 +1,8 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { getHomepage, getFooter } from "@/lib/cms";
+import { SUPPORTED_LOCALES } from "@/lib/i18n";
 import { resolveLocaleParam } from "@/lib/request-helpers";
 import { requireStrapiEntity, unwrapStrapiEntity } from "@/lib/strapi-entity";
 import {
@@ -15,6 +17,28 @@ import type { CarouselSlide } from "@/components/homepage-carousel";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const locale = await resolveLocaleParam(params);
+  const homepage = await getHomepage(locale);
+  const data = homepage ? unwrapStrapiEntity(homepage) as Homepage | null : null;
+
+  const description =
+    data?.heading ?? "Architecture and urban planning studio based in Zagreb.";
+
+  return {
+    description,
+    alternates: {
+      languages: Object.fromEntries(
+        SUPPORTED_LOCALES.map((l) => [l, `/${l}`]),
+      ),
+    },
+  };
 }
 
 function buildCarouselSlides(
