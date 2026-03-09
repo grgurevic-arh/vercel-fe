@@ -3,6 +3,7 @@ import { DEFAULT_LOCALE, isLocale, type Locale } from "@/lib/i18n";
 import { StrapiRequestError, strapiFetch } from "@/lib/strapi-client";
 import { buildMediaPopulateParams } from "@/lib/strapi-populate";
 import type {
+  Footer,
   Homepage,
   LegalPage,
   NewsArticle,
@@ -137,6 +138,11 @@ export async function getLegalPage(locale: string) {
     "/legal-page",
     locale,
   );
+  return response.data;
+}
+
+export async function getFooter(locale: string) {
+  const response = await fetchSingleWithFallback<Footer>("/footer", locale);
   return response.data;
 }
 

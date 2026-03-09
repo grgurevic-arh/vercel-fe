@@ -206,6 +206,13 @@ export interface LegalPage extends LocalizedEntity {
   telephone: string | null;
 }
 
+export interface Footer extends LocalizedEntity {
+  companyName: string;
+  email: string;
+  phoneNumber: string;
+  address: string;
+}
+
 export type ResearchInputType = "text" | "textarea" | "select" | "number" | "date";
 
 export interface ResearchQuestion {
