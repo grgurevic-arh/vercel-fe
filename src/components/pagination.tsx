@@ -39,6 +39,7 @@ export function Pagination({
           <Link
             key={page}
             href={href}
+            scroll={false}
             aria-current={isActive ? "page" : undefined}
             className={`
               text-[21px] leading-[100%] text-text-primary
