@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { ContactInfo } from "@/components/contact-info";
-import { getLegalPage, getOfficePage } from "@/lib/cms";
+import { getFooter, getOfficePage } from "@/lib/cms";
 import { resolveLocaleParam } from "@/lib/request-helpers";
 import {
   requireStrapiEntity,
@@ -9,7 +9,7 @@ import {
 } from "@/lib/strapi-entity";
 import type {
   ClientPartnerCard,
-  LegalPage,
+  Footer,
   OfficePage,
   TeamMember,
 } from "@/types/cms";
@@ -21,9 +21,9 @@ interface PageProps {
 export default async function OfficePage({ params }: PageProps) {
   const locale = await resolveLocaleParam(params);
 
-  const [officeData, legalData] = await Promise.all([
+  const [officeData, footerData] = await Promise.all([
     getOfficePage(locale),
-    getLegalPage(locale),
+    getFooter(locale),
   ]);
 
   if (!officeData) {
@@ -35,8 +35,8 @@ export default async function OfficePage({ params }: PageProps) {
     "Office entry missing attributes",
   );
 
-  const legal = legalData
-    ? (unwrapStrapiEntity(legalData) as LegalPage | null)
+  const footer = footerData
+    ? (unwrapStrapiEntity(footerData) as Footer | null)
     : null;
 
   const teamMembers = (data.team ?? []) as TeamMember[];
@@ -148,10 +148,10 @@ export default async function OfficePage({ params }: PageProps) {
       {/* Contact Info */}
       <div className="mt-[60px] md:mt-[80px] lg:mt-[120px] xl:mt-[200px]">
         <ContactInfo
-          email={legal?.email ?? null}
-          telephone={legal?.telephone ?? null}
-          companyName={"Grgurevi\u0107 & Partners LTD."}
-          address={"\u010Cani\u0107eva 6, Zagreb, HR-10000"}
+          email={footer?.email ?? null}
+          telephone={footer?.phoneNumber ?? null}
+          companyName={footer?.companyName ?? undefined}
+          address={footer?.address ?? undefined}
         />
       </div>
     </main>
