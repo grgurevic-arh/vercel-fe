@@ -5,3 +5,5 @@ export const env = {
   strapiReadToken: process.env.STRAPI_READ_TOKEN,
   strapiSubmitToken: process.env.STRAPI_SUBMIT_TOKEN,
 };
+
+export const allowIndexing = process.env.ALLOW_INDEXING === "true";
