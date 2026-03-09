@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-import { getHomepage, getNewsArticles, getLegalPage } from "@/lib/cms";
+import { getHomepage, getNewsArticles, getFooter } from "@/lib/cms";
 import { resolveLocaleParam } from "@/lib/request-helpers";
 import { requireStrapiEntity, unwrapStrapiEntity } from "@/lib/strapi-entity";
 import {
@@ -12,7 +12,7 @@ import { HomepageCarousel } from "@/components/homepage-carousel";
 import { HomepageFeed } from "@/components/homepage-feed";
 import { BlocksRenderer } from "@/components/blocks-renderer";
 import { ContactInfo } from "@/components/contact-info";
-import type { Homepage, LegalPage, StrapiMedia } from "@/types/cms";
+import type { Homepage, Footer, StrapiMedia } from "@/types/cms";
 import type { CarouselSlide } from "@/components/homepage-carousel";
 import type { FeedItem } from "@/components/homepage-feed";
 
@@ -57,10 +57,10 @@ export default async function LocaleHomepage({ params }: PageProps) {
   const locale = await resolveLocaleParam(params);
 
   // Fetch all data in parallel
-  const [homepageData, newsData, legalData] = await Promise.all([
+  const [homepageData, newsData, footerData] = await Promise.all([
     getHomepage(locale),
     getNewsArticles(locale, 1, 3),
-    getLegalPage(locale),
+    getFooter(locale),
   ]);
 
   if (!homepageData) {
@@ -72,7 +72,7 @@ export default async function LocaleHomepage({ params }: PageProps) {
     "Homepage entry missing",
   );
 
-  const legal = legalData ? unwrapStrapiEntity(legalData) as LegalPage | null : null;
+  const footer = footerData ? unwrapStrapiEntity(footerData) as Footer | null : null;
 
   const slides = buildCarouselSlides(homepage.hero, homepage.heading ?? "Hero");
   const feedItems = buildFeedItems(newsData);
@@ -136,11 +136,10 @@ export default async function LocaleHomepage({ params }: PageProps) {
       {/* Contact Info */}
       <div className="mt-[60px]">
         <ContactInfo
-          email={legal?.email ?? null}
-          telephone={legal?.telephone ?? null}
-          // TODO: Remove fallbacks once companyName & address are populated in Strapi
-          companyName={legal?.companyName ?? "Grgurević & Partners LTD."}
-          address={legal?.address ?? "Čanićeva 6, Zagreb, HR-10000"}
+          email={footer?.email ?? null}
+          telephone={footer?.phoneNumber ?? null}
+          companyName={footer?.companyName ?? undefined}
+          address={footer?.address ?? undefined}
         />
       </div>
     </main>
