@@ -19,7 +19,10 @@ const untitledSerif = localFont({
   display: "swap",
 });
 
+const siteUrl = process.env.SITE_URL ?? "https://grgurevic.hr";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
     default: "Grgurević & partneri",
     template: "%s | Grgurević & partneri",
