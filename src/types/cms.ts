@@ -150,24 +150,23 @@ export interface Homepage extends LocalizedEntity {
 export interface ProjectListing extends LocalizedEntity {
   title: string;
   slug: string;
-  year: number | null;
-  status: string | null;
+  year: string | null;
+  discipline: string | null;
   location: string | null;
   size: string | null;
-  coverImage: StrapiMedia;
-  program?: string | null;
+  heroImages: ImageWithCaption[];
 }
 
 export interface ProjectDetail extends ProjectListing {
-  heading: string | null;
-  description: string | null;
-  completed: string | null;
-  grossArea: string | null;
-  investor: string | null;
   projectCode: string | null;
+  heading: string | null;
+  description: Block[] | null;
+  projectStatus: string | null;
+  completed: string | null;
+  investor: string | null;
+  projectLength: string | null;
   siteArea: string | null;
   investmentValue: string | null;
-  heroImages: ImageWithCaption[];
   siteImages: Array<{ image: StrapiMedia; description: string | null }>;
   floorPlans: Array<{ plan: StrapiMedia; label: string | null }>;
 }
