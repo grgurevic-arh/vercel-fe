@@ -31,13 +31,14 @@ export async function generateMetadata({
   const data = unwrapStrapiEntity(project) as ProjectDetail | null;
   if (!data) return {};
 
-  const ogImage = data.coverImage
-    ? getStrapiMediaUrl(data.coverImage)
+  const firstHero = data.heroImages?.[0];
+  const ogImage = firstHero?.image
+    ? getStrapiMediaUrl(firstHero.image)
     : undefined;
 
   return {
     title: data.title,
-    description: [data.program, data.location, data.year]
+    description: [data.discipline, data.location, data.year]
       .filter(Boolean)
       .join(" \u00b7 "),
     openGraph: ogImage ? { images: [ogImage] } : undefined,
@@ -75,6 +76,7 @@ export default async function EuProjectDetailPage({ params }: PageProps) {
       />
       <ProjectDetailContent
         project={projectAttributes}
+        locale={locale}
         titleFallback="Untitled EU project"
       />
     </main>
