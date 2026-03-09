@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import localFont from "next/font/local";
 
+import { allowIndexing } from "@/lib/env";
 import { DEFAULT_LOCALE } from "@/lib/i18n";
 import "./globals.css";
 
@@ -19,8 +20,14 @@ const untitledSerif = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Grgurević & partneri",
+  title: {
+    default: "Grgurević & partneri",
+    template: "%s | Grgurević & partneri",
+  },
   description: "Architecture and urban planning studio based in Zagreb.",
+  ...(!allowIndexing && {
+    robots: { index: false, follow: false },
+  }),
 };
 
 export default function RootLayout({
