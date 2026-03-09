@@ -8,6 +8,7 @@ import type {
   LegalPage,
   NewsArticle,
   OfficePage,
+  PrivacyPolicy,
   ProjectDetail,
   ProjectListing,
   ResearchSettings,
@@ -136,6 +137,14 @@ export async function getOfficePage(locale: string) {
 export async function getLegalPage(locale: string) {
   const response = await fetchSingleWithFallback<LegalPage>(
     "/legal-page",
+    locale,
+  );
+  return response.data;
+}
+
+export async function getPrivacyPolicy(locale: string) {
+  const response = await fetchSingleWithFallback<PrivacyPolicy>(
+    "/privacy-policy",
     locale,
   );
   return response.data;

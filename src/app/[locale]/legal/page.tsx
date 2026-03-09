@@ -53,16 +53,17 @@ export default async function LegalPage({ params }: PageProps) {
 
       {/* Company Metadata */}
       <CompanyMetadata
-        bk={data.bk}
+        bank={data.bank}
         swift={data.swift}
         iban={data.iban}
         oib={data.oib}
         mb={data.mb}
         mbs={data.mbs}
-        capital={data.capital}
+        vatId={data.vatId}
+        shareCapital={data.shareCapital}
         board={data.board}
         foto={data.foto}
-        activity={data.activity}
+        website={data.website}
       />
 
       {/* Contact Info */}

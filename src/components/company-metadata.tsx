@@ -1,45 +1,48 @@
 interface CompanyMetadataProps {
-  bk: string | null;
+  bank: string | null;
   swift: string | null;
   iban: string | null;
   oib: string | null;
   mb: string | null;
   mbs: string | null;
-  capital: string | null;
+  vatId: string | null;
+  shareCapital: string | null;
   board: string | null;
   foto: string | null;
-  activity: string | null;
+  website: string | null;
 }
 
 const hasValue = (value: string | null): value is string =>
   value != null && value.trim().length > 0;
 
 export function CompanyMetadata({
-  bk,
+  bank,
   swift,
   iban,
   oib,
   mb,
   mbs,
-  capital,
+  vatId,
+  shareCapital,
   board,
   foto,
-  activity,
+  website,
 }: CompanyMetadataProps) {
   const bankingFields = [
-    { label: "bk.", value: bk },
+    { label: "bank", value: bank },
     { label: "swift", value: swift },
     { label: "iban", value: iban },
     { label: "oib", value: oib },
     { label: "mb", value: mb },
     { label: "mbs", value: mbs },
+    { label: "vat id", value: vatId },
   ].filter((f): f is { label: string; value: string } => hasValue(f.value));
 
   const companyFields = [
-    { label: "capital", value: capital },
+    { label: "capital", value: shareCapital },
     { label: "board", value: board },
     { label: "foto", value: foto },
-    { label: "activity", value: activity },
+    { label: "website", value: website },
   ].filter((f): f is { label: string; value: string } => hasValue(f.value));
 
   if (!bankingFields.length && !companyFields.length) return null;

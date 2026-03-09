@@ -9,7 +9,7 @@ const footerNavLinks = [
   { label: "Legal", path: "/legal" },
   { label: "Research", path: "/research" },
   { label: "eu projects", path: "/eu-projects" },
-  { label: "Privacy policy", path: "/legal" },
+  { label: "Privacy policy", path: "/privacy-policy" },
 ];
 
 const languages = [

@@ -190,20 +190,25 @@ export interface OfficePage extends LocalizedEntity {
 }
 
 export interface LegalPage extends LocalizedEntity {
-  companyName: string | null;
-  address: string | null;
-  bk: string | null;
+  name: string | null;
+  location: string | null;
+  tel: string | null;
+  email: string | null;
+  oib: string | null;
+  board: string | null;
+  mbs: string | null;
+  mb: string | null;
+  shareCapital: string | null;
+  bank: string | null;
   iban: string | null;
   swift: string | null;
-  oib: string | null;
-  mb: string | null;
-  mbs: string | null;
-  capital: string | null;
-  board: string | null;
+  vatId: string | null;
   foto: string | null;
-  activity: string | null;
-  email: string | null;
-  telephone: string | null;
+  website: string | null;
+}
+
+export interface PrivacyPolicy extends LocalizedEntity {
+  content: Block[];
 }
 
 export interface Footer extends LocalizedEntity {
