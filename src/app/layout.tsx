@@ -25,6 +25,15 @@ export const metadata: Metadata = {
     template: "%s | Grgurević & partneri",
   },
   description: "Architecture and urban planning studio based in Zagreb.",
+  openGraph: {
+    type: "website",
+    siteName: "Grgurević & partneri",
+    images: [{ url: "/og-default.jpg", width: 1200, height: 630 }],
+  },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
   ...(!allowIndexing && {
     robots: { index: false, follow: false },
   }),
