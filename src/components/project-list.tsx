@@ -20,8 +20,8 @@ export function ProjectList({ locale, projects, emptyMessage }: ProjectListProps
   return (
     <ul className="border-t border-divider">
       {projects.map((project) => {
-        const year = project.year?.toString() ?? "\u2014";
-        const status = project.status ?? "";
+        const year = project.year ?? "\u2014";
+        const discipline = project.discipline ?? "";
         const title = project.title;
         const location = project.location ?? "";
         const size = project.size ?? "";
@@ -50,7 +50,7 @@ export function ProjectList({ locale, projects, emptyMessage }: ProjectListProps
                 {year}
               </span>
               <span className="hidden md:inline shrink-0 w-[96px] uppercase tracking-wide">
-                {status}
+                {discipline}
               </span>
               <span className="shrink-0 min-w-0 md:w-[200px] lg:w-[240px] xl:w-[280px] truncate">
                 {title}
