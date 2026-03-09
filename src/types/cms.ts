@@ -81,9 +81,69 @@ export interface ClientPartnerCard {
   logo: StrapiMedia;
 }
 
+export interface BlockText {
+  type: "text";
+  text: string;
+  bold?: boolean;
+  italic?: boolean;
+  underline?: boolean;
+  strikethrough?: boolean;
+  code?: boolean;
+}
+
+export interface BlockHeading {
+  type: "heading";
+  level: 1 | 2 | 3 | 4 | 5 | 6;
+  children: BlockText[];
+}
+
+export interface BlockParagraph {
+  type: "paragraph";
+  children: BlockText[];
+}
+
+export interface BlockListItem {
+  type: "list-item";
+  children: BlockText[];
+}
+
+export interface BlockList {
+  type: "list";
+  format: "ordered" | "unordered";
+  children: BlockListItem[];
+}
+
+export interface BlockQuote {
+  type: "quote";
+  children: BlockText[];
+}
+
+export interface BlockCode {
+  type: "code";
+  children: BlockText[];
+}
+
+export interface BlockImage {
+  type: "image";
+  image: {
+    url: string;
+    alternativeText?: string | null;
+    width?: number;
+    height?: number;
+  };
+}
+
+export type Block =
+  | BlockHeading
+  | BlockParagraph
+  | BlockList
+  | BlockQuote
+  | BlockCode
+  | BlockImage;
+
 export interface Homepage extends LocalizedEntity {
   heading: string | null;
-  content: string | null;
+  content: Block[] | null;
   hero: ImageWithCaption[];
 }
 
