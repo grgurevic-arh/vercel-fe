@@ -1,11 +1,30 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { NewsList } from "@/components/news-list";
 import { Pagination } from "@/components/pagination";
 import { getNewsArticles } from "@/lib/cms";
+import { SUPPORTED_LOCALES } from "@/lib/i18n";
 import { resolveLocaleParam, resolvePageParam } from "@/lib/request-helpers";
 import { normalizeNewsArticles } from "@/lib/news-helpers";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const locale = await resolveLocaleParam(params);
+
+  return {
+    title: locale === "hr" ? "Novosti" : "News",
+    alternates: {
+      languages: Object.fromEntries(
+        SUPPORTED_LOCALES.map((l) => [l, `/${l}/news`]),
+      ),
+    },
+  };
+}
 
 interface PageProps {
   params: Promise<{ locale: string }>;

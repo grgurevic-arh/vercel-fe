@@ -1,11 +1,14 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
 import { NewsList } from "@/components/news-list";
 import { Pagination } from "@/components/pagination";
 import { getNewsArticleBySlug, getNewsArticles } from "@/lib/cms";
+import { SUPPORTED_LOCALES, DEFAULT_LOCALE } from "@/lib/i18n";
+import type { Locale } from "@/lib/i18n";
 import { resolveLocaleParam } from "@/lib/request-helpers";
-import { requireStrapiEntity } from "@/lib/strapi-entity";
+import { requireStrapiEntity, unwrapStrapiEntity } from "@/lib/strapi-entity";
 import { normalizeNewsArticles } from "@/lib/news-helpers";
 import {
   getStrapiMediaAttributes,
@@ -15,6 +18,38 @@ import type { NewsArticle } from "@/types/cms";
 
 interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const validLocale = SUPPORTED_LOCALES.includes(locale as Locale)
+    ? (locale as Locale)
+    : DEFAULT_LOCALE;
+  const article = await getNewsArticleBySlug(validLocale, slug);
+
+  if (!article) return {};
+
+  const data = unwrapStrapiEntity(article) as NewsArticle | null;
+  if (!data) return {};
+
+  const ogImage = data.heroImage
+    ? getStrapiMediaUrl(data.heroImage)
+    : undefined;
+
+  return {
+    title: data.title,
+    description: data.summary ?? undefined,
+    openGraph: ogImage ? { images: [ogImage] } : undefined,
+    alternates: {
+      languages: Object.fromEntries(
+        SUPPORTED_LOCALES.map((l) => [l, `/${l}/news/${slug}`]),
+      ),
+    },
+  };
 }
 
 export default async function NewsDetailPage({ params }: PageProps) {
