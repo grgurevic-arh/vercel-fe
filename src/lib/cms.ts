@@ -3,6 +3,7 @@ import { DEFAULT_LOCALE, isLocale, type Locale } from "@/lib/i18n";
 import { StrapiRequestError, strapiFetch } from "@/lib/strapi-client";
 import { buildMediaPopulateParams } from "@/lib/strapi-populate";
 import type {
+  EuProjectPage,
   Footer,
   Homepage,
   LegalPage,
@@ -18,7 +19,6 @@ import type {
 } from "@/types/cms";
 
 const heroImagePopulateParams = buildMediaPopulateParams("heroImage");
-const coverImagePopulateParams = buildMediaPopulateParams("coverImage");
 const teamPortraitPopulateParams = buildMediaPopulateParams([
   "team",
   "portrait",
@@ -165,6 +165,19 @@ export async function getResearchSettings(locale: string) {
   return response.data;
 }
 
+export async function getEuProjectPage(locale: string) {
+  const response = await fetchSingleWithFallback<EuProjectPage>(
+    "/eu-project-page",
+    locale,
+    {
+      "populate[contentBlocks]": true,
+      "populate[usefulLinks]": true,
+      "populate[euDirective]": true,
+    },
+  );
+  return response.data;
+}
+
 export async function getWorkProjects(locale: string, page = 1, pageSize = 10) {
   return fetchCollectionWithFallback<ProjectListing>(
     "/work-projects",
@@ -206,34 +219,6 @@ export async function getWorkProjectSlugs(locale: string) {
     },
   });
   return response.data;
-}
-
-export async function getEuProjects(locale: string, page = 1, pageSize = 20) {
-  return fetchCollectionWithFallback<ProjectListing>(
-    "/eu-projects",
-    {
-      ...withLocale(locale),
-      "pagination[page]": page,
-      "pagination[pageSize]": pageSize,
-      sort: "year:desc",
-      ...coverImagePopulateParams,
-    },
-    { page, pageSize },
-  );
-}
-
-export async function getEuProjectBySlug(locale: string, slug: string) {
-  const response = await strapiFetch<StrapiCollectionResponse<ProjectDetail>>(
-    "/eu-projects",
-    {
-      searchParams: {
-        ...withLocale(locale),
-        "filters[slug][$eq]": slug,
-        ...workProjectNestedMediaPopulate,
-      },
-    },
-  );
-  return response.data[0] ?? null;
 }
 
 export async function getNewsArticles(
