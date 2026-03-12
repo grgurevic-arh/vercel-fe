@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import type { Locale } from "@/lib/i18n";
@@ -14,12 +14,19 @@ interface PollFormProps {
 
 export function PollForm({ poll, locale }: PollFormProps) {
   const router = useRouter();
+  const storageKey = `poll-submitted-${poll.documentId}`;
+
+  const hasSubmittedBefore = (() => {
+    try {
+      return localStorage.getItem(storageKey) !== null;
+    } catch {
+      return false;
+    }
+  })();
+
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [pollClosed, setPollClosed] = useState(false);
-  const [alreadySubmitted, setAlreadySubmitted] = useState(false);
-  const [showBanner, setShowBanner] = useState(false);
-
-  const storageKey = `poll-submitted-${poll.documentId}`;
+  const [showBanner, setShowBanner] = useState(hasSubmittedBefore);
 
   const {
     register,
@@ -27,17 +34,6 @@ export function PollForm({ poll, locale }: PollFormProps) {
     formState: { errors, isSubmitting },
     setError,
   } = useForm<Record<string, string>>();
-
-  useEffect(() => {
-    try {
-      if (localStorage.getItem(storageKey)) {
-        setAlreadySubmitted(true);
-        setShowBanner(true);
-      }
-    } catch {
-      // localStorage not available
-    }
-  }, [storageKey]);
 
   const onSubmit = async (formData: Record<string, string>) => {
     setSubmitError(null);
@@ -108,7 +104,7 @@ export function PollForm({ poll, locale }: PollFormProps) {
 
   return (
     <div>
-      {showBanner && alreadySubmitted ? (
+      {showBanner ? (
         <div
           className="
             mb-[24px] flex items-center justify-between
