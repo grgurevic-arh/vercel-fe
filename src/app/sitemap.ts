@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 import { allowIndexing } from "@/lib/env";
 import { SUPPORTED_LOCALES } from "@/lib/i18n";
-import { getWorkProjects, getEuProjects, getNewsArticles } from "@/lib/cms";
+import { getWorkProjects, getNewsArticles } from "@/lib/cms";
 
 const SITE_URL = process.env.SITE_URL ?? "https://grgurevic.hr";
 
@@ -40,9 +40,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Dynamic pages — fetch all slugs from CMS
   // Use "en" locale; slugs are shared across locales
-  const [workResponse, euResponse, newsResponse] = await Promise.all([
+  const [workResponse, newsResponse] = await Promise.all([
     getWorkProjects("en", 1, 100),
-    getEuProjects("en", 1, 100),
     getNewsArticles("en", 1, 100),
   ]);
 
@@ -50,13 +49,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     localizedEntries(`/work/${p.attributes.slug}`),
   );
 
-  const euEntries = (euResponse?.data ?? []).flatMap((p) =>
-    localizedEntries(`/eu-projects/${p.attributes.slug}`),
-  );
-
   const newsEntries = (newsResponse?.data ?? []).flatMap((a) =>
     localizedEntries(`/news/${a.attributes.slug}`),
   );
 
-  return [...staticEntries, ...workEntries, ...euEntries, ...newsEntries];
+  return [...staticEntries, ...workEntries, ...newsEntries];
 }
