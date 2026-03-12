@@ -170,9 +170,9 @@ export async function getEuProjectPage(locale: string) {
     "/eu-project-page",
     locale,
     {
-      "populate[contentBlocks]": true,
-      "populate[usefulLinks]": true,
-      "populate[euDirective]": true,
+      "populate[contentBlocks]": "*",
+      "populate[usefulLinks]": "*",
+      "populate[euDirective]": "*",
     },
   );
   return response.data;
