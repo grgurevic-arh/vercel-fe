@@ -12,8 +12,8 @@ import type {
   PrivacyPolicy,
   ProjectDetail,
   ProjectListing,
-  ResearchSettings,
-  ResearchSubmissionPayload,
+  EntryPoll,
+  PollSubmissionPayload,
   StrapiCollectionResponse,
   StrapiSingleResponse,
 } from "@/types/cms";
@@ -154,17 +154,6 @@ export async function getFooter(locale: string) {
   return response.data;
 }
 
-export async function getResearchSettings(locale: string) {
-  const response = await fetchSingleWithFallback<ResearchSettings>(
-    "/research-settings",
-    locale,
-    {
-      "populate[questions]": "*",
-    },
-  );
-  return response.data;
-}
-
 export async function getEuProjectPage(locale: string) {
   const response = await fetchSingleWithFallback<EuProjectPage>(
     "/eu-project-page",
@@ -253,19 +242,43 @@ export async function getNewsArticleBySlug(locale: string, slug: string) {
   return response.data[0] ?? null;
 }
 
-export async function submitResearchSubmission(payload: ResearchSubmissionPayload) {
+export async function getEntryPolls(locale: string, page = 1, pageSize = 100) {
+  return fetchCollectionWithFallback<EntryPoll>(
+    "/entry-polls",
+    {
+      ...withLocale(locale),
+      "pagination[page]": page,
+      "pagination[pageSize]": pageSize,
+      "populate[questions]": "*",
+    },
+    { page, pageSize },
+  );
+}
+
+export async function getEntryPollBySlug(locale: string, slug: string) {
+  const response = await strapiFetch<StrapiCollectionResponse<EntryPoll>>(
+    "/entry-polls",
+    {
+      searchParams: {
+        ...withLocale(locale),
+        "filters[slug][$eq]": slug,
+        "populate[questions]": "*",
+      },
+    },
+  );
+  return response.data[0] ?? null;
+}
+
+export async function submitPollAnswers(payload: PollSubmissionPayload) {
   if (!env.strapiSubmitToken) {
     throw new Error(
       "Missing STRAPI_SUBMIT_TOKEN environment variable for submissions.",
     );
   }
 
-  return strapiFetch(
-    "/research-submissions",
-    {
-      method: "POST",
-      body: JSON.stringify({ data: payload }),
-      token: env.strapiSubmitToken,
-    },
-  );
+  return strapiFetch("/poll-submissions", {
+    method: "POST",
+    body: JSON.stringify({ data: payload }),
+    token: env.strapiSubmitToken,
+  });
 }
