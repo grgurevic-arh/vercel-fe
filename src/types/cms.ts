@@ -217,6 +217,30 @@ export interface Footer extends LocalizedEntity {
   address: string;
 }
 
+export interface EuContentBlock {
+  id: number;
+  title: string;
+  content: Block[];
+}
+
+export interface EuUsefulLink {
+  id: number;
+  label: string;
+  url: string;
+}
+
+export interface EuProjectPage extends LocalizedEntity {
+  heading: string;
+  description: Block[];
+  contentBlocks: EuContentBlock[];
+  projectWorth: string;
+  euFinanced: string;
+  timeOfProject: string;
+  contact: string;
+  usefulLinks: EuUsefulLink[];
+  euDirective: EuContentBlock;
+}
+
 export type ResearchInputType = "text" | "textarea" | "select" | "number" | "date";
 
 export interface ResearchQuestion {
