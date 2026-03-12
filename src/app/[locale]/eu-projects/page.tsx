@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { RawDataAccordion } from "@/components/raw-data-accordion";
-import { ProjectGallery } from "@/components/project-gallery";
-import { ProjectList } from "@/components/project-list";
-import { Pagination } from "@/components/pagination";
-import { getEuProjects } from "@/lib/cms";
+import { BlocksRenderer } from "@/components/blocks-renderer";
+import { getEuProjectPage } from "@/lib/cms";
 import { SUPPORTED_LOCALES } from "@/lib/i18n";
-import { resolveLocaleParam, resolvePageParam } from "@/lib/request-helpers";
-import { normalizeProjectListings } from "@/lib/project-helpers";
+import { resolveLocaleParam } from "@/lib/request-helpers";
+import { requireStrapiEntity } from "@/lib/strapi-entity";
+import type { EuProjectPage } from "@/types/cms";
 
 export async function generateMetadata({
   params,
@@ -29,67 +27,144 @@ export async function generateMetadata({
 
 interface PageProps {
   params: Promise<{ locale: string }>;
-  searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }
 
-export default async function EuProjectsPage({ params, searchParams }: PageProps) {
+export default async function EuProjectsPage({ params }: PageProps) {
   const locale = await resolveLocaleParam(params);
-  const requestedPage = await resolvePageParam(searchParams);
+  const euProjectData = await getEuProjectPage(locale);
 
-  const response = await getEuProjects(locale, requestedPage);
-  const projects = normalizeProjectListings(response.data);
-  const pagination = response.meta.pagination;
-  const pageCount = pagination?.pageCount ?? 1;
-
-  if (pageCount > 0 && requestedPage > pageCount) {
+  if (!euProjectData) {
     notFound();
   }
 
+  const data = requireStrapiEntity<EuProjectPage>(
+    euProjectData,
+    "EU project page missing attributes",
+  );
+
+  const sectionHeadingClass =
+    "text-[20px] leading-[28px] lg:text-[28px] lg:leading-[38px] text-text-primary";
+
+  const sectionPaddingClass =
+    "pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[88px] pr-[12px] md:pr-[20px]";
+
+  const blockTextClass = "text-[16px] leading-[23px] text-text-primary";
+
   return (
-    <main className="space-y-8 p-6">
-      <RawDataAccordion
-        summary="EU projects response"
-        title="EU projects list"
-        description="Paginated EU projects payload from Strapi."
-        data={response}
-      />
+    <main>
+      {/* Heading */}
+      <section
+        className="
+          pt-[120px] md:pt-[144px] lg:pt-[154px] xl:pt-[270px]
+          pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[328px]
+          pb-[24px] md:pb-[32px] lg:pb-[40px] xl:pb-[100px]
+        "
+      >
+        <h1
+          className="
+            text-[36px] md:text-[48px] lg:text-[56px] xl:text-[66px]
+            leading-[100%] text-text-primary
+          "
+        >
+          {data.heading}
+        </h1>
+      </section>
 
-      {projects.length ? (
-        <>
-          <section className="space-y-4">
-            <header>
-              <p className="text-sm uppercase tracking-wide text-gray-500">
-                Featured EU projects
-              </p>
-              <p className="text-sm text-gray-600">Latest published EU work.</p>
-            </header>
-            <ProjectGallery locale={locale} projects={projects} />
-          </section>
+      {/* Description */}
+      {data.description?.length > 0 && (
+        <section
+          className="
+            pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[408px]
+            pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
+            pb-[24px] md:pb-[38px] lg:pb-[54px] xl:pb-[47px]
+          "
+        >
+          <BlocksRenderer content={data.description} className={blockTextClass} />
+        </section>
+      )}
 
-          <section className="space-y-4">
-            <header>
-              <p className="text-sm uppercase tracking-wide text-gray-500">
-                All EU projects
+      {/* Content Blocks */}
+      {data.contentBlocks?.map((block) => (
+        <section key={block.id} className={`${sectionPaddingClass} py-[24px] md:py-[32px] xl:py-[40px]`}>
+          <h2 className={`${sectionHeadingClass} pb-[16px] md:pb-[24px]`}>
+            {block.title}
+          </h2>
+          <BlocksRenderer content={block.content} className={blockTextClass} />
+        </section>
+      ))}
+
+      {/* Metadata Grid */}
+      <section className={`${sectionPaddingClass} py-[24px] md:py-[32px] xl:py-[40px] border-t border-divider`}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-[16px] md:gap-[24px]">
+          {data.projectWorth && (
+            <div>
+              <p className="text-[14px] leading-[20px] text-text-secondary tracking-[0.03em] [font-variant-caps:small-caps]">
+                {locale === "hr" ? "Vrijednost projekta" : "Project Worth"}
               </p>
-              <p className="text-sm text-gray-600">
-                Chronological catalogue of all EU-funded projects.
+              <p className={blockTextClass}>{data.projectWorth}</p>
+            </div>
+          )}
+          {data.euFinanced && (
+            <div>
+              <p className="text-[14px] leading-[20px] text-text-secondary tracking-[0.03em] [font-variant-caps:small-caps]">
+                {locale === "hr" ? "EU financiranje" : "EU Financed"}
               </p>
-            </header>
-            <ProjectList locale={locale} projects={projects} />
-            <Pagination
-              locale={locale}
-              basePath="/eu-projects"
-              currentPage={pagination?.page ?? requestedPage}
-              pageCount={pageCount}
-            />
-          </section>
-        </>
-      ) : (
-        <section className="space-y-3 rounded-lg border border-zinc-200 bg-white p-6 text-center shadow-sm">
-          <h1 className="text-2xl font-semibold text-zinc-900">No EU projects yet</h1>
-          <p className="text-sm text-zinc-500">
-            EU projects will appear here once they are published in Strapi.
-          </p>
+              <p className={blockTextClass}>{data.euFinanced}</p>
+            </div>
+          )}
+          {data.timeOfProject && (
+            <div>
+              <p className="text-[14px] leading-[20px] text-text-secondary tracking-[0.03em] [font-variant-caps:small-caps]">
+                {locale === "hr" ? "Trajanje projekta" : "Time of Project"}
+              </p>
+              <p className={blockTextClass}>{data.timeOfProject}</p>
+            </div>
+          )}
+          {data.contact && (
+            <div>
+              <p className="text-[14px] leading-[20px] text-text-secondary tracking-[0.03em] [font-variant-caps:small-caps]">
+                {locale === "hr" ? "Kontakt" : "Contact"}
+              </p>
+              <p className={blockTextClass}>
+                <a href={`mailto:${data.contact}`} className="underline">
+                  {data.contact}
+                </a>
+              </p>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Useful Links */}
+      {data.usefulLinks?.length > 0 && (
+        <section className={`${sectionPaddingClass} py-[24px] md:py-[32px] xl:py-[40px] border-t border-divider`}>
+          <h2 className={`${sectionHeadingClass} pb-[16px] md:pb-[24px]`}>
+            {locale === "hr" ? "Korisne poveznice" : "Useful Links"}
+          </h2>
+          <ul className="space-y-[8px]">
+            {data.usefulLinks.map((link) => (
+              <li key={link.id}>
+                <a
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${blockTextClass} underline`}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {/* EU Directive */}
+      {data.euDirective && (
+        <section className={`${sectionPaddingClass} py-[24px] md:py-[32px] xl:py-[40px] border-t border-divider`}>
+          <h2 className={`${sectionHeadingClass} pb-[16px] md:pb-[24px]`}>
+            {data.euDirective.title}
+          </h2>
+          <BlocksRenderer content={data.euDirective.content} className={blockTextClass} />
         </section>
       )}
     </main>
