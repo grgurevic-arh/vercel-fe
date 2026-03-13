@@ -241,30 +241,35 @@ export interface EuProjectPage extends LocalizedEntity {
   euDirective: EuContentBlock;
 }
 
-export type ResearchInputType = "text" | "textarea" | "select" | "number" | "date";
-
-export interface ResearchQuestion {
+export interface PollQuestion {
+  id: number;
   questionId: string;
   prompt: string;
-  inputType: ResearchInputType;
+  inputType: "text" | "textarea" | "select";
   required: boolean;
+  options: Array<{ label: string; value: string }> | null;
   placeholder: string | null;
-  options: string[] | null;
 }
 
-export interface ResearchSettings extends LocalizedEntity {
-  intro: string | null;
-  questions: ResearchQuestion[];
+export interface EntryPoll extends LocalizedEntity {
+  documentId: string;
+  slug: string;
+  projectName: string;
+  description: string | null;
+  status: "open";
+  questions: PollQuestion[];
+  createdAt: string;
+  updatedAt: string;
 }
 
-export interface ResearchAnswerPayload {
+export interface PollAnswer {
   questionId: string;
-  prompt: string;
   value: string;
 }
 
-export interface ResearchSubmissionPayload {
-  locale: Locale;
-  answers: ResearchAnswerPayload[];
+export interface PollSubmissionPayload {
+  entryPoll: string;
+  locale: "en" | "hr";
+  answers: PollAnswer[];
   metadata?: Record<string, unknown>;
 }

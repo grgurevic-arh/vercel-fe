@@ -1,17 +1,27 @@
 import { NextResponse } from "next/server";
 
-import { submitResearchSubmission } from "@/lib/cms";
+import { submitPollAnswers } from "@/lib/cms";
 import { isLocale } from "@/lib/i18n";
-import type { ResearchAnswerPayload } from "@/types/cms";
+import { StrapiRequestError } from "@/lib/strapi-client";
+import type { PollAnswer } from "@/types/cms";
 
 interface SubmissionBody {
+  entryPoll?: string;
   locale?: string;
-  answers?: ResearchAnswerPayload[];
+  answers?: PollAnswer[];
   metadata?: Record<string, unknown>;
 }
 
 export async function POST(request: Request) {
-  const { locale, answers, metadata }: SubmissionBody = await request.json();
+  const { entryPoll, locale, answers, metadata }: SubmissionBody =
+    await request.json();
+
+  if (!entryPoll || typeof entryPoll !== "string") {
+    return NextResponse.json(
+      { error: "entryPoll documentId is required." },
+      { status: 400 },
+    );
+  }
 
   if (!locale || !isLocale(locale)) {
     return NextResponse.json(
@@ -28,7 +38,8 @@ export async function POST(request: Request) {
   }
 
   try {
-    const submission = await submitResearchSubmission({
+    const submission = await submitPollAnswers({
+      entryPoll,
       locale,
       answers,
       metadata,
@@ -36,9 +47,13 @@ export async function POST(request: Request) {
 
     return NextResponse.json(submission, { status: 201 });
   } catch (error) {
-    console.error("Research submission failed", error);
+    if (error instanceof StrapiRequestError && error.status === 400) {
+      return NextResponse.json(error.details, { status: 400 });
+    }
+
+    console.error("Poll submission failed", error);
     return NextResponse.json(
-      { error: "Unable to submit research answers." },
+      { error: "Unable to submit poll answers." },
       { status: 502 },
     );
   }
