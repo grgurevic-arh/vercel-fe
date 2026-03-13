@@ -56,7 +56,7 @@ export default async function WorkListingPage({ params, searchParams }: PageProp
       {/* All projects table */}
       <section
         className="
-          mt-[60px] md:mt-[80px] lg:mt-[100px] xl:mt-[120px]
+          mt-[100px] md:mt-[100px] lg:mt-[100px] xl:mt-[120px]
         "
       >
         <ProjectList locale={locale} projects={projects} />

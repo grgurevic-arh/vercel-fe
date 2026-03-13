@@ -22,3 +22,8 @@ body {
   font-family: var(--font-serif);
   font-feature-settings: "onum" 1, "pnum" 1;
 }
+
+.content-wrapper {
+  max-width: 1440px;
+  margin-inline: auto;
+}

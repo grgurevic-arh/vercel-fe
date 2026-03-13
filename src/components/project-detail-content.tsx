@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import { BlocksRenderer } from "@/components/blocks-renderer";
+import { BorderedSection } from "@/components/bordered-section";
 import { HomepageCarousel, type CarouselSlide } from "@/components/homepage-carousel";
 import {
   getStrapiMediaAttributes,
@@ -97,6 +98,7 @@ function CompositionImage({
   return (
     <figure
       className="
+        content-wrapper
         px-[12px] md:px-[44px] lg:px-[40px] xl:px-[88px]
         mb-[40px] md:mb-[60px] lg:mb-[80px]
       "
@@ -152,6 +154,7 @@ export function ProjectDetailContent({
       {/* Title */}
       <h1
         className="
+          content-wrapper
           pt-[32px] md:pt-[40px] lg:pt-[48px]
           pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[408px]
           pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
@@ -169,6 +172,7 @@ export function ProjectDetailContent({
       {project.projectCode ? (
         <p
           className="
+            content-wrapper
             pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[408px]
             pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
             pb-[16px] md:pb-[20px]
@@ -183,6 +187,7 @@ export function ProjectDetailContent({
       {project.description && Array.isArray(project.description) && project.description.length > 0 ? (
         <div
           className="
+            content-wrapper
             pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[408px]
             pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
             pb-[40px] md:pb-[48px] lg:pb-[56px]
@@ -207,23 +212,22 @@ export function ProjectDetailContent({
       {metaPairs.length ? (
         <section
           className="
-            px-[12px] md:px-[44px] lg:px-[40px] xl:px-[88px]
             pb-[40px] md:pb-[60px] lg:pb-[80px]
           "
         >
-          <div className="border-t border-divider">
+          <BorderedSection border="border-t border-divider" className="px-[12px] md:px-[44px] lg:px-[40px] xl:px-[88px]">
             {(() => {
               const rows: Array<typeof metaPairs> = [];
               for (let i = 0; i < metaPairs.length; i += 2) {
                 rows.push(metaPairs.slice(i, i + 2));
               }
               return rows.map((row, rowIndex) => (
-                <div
+                <BorderedSection
                   key={rowIndex}
+                  border="border-b border-divider"
                   className="
                     grid grid-cols-1 md:grid-cols-2
                     gap-x-[40px] lg:gap-x-[80px]
-                    border-b border-divider
                     py-[12px] md:py-[16px]
                   "
                 >
@@ -237,10 +241,10 @@ export function ProjectDetailContent({
                       </span>
                     </div>
                   ))}
-                </div>
+                </BorderedSection>
               ));
             })()}
-          </div>
+          </BorderedSection>
         </section>
       ) : null}
 

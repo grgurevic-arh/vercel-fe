@@ -54,11 +54,16 @@ export function CompanyMetadata({
   return (
     <section
       className="
-        relative bg-white
+        bg-white
         border-t border-divider
-        h-[430px] min-[321px]:h-[370px] md:h-[360px] lg:h-[400px] xl:h-[544px]
       "
     >
+      <div
+        className="
+          content-wrapper relative
+          h-[430px] min-[321px]:h-[370px] md:h-[360px] lg:h-[400px] xl:h-[544px]
+        "
+      >
       {/* Banking & Registration group */}
       <div
         className="
@@ -93,6 +98,7 @@ export function CompanyMetadata({
             <span>{f.value}</span>
           </div>
         ))}
+      </div>
       </div>
     </section>
   );

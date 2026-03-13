@@ -19,7 +19,7 @@ const languages = [
 
 export function SiteFooter({ locale }: SiteFooterProps) {
   return (
-    <footer className="relative bg-white h-[360px] md:h-[240px] xl:h-[300px]">
+    <footer className="content-wrapper relative bg-white h-[360px] md:h-[240px] xl:h-[300px]">
       {/* Navigation links */}
       <div
         className="

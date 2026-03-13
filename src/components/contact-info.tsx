@@ -14,11 +14,16 @@ export function ContactInfo({
   return (
     <section
       className="
-        relative bg-white
+        bg-white
         border-t border-b border-divider
-        h-[340px] md:h-[434px] lg:h-[484px] xl:h-[544px]
       "
     >
+      <div
+        className="
+          content-wrapper relative
+          h-[340px] md:h-[434px] lg:h-[484px] xl:h-[544px]
+        "
+      >
       {/* Column 1: Email & Phone */}
       <div
         className="
@@ -49,6 +54,7 @@ export function ContactInfo({
       >
         <p>{companyName}</p>
         <p>{address}</p>
+      </div>
       </div>
     </section>
   );

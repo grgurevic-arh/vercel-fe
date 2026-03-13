@@ -124,9 +124,13 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
     <header
       inert={menuOpen || undefined}
       className="
-        flex items-center justify-between
         border-b-[0.5px] border-divider bg-white
         h-[54px] xl:h-[80px]
+      "
+    >
+    <div
+      className="
+        content-wrapper flex items-center justify-between h-full
         px-[12px] md:px-[44px] lg:px-[40px] xl:px-[88px]
       "
     >
@@ -171,6 +175,7 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
       >
         {menuOpen ? "Close" : "Menu"}
       </button>
+    </div>
     </header>
 
     {menuOpen && (

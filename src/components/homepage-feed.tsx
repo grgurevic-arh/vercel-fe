@@ -20,7 +20,7 @@ export function HomepageFeed({ locale, items }: HomepageFeedProps) {
         className="
           pl-[12px] md:pl-[160px] lg:pl-[220px] xl:pl-[408px]
           pr-[12px] md:pr-[46px] lg:pr-[160px] xl:pr-[248px]
-          space-y-[96px] md:space-y-[56px] lg:space-y-[90px] xl:space-y-[78px]
+          space-y-[47px] md:space-y-[56px] lg:space-y-[90px] xl:space-y-[90px]
         "
       >
         {items.map((item) => (
@@ -44,7 +44,7 @@ export function HomepageFeed({ locale, items }: HomepageFeedProps) {
               {item.summary ? (
                 <p
                   className="
-                    mt-[10px] md:mt-[12px]
+                    mt-[10px] md:mt-[12px] lg:mt-[16px] xl:mt-[12px]
                     text-[16px] leading-[23px]
                     md:text-[20px] md:leading-[28px]
                     lg:text-[26px] lg:leading-[36px]

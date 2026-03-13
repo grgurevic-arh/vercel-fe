@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { BorderedSection } from "@/components/bordered-section";
 import {
   formatNewsDayMonth,
   getNewsYearFromCustom,
@@ -37,10 +38,11 @@ export function NewsList({ locale, articles, emptyMessage }: NewsListProps) {
         const href = `/${locale}/news/${article.slug}`;
 
         return (
-          <li
-            key={`${article.slug}-${article.id}`}
-            className="border-b border-divider"
-          >
+          <li key={`${article.slug}-${article.id}`}>
+            <BorderedSection
+              border="border-b border-divider"
+              className="block"
+            >
             <Link
               href={href}
               className="
@@ -65,6 +67,7 @@ export function NewsList({ locale, articles, emptyMessage }: NewsListProps) {
                 {summary}
               </span>
             </Link>
+            </BorderedSection>
           </li>
         );
       })}

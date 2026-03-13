@@ -91,6 +91,7 @@ export default async function LocaleHomepage({ params }: PageProps) {
       {/* Description */}
       <section
         className="
+          content-wrapper
           pt-[156px] md:pt-[184px] lg:pt-[178px] xl:pt-[232px]
           pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[408px]
           pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
@@ -116,6 +117,7 @@ export default async function LocaleHomepage({ params }: PageProps) {
       {/* Content */}
       <section
         className="
+          content-wrapper
           pt-[156px] md:pt-[184px] lg:pt-[178px] xl:pt-[232px]
           pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[408px]
           pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]

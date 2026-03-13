@@ -18,6 +18,7 @@ export function ProjectNavigation({
   return (
     <nav
       className="
+        content-wrapper
         flex items-baseline justify-between
         px-[12px] md:px-[44px] lg:px-[40px] xl:px-[88px]
         pt-[60px] md:pt-[80px] lg:pt-[100px]

@@ -70,24 +70,29 @@ function GalleryItem({
         focus-visible:outline-offset-2 focus-visible:outline-black
       "
     >
-      {coverUrl ? (
-        <Image
-          src={coverUrl}
-          alt={coverAlt}
-          width={coverWidth}
-          height={coverHeight}
-          sizes="(min-width: 1024px) 50vw, (min-width: 768px) 50vw, 100vw"
-          className="h-auto w-full"
-        />
-      ) : (
-        <div className="flex aspect-[4/3] items-center justify-center bg-gray-100 text-[16px] text-text-primary">
-          No cover image
-        </div>
-      )}
+      <div className="md:max-w-[448px] lg:max-w-[396px] mx-auto">
+        {coverUrl ? (
+          <Image
+            src={coverUrl}
+            alt={coverAlt}
+            width={coverWidth}
+            height={coverHeight}
+            sizes="(min-width: 1024px) 396px, (min-width: 768px) 448px, 100vw"
+            className="h-auto w-full"
+          />
+        ) : (
+          <div className="flex aspect-[4/3] items-center justify-center bg-gray-100 text-[16px] text-text-primary">
+            No cover image
+          </div>
+        )}
+      </div>
       <p
         className="
           mt-[12px] md:mt-[16px]
-          text-[16px] leading-[23px] text-text-primary
+          text-[16px] leading-[23px] md:text-[20px] md:leading-[28px]
+          text-text-primary
+          [font-feature-settings:'onum'_1,'pnum'_1]
+          pl-[12px] md:pl-0
         "
       >
         {project.title}
@@ -104,43 +109,56 @@ export function ProjectGallery({ locale, projects }: ProjectGalleryProps) {
   return (
     <section
       className="
-        px-[12px] md:px-[44px] lg:px-[40px] xl:px-[88px]
-        pt-[80px] md:pt-[100px] lg:pt-[120px] xl:pt-[140px]
-        space-y-[40px] md:space-y-[60px] lg:space-y-[80px]
+        content-wrapper
+        px-0 md:px-0 lg:px-[40px] xl:px-[248px]
+        pt-[182px] md:pt-[160px] lg:pt-[208px] xl:pt-[208px]
+        space-y-[52px] md:space-y-[32px] lg:space-y-[40px]
       "
     >
-      {rows.map((row, rowIndex) => {
-        if (row.type === "pair") {
+      {/* Mobile + md layout (stacked, shown below lg) */}
+      <div className="lg:hidden space-y-[52px] md:space-y-[32px]">
+        {projects.map((project) => (
+          <div key={`${project.slug}-${project.id}`} className="md:mx-auto md:w-[564px]">
+            <GalleryItem project={project} locale={locale} />
+          </div>
+        ))}
+      </div>
+
+      {/* lg+ layout (paired grid) */}
+      <div className="hidden lg:block space-y-[40px]">
+        {rows.map((row, rowIndex) => {
+          if (row.type === "pair") {
+            return (
+              <div
+                key={`row-${rowIndex}`}
+                className="grid grid-cols-2 gap-[16px]"
+              >
+                {row.projects.map((project) => (
+                  <GalleryItem
+                    key={`${project.slug}-${project.id}`}
+                    project={project}
+                    locale={locale}
+                  />
+                ))}
+              </div>
+            );
+          }
+
           return (
             <div
               key={`row-${rowIndex}`}
-              className="grid grid-cols-2 gap-[24px] md:gap-[40px] lg:gap-[48px]"
+              className="flex justify-center"
             >
-              {row.projects.map((project) => (
+              <div className="w-[464px]">
                 <GalleryItem
-                  key={`${project.slug}-${project.id}`}
-                  project={project}
+                  project={row.projects[0]}
                   locale={locale}
                 />
-              ))}
+              </div>
             </div>
           );
-        }
-
-        return (
-          <div
-            key={`row-${rowIndex}`}
-            className="flex justify-center"
-          >
-            <div className="w-full md:w-[60%] lg:w-[50%]">
-              <GalleryItem
-                project={row.projects[0]}
-                locale={locale}
-              />
-            </div>
-          </div>
-        );
-      })}
+        })}
+      </div>
     </section>
   );
 }

@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { BorderedSection } from "@/components/bordered-section";
 import type { NormalizedProjectListing } from "@/lib/project-helpers";
 
 interface ProjectListProps {
@@ -28,17 +29,17 @@ export function ProjectList({ locale, projects, emptyMessage }: ProjectListProps
         const href = `/${locale}/work/${project.slug}`;
 
         return (
-          <li
-            key={`${project.slug}-${project.id}`}
-            className="border-b border-divider"
-          >
+          <li key={`${project.slug}-${project.id}`}>
+            <BorderedSection
+              border="border-b border-divider"
+              className="block"
+            >
             <Link
               href={href}
               className="
-                flex items-baseline gap-x-[24px] md:gap-x-[40px] lg:gap-x-[48px]
+                flex items-center h-[60px] md:h-[80px]
                 text-[16px] leading-[23px] text-text-primary
                 [font-feature-settings:'onum'_1,'pnum'_1]
-                py-[12px] md:py-[14px] xl:py-[16px]
                 pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[88px]
                 pr-[12px] md:pr-[44px] lg:pr-[40px] xl:pr-[88px]
                 hover:bg-gray-50 transition-colors
@@ -46,22 +47,23 @@ export function ProjectList({ locale, projects, emptyMessage }: ProjectListProps
                 focus-visible:outline-offset-2 focus-visible:outline-black
               "
             >
-              <span className="shrink-0 w-[48px]">
+              <span className="shrink-0 w-[77px] md:w-[58px] lg:w-[120px] xl:w-[160px]">
                 {year}
               </span>
-              <span className="hidden md:inline shrink-0 w-[96px] uppercase tracking-wide">
+              <span className="hidden md:inline shrink-0 w-[174px] lg:w-[120px] xl:w-[160px] uppercase tracking-[0.48px]">
                 {discipline}
               </span>
-              <span className="shrink-0 min-w-0 md:w-[200px] lg:w-[240px] xl:w-[280px] truncate">
+              <span className="shrink-0 min-w-0 flex-1 md:flex-none md:w-[220px] lg:w-[344px] xl:w-[384px] truncate">
                 {title}
               </span>
-              <span className="hidden lg:inline flex-1 min-w-0 truncate">
+              <span className="hidden lg:inline shrink-0 w-[224px] xl:w-[304px] truncate">
                 {location}
               </span>
-              <span className="hidden lg:inline shrink-0 w-[80px] text-right">
+              <span className="hidden lg:inline shrink-0 w-[104px] xl:w-[144px] text-right">
                 {size}
               </span>
             </Link>
+            </BorderedSection>
           </li>
         );
       })}

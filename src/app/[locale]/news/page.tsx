@@ -52,6 +52,7 @@ export default async function NewsListingPage({
       {/* Article titles / headlines section */}
       <section
         className="
+          content-wrapper
           pt-[120px] md:pt-[148px] lg:pt-[148px] xl:pt-[180px]
           pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[408px]
           pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]

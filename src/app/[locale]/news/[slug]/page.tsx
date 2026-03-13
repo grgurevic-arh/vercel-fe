@@ -91,6 +91,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
       {/* Title */}
       <h1
         className="
+          content-wrapper
           pt-[120px] md:pt-[148px] lg:pt-[148px] xl:pt-[180px]
           pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[248px]
           pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
@@ -110,6 +111,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
       {data.body ? (
         <div
           className="
+            content-wrapper
             pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[248px]
             pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
             pb-[40px] md:pb-[48px] lg:pb-[56px]
@@ -129,6 +131,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
       {heroImageUrl ? (
         <figure
           className="
+            content-wrapper
             pl-[0px] md:pl-[160px] lg:pl-[248px] xl:pl-[248px]
             pr-[0px] md:pr-[44px] lg:pr-[248px] xl:pr-[248px]
             min-[320px]:pl-[102px] min-[320px]:pr-[40px]

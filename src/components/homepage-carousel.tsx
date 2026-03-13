@@ -41,31 +41,17 @@ export function HomepageCarousel({ slides }: HomepageCarouselProps) {
         />
       </div>
 
-      {/* Caption + Number pagination row */}
+      {/* Pagination + Caption */}
       <div
         className="
-          flex items-baseline justify-between
+          content-wrapper
           mt-[16px] md:mt-[28px] lg:mt-[28px] xl:mt-[33px]
           px-[12px] md:px-[44px] lg:px-[40px] xl:px-[88px]
         "
       >
-        {current.description ? (
-          <p
-            className="
-              text-[16px] leading-[23px] text-text-primary
-              [font-feature-settings:'onum'_1,'pnum'_1]
-              flex-1 min-w-0 mr-[24px]
-            "
-          >
-            {current.description}
-          </p>
-        ) : (
-          <span />
-        )}
-
         {slides.length > 1 ? (
           <nav
-            className="flex shrink-0 gap-[14px] md:gap-[24px]"
+            className="flex gap-[14px] md:gap-[24px] lg:gap-[14px] xl:gap-[24px]"
             aria-label="Image pagination"
           >
             {slides.map((_, index) => {
@@ -78,6 +64,7 @@ export function HomepageCarousel({ slides }: HomepageCarouselProps) {
                   aria-label={`Show image ${index + 1}`}
                   aria-current={isActive ? "true" : undefined}
                   className={`
+                    text-left md:min-w-[34px] lg:min-w-[39px] xl:min-w-[56px]
                     text-[16px] leading-[23px] text-text-primary
                     ${isActive ? "underline" : ""}
                   `}
@@ -87,6 +74,18 @@ export function HomepageCarousel({ slides }: HomepageCarouselProps) {
               );
             })}
           </nav>
+        ) : null}
+
+        {current.description ? (
+          <p
+            className="
+              mt-[12px]
+              text-[16px] leading-[23px] text-text-primary
+              [font-feature-settings:'onum'_1,'pnum'_1]
+            "
+          >
+            {current.description}
+          </p>
         ) : null}
       </div>
     </section>

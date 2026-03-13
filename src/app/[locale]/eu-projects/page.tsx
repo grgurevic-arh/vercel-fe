@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { BlocksRenderer } from "@/components/blocks-renderer";
+import { BorderedSection } from "@/components/bordered-section";
 import { getEuProjectPage } from "@/lib/cms";
 import { SUPPORTED_LOCALES } from "@/lib/i18n";
 import { resolveLocaleParam } from "@/lib/request-helpers";
@@ -55,6 +56,7 @@ export default async function EuProjectsPage({ params }: PageProps) {
       {/* Heading */}
       <section
         className="
+          content-wrapper
           pt-[120px] md:pt-[144px] lg:pt-[154px] xl:pt-[270px]
           pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[328px]
           pb-[24px] md:pb-[32px] lg:pb-[40px] xl:pb-[100px]
@@ -74,6 +76,7 @@ export default async function EuProjectsPage({ params }: PageProps) {
       {data.description?.length > 0 && (
         <section
           className="
+            content-wrapper
             pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[408px]
             pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
             pb-[24px] md:pb-[38px] lg:pb-[54px] xl:pb-[47px]
@@ -85,7 +88,7 @@ export default async function EuProjectsPage({ params }: PageProps) {
 
       {/* Content Blocks */}
       {data.contentBlocks?.map((block) => (
-        <section key={block.id} className={`${sectionPaddingClass} py-[24px] md:py-[32px] xl:py-[40px]`}>
+        <section key={block.id} className={`content-wrapper ${sectionPaddingClass} py-[24px] md:py-[32px] xl:py-[40px]`}>
           <h2 className={`${sectionHeadingClass} pb-[16px] md:pb-[24px]`}>
             {block.title}
           </h2>
@@ -94,7 +97,7 @@ export default async function EuProjectsPage({ params }: PageProps) {
       ))}
 
       {/* Metadata Grid */}
-      <section className={`${sectionPaddingClass} py-[24px] md:py-[32px] xl:py-[40px] border-t border-divider`}>
+      <BorderedSection border="border-t border-divider" className={`${sectionPaddingClass} py-[24px] md:py-[32px] xl:py-[40px]`}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-[16px] md:gap-[24px]">
           {data.projectWorth && (
             <div>
@@ -133,11 +136,11 @@ export default async function EuProjectsPage({ params }: PageProps) {
             </div>
           )}
         </div>
-      </section>
+      </BorderedSection>
 
       {/* Useful Links */}
       {data.usefulLinks?.length > 0 && (
-        <section className={`${sectionPaddingClass} py-[24px] md:py-[32px] xl:py-[40px] border-t border-divider`}>
+        <BorderedSection border="border-t border-divider" className={`${sectionPaddingClass} py-[24px] md:py-[32px] xl:py-[40px]`}>
           <h2 className={`${sectionHeadingClass} pb-[16px] md:pb-[24px]`}>
             {locale === "hr" ? "Korisne poveznice" : "Useful Links"}
           </h2>
@@ -155,17 +158,17 @@ export default async function EuProjectsPage({ params }: PageProps) {
               </li>
             ))}
           </ul>
-        </section>
+        </BorderedSection>
       )}
 
       {/* EU Directive */}
       {data.euDirective && (
-        <section className={`${sectionPaddingClass} py-[24px] md:py-[32px] xl:py-[40px] border-t border-divider`}>
+        <BorderedSection border="border-t border-divider" className={`${sectionPaddingClass} py-[24px] md:py-[32px] xl:py-[40px]`}>
           <h2 className={`${sectionHeadingClass} pb-[16px] md:pb-[24px]`}>
             {data.euDirective.title}
           </h2>
           <BlocksRenderer content={data.euDirective.content} className={blockTextClass} />
-        </section>
+        </BorderedSection>
       )}
     </main>
   );
