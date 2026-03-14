@@ -166,7 +166,7 @@ export function PollForm({ poll, locale }: PollFormProps) {
                       text-[16px] leading-[23px]
                       text-text-primary
                       placeholder:text-[#636363] placeholder:tracking-[-0.1px]
-                      focus:outline focus:outline-2 focus:outline-text-primary
+                      focus:outline-none
                     "
                   />
                 ) : null}
@@ -174,7 +174,7 @@ export function PollForm({ poll, locale }: PollFormProps) {
                 {q.inputType === "textarea" ? (
                   <textarea
                     id={q.questionId}
-                    rows={4}
+                    rows={1}
                     placeholder={q.placeholder ?? undefined}
                     {...register(q.questionId, {
                       required: q.required ? requiredMessage : false,
@@ -185,7 +185,7 @@ export function PollForm({ poll, locale }: PollFormProps) {
                       text-[16px] leading-[23px]
                       text-text-primary
                       placeholder:text-[#636363] placeholder:tracking-[-0.1px]
-                      focus:outline focus:outline-2 focus:outline-text-primary
+                      focus:outline-none
                       resize-y
                     "
                   />
