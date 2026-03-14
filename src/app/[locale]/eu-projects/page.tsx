@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 
 import { BlocksRenderer } from "@/components/blocks-renderer";
@@ -43,13 +44,36 @@ export default async function EuProjectsPage({ params }: PageProps) {
     "EU project page missing attributes",
   );
 
-  const sectionHeadingClass =
-    "text-[20px] leading-[28px] lg:text-[28px] lg:leading-[38px] text-text-primary";
-
-  const sectionPaddingClass =
-    "pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[88px] pr-[12px] md:pr-[20px]";
-
-  const blockTextClass = "text-[16px] leading-[23px] text-text-primary";
+  const metadataRows = [
+    data.projectWorth && {
+      label: locale === "hr" ? "Ukupna vrijednost projekta" : "Project Worth",
+      value: data.projectWorth,
+    },
+    data.euFinanced && {
+      label: locale === "hr" ? "Iznos koji sufinancira EU" : "EU Financed",
+      value: data.euFinanced,
+    },
+    data.timeOfProject && {
+      label: locale === "hr" ? "Razdoblje provedbe projekta" : "Time of Project",
+      value: data.timeOfProject,
+    },
+    data.contact && {
+      label: locale === "hr" ? "Kontakt za više informacija" : "Contact",
+      value: data.contact,
+      href: `mailto:${data.contact}`,
+    },
+    ...(data.usefulLinks?.map((link) => ({
+      label: locale === "hr" ? "Korisni linkovi" : "Useful Links",
+      value: link.label,
+      href: link.url,
+      external: true,
+    })) ?? []),
+  ].filter(Boolean) as Array<{
+    label: string;
+    value: string;
+    href?: string;
+    external?: boolean;
+  }>;
 
   return (
     <main>
@@ -59,7 +83,7 @@ export default async function EuProjectsPage({ params }: PageProps) {
           content-wrapper
           pt-[120px] md:pt-[144px] lg:pt-[154px] xl:pt-[270px]
           pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[328px]
-          pb-[24px] md:pb-[32px] lg:pb-[40px] xl:pb-[100px]
+          pb-[24px] md:pb-[32px] lg:pb-[40px] xl:pb-[105px]
         "
       >
         <h1
@@ -77,98 +101,101 @@ export default async function EuProjectsPage({ params }: PageProps) {
         <section
           className="
             content-wrapper
-            pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[408px]
-            pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
+            pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[328px]
+            pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[408px]
             pb-[24px] md:pb-[38px] lg:pb-[54px] xl:pb-[47px]
           "
         >
-          <BlocksRenderer content={data.description} className={blockTextClass} />
+          <BlocksRenderer
+            content={data.description}
+            className="text-[16px] leading-[23px] xl:text-[20px] xl:leading-[28px] text-text-primary"
+          />
         </section>
       )}
 
       {/* Content Blocks */}
       {data.contentBlocks?.map((block) => (
-        <section key={block.id} className={`content-wrapper ${sectionPaddingClass} py-[24px] md:py-[32px] xl:py-[40px]`}>
-          <h2 className={`${sectionHeadingClass} pb-[16px] md:pb-[24px]`}>
+        <section
+          key={block.id}
+          className="
+            content-wrapper
+            pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[328px]
+            pr-[12px] md:pr-[20px] lg:pr-[160px] xl:pr-[408px]
+            py-[24px] md:py-[32px] xl:py-[40px]
+          "
+        >
+          <h2 className="italic text-[20px] leading-normal text-text-primary pb-[8px] md:pb-[12px] xl:pb-[16px]">
             {block.title}
           </h2>
-          <BlocksRenderer content={block.content} className={blockTextClass} />
+          <BlocksRenderer content={block.content} className="text-[16px] leading-[23px] text-text-primary" />
         </section>
       ))}
 
-      {/* Metadata Grid */}
-      <BorderedSection border="border-t border-divider" className={`${sectionPaddingClass} py-[24px] md:py-[32px] xl:py-[40px]`}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-[16px] md:gap-[24px]">
-          {data.projectWorth && (
-            <div>
-              <p className="text-[14px] leading-[20px] text-text-secondary tracking-[0.03em] [font-variant-caps:small-caps]">
-                {locale === "hr" ? "Vrijednost projekta" : "Project Worth"}
+      {/* Metadata Table */}
+      <section>
+        {metadataRows.map((row, index) => (
+          <BorderedSection
+            key={`${row.label}-${index}`}
+            border={`border-b border-divider ${index === 0 ? "border-t" : ""}`}
+          >
+            <div
+              className="
+                relative w-full bg-white
+                min-h-[60px] md:min-h-[70px] xl:h-[80px]
+                flex flex-col xl:flex-row xl:items-center
+                px-[12px] md:px-[44px] lg:px-[40px] xl:px-0
+                py-[16px] xl:py-0
+              "
+            >
+              <p className="text-[16px] leading-[23px] text-text-primary xl:absolute xl:left-[22.78%]">
+                {row.label}
               </p>
-              <p className={blockTextClass}>{data.projectWorth}</p>
-            </div>
-          )}
-          {data.euFinanced && (
-            <div>
-              <p className="text-[14px] leading-[20px] text-text-secondary tracking-[0.03em] [font-variant-caps:small-caps]">
-                {locale === "hr" ? "EU financiranje" : "EU Financed"}
-              </p>
-              <p className={blockTextClass}>{data.euFinanced}</p>
-            </div>
-          )}
-          {data.timeOfProject && (
-            <div>
-              <p className="text-[14px] leading-[20px] text-text-secondary tracking-[0.03em] [font-variant-caps:small-caps]">
-                {locale === "hr" ? "Trajanje projekta" : "Time of Project"}
-              </p>
-              <p className={blockTextClass}>{data.timeOfProject}</p>
-            </div>
-          )}
-          {data.contact && (
-            <div>
-              <p className="text-[14px] leading-[20px] text-text-secondary tracking-[0.03em] [font-variant-caps:small-caps]">
-                {locale === "hr" ? "Kontakt" : "Contact"}
-              </p>
-              <p className={blockTextClass}>
-                <a href={`mailto:${data.contact}`} className="underline">
-                  {data.contact}
-                </a>
-              </p>
-            </div>
-          )}
-        </div>
-      </BorderedSection>
-
-      {/* Useful Links */}
-      {data.usefulLinks?.length > 0 && (
-        <BorderedSection border="border-t border-divider" className={`${sectionPaddingClass} py-[24px] md:py-[32px] xl:py-[40px]`}>
-          <h2 className={`${sectionHeadingClass} pb-[16px] md:pb-[24px]`}>
-            {locale === "hr" ? "Korisne poveznice" : "Useful Links"}
-          </h2>
-          <ul className="space-y-[8px]">
-            {data.usefulLinks.map((link) => (
-              <li key={link.id}>
+              {row.href ? (
                 <a
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`${blockTextClass} underline`}
+                  href={row.href}
+                  {...(row.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  className={`text-[16px] leading-[23px] text-text-primary xl:absolute xl:left-[45%] ${row.external ? "underline" : ""}`}
                 >
-                  {link.label}
+                  {row.value}
                 </a>
-              </li>
-            ))}
-          </ul>
-        </BorderedSection>
-      )}
+              ) : (
+                <p className="text-[16px] leading-[23px] text-text-primary xl:absolute xl:left-[45%]">
+                  {row.value}
+                </p>
+              )}
+            </div>
+          </BorderedSection>
+        ))}
+      </section>
 
       {/* EU Directive */}
       {data.euDirective && (
-        <BorderedSection border="border-t border-divider" className={`${sectionPaddingClass} py-[24px] md:py-[32px] xl:py-[40px]`}>
-          <h2 className={`${sectionHeadingClass} pb-[16px] md:pb-[24px]`}>
+        <section
+          className="
+            content-wrapper
+            pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[328px]
+            pr-[12px] md:pr-[20px] lg:pr-[160px] xl:pr-[408px]
+            py-[40px] md:py-[50px] xl:py-[60px]
+          "
+        >
+          {/* EU Badge */}
+          <Image
+            src="/eu-funded-badge.svg"
+            alt={locale === "hr" ? "Financira Europska unija" : "Funded by the European Union"}
+            width={363}
+            height={68}
+            className="w-[200px] md:w-[280px] xl:w-[363px] h-auto mb-[32px] xl:mb-[40px]"
+          />
+          {/* Title */}
+          <p className="text-[16px] leading-[23px] xl:text-[20px] xl:leading-[28px] text-text-primary mb-[8px]">
             {data.euDirective.title}
-          </h2>
-          <BlocksRenderer content={data.euDirective.content} className={blockTextClass} />
-        </BorderedSection>
+          </p>
+          {/* Disclaimer */}
+          <BlocksRenderer
+            content={data.euDirective.content}
+            className="text-[16px] leading-[23px] xl:text-[20px] xl:leading-[28px] text-[#636363]"
+          />
+        </section>
       )}
     </main>
   );
