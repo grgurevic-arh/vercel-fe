@@ -108,7 +108,7 @@ export function PollForm({ poll, locale }: PollFormProps) {
         <div
           className="
             mb-[32px] flex items-center justify-between
-            border-b border-[#636363] px-[1px] py-[10px]
+            px-[1px] py-[10px]
             font-sans text-[16px] leading-[23px] text-[#636363]
             [font-feature-settings:'onum'_1,'pnum'_1]
           "
