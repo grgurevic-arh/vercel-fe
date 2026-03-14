@@ -135,15 +135,15 @@ export function PollForm({ poll, locale }: PollFormProps) {
         </p>
       ) : (
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
-          <div className="space-y-[24px] md:space-y-[32px]">
-            {poll.questions.map((q) => (
-              <div key={q.questionId}>
+          {/* First two questions — two-column on md+ */}
+          <div className="grid grid-cols-1 md:grid-cols-2 md:gap-x-[40px] gap-y-[24px]">
+            {poll.questions.slice(0, 2).map((q) => (
+              <div key={q.questionId} className="flex flex-col gap-[6px]">
                 <label
                   htmlFor={q.questionId}
                   className="
-                    mb-[8px] block
-                    text-[16px] leading-[23px]
-                    md:text-[20px] md:leading-[28px]
+                    font-sans text-[16px] leading-[23px]
+                    [font-feature-settings:'onum'_1,'pnum'_1]
                     text-text-primary
                   "
                 >
@@ -162,11 +162,107 @@ export function PollForm({ poll, locale }: PollFormProps) {
                       required: q.required ? requiredMessage : false,
                     })}
                     className="
-                      w-full border border-text-primary/30
-                      px-[12px] py-[10px]
+                      font-sans w-full border-0 border-b border-[#636363]
+                      bg-transparent px-[1px] py-[10px]
                       text-[16px] leading-[23px]
                       text-text-primary
-                      placeholder:text-text-primary/40
+                      placeholder:text-[#636363] placeholder:tracking-[-0.1px]
+                      focus:outline focus:outline-2 focus:outline-text-primary
+                    "
+                  />
+                ) : null}
+
+                {q.inputType === "select" ? (
+                  <div className="flex items-center gap-[20px] py-[10px]">
+                    {q.options?.map((opt) => (
+                      <label
+                        key={opt.value}
+                        className="
+                          flex items-center gap-[7px] cursor-pointer
+                          font-sans text-[16px] leading-[23px]
+                          text-text-primary tracking-[-0.1px]
+                        "
+                      >
+                        <input
+                          type="radio"
+                          value={opt.value}
+                          {...register(q.questionId, {
+                            required: q.required ? requiredMessage : false,
+                          })}
+                          className="size-[12px] accent-text-primary"
+                        />
+                        {opt.label}
+                      </label>
+                    ))}
+                  </div>
+                ) : null}
+
+                {q.inputType === "textarea" ? (
+                  <textarea
+                    id={q.questionId}
+                    rows={4}
+                    placeholder={q.placeholder ?? undefined}
+                    {...register(q.questionId, {
+                      required: q.required ? requiredMessage : false,
+                    })}
+                    className="
+                      font-sans w-full border-0 border-b border-[#636363]
+                      bg-transparent px-[1px] py-[10px]
+                      text-[16px] leading-[23px]
+                      text-text-primary
+                      placeholder:text-[#636363] placeholder:tracking-[-0.1px]
+                      focus:outline focus:outline-2 focus:outline-text-primary
+                      resize-y
+                    "
+                  />
+                ) : null}
+
+                {errors[q.questionId] ? (
+                  <p className="mt-[4px] text-[14px] text-red-600">
+                    {errors[q.questionId]?.message}
+                  </p>
+                ) : null}
+              </div>
+            ))}
+          </div>
+
+          {/* Remaining questions — single column */}
+          <div
+            className="
+              mt-[86px] md:mt-[164px]
+              space-y-[96px] md:space-y-[104px]
+            "
+          >
+            {poll.questions.slice(2).map((q) => (
+              <div key={q.questionId} className="flex flex-col gap-[6px]">
+                <label
+                  htmlFor={q.questionId}
+                  className="
+                    font-sans text-[16px] leading-[23px]
+                    [font-feature-settings:'onum'_1,'pnum'_1]
+                    text-text-primary
+                  "
+                >
+                  {q.prompt}
+                  {q.required ? (
+                    <span className="ml-[4px] text-red-600">*</span>
+                  ) : null}
+                </label>
+
+                {q.inputType === "text" ? (
+                  <input
+                    id={q.questionId}
+                    type="text"
+                    placeholder={q.placeholder ?? undefined}
+                    {...register(q.questionId, {
+                      required: q.required ? requiredMessage : false,
+                    })}
+                    className="
+                      font-sans w-full border-0 border-b border-[#636363]
+                      bg-transparent px-[1px] py-[10px]
+                      text-[16px] leading-[23px]
+                      text-text-primary
+                      placeholder:text-[#636363] placeholder:tracking-[-0.1px]
                       focus:outline focus:outline-2 focus:outline-text-primary
                     "
                   />
@@ -181,11 +277,11 @@ export function PollForm({ poll, locale }: PollFormProps) {
                       required: q.required ? requiredMessage : false,
                     })}
                     className="
-                      w-full border border-text-primary/30
-                      px-[12px] py-[10px]
+                      font-sans w-full border-0 border-b border-[#636363]
+                      bg-transparent px-[1px] py-[10px]
                       text-[16px] leading-[23px]
                       text-text-primary
-                      placeholder:text-text-primary/40
+                      placeholder:text-[#636363] placeholder:tracking-[-0.1px]
                       focus:outline focus:outline-2 focus:outline-text-primary
                       resize-y
                     "
@@ -193,30 +289,28 @@ export function PollForm({ poll, locale }: PollFormProps) {
                 ) : null}
 
                 {q.inputType === "select" ? (
-                  <select
-                    id={q.questionId}
-                    {...register(q.questionId, {
-                      required: q.required ? requiredMessage : false,
-                    })}
-                    defaultValue=""
-                    className="
-                      w-full border border-text-primary/30
-                      px-[12px] py-[10px]
-                      text-[16px] leading-[23px]
-                      text-text-primary
-                      focus:outline focus:outline-2 focus:outline-text-primary
-                    "
-                  >
-                    <option value="" disabled>
-                      {q.placeholder ??
-                        (locale === "hr" ? "Odaberite..." : "Select...")}
-                    </option>
+                  <div className="flex items-center gap-[20px] py-[10px]">
                     {q.options?.map((opt) => (
-                      <option key={opt.value} value={opt.value}>
+                      <label
+                        key={opt.value}
+                        className="
+                          flex items-center gap-[7px] cursor-pointer
+                          font-sans text-[16px] leading-[23px]
+                          text-text-primary tracking-[-0.1px]
+                        "
+                      >
+                        <input
+                          type="radio"
+                          value={opt.value}
+                          {...register(q.questionId, {
+                            required: q.required ? requiredMessage : false,
+                          })}
+                          className="size-[12px] accent-text-primary"
+                        />
                         {opt.label}
-                      </option>
+                      </label>
                     ))}
-                  </select>
+                  </div>
                 ) : null}
 
                 {errors[q.questionId] ? (
@@ -232,27 +326,31 @@ export function PollForm({ poll, locale }: PollFormProps) {
             <p className="mt-[16px] text-[14px] text-red-600">{submitError}</p>
           ) : null}
 
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="
-              mt-[32px] md:mt-[40px]
-              px-[24px] py-[12px]
-              bg-text-primary text-background
-              text-[16px] leading-[23px]
-              hover:opacity-80
-              focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-text-primary
-              disabled:opacity-50 disabled:cursor-not-allowed
-            "
-          >
-            {isSubmitting
-              ? locale === "hr"
-                ? "Šaljem..."
-                : "Submitting..."
-              : locale === "hr"
-                ? "Pošalji"
-                : "Submit"}
-          </button>
+          <div className="flex justify-center md:justify-end mt-[32px] md:mt-[40px]">
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="
+                w-full md:w-auto
+                font-serif
+                px-[20px] py-[10px]
+                bg-text-primary text-white
+                text-[20px] leading-[28px]
+                [font-feature-settings:'onum'_1,'pnum'_1]
+                hover:opacity-80
+                focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-text-primary
+                disabled:opacity-50 disabled:cursor-not-allowed
+              "
+            >
+              {isSubmitting
+                ? locale === "hr"
+                  ? "Šaljem..."
+                  : "Submitting..."
+                : locale === "hr"
+                  ? "Pošalji"
+                  : "Submit"}
+            </button>
+          </div>
         </form>
       )}
     </div>
