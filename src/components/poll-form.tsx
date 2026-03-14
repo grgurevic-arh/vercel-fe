@@ -107,9 +107,10 @@ export function PollForm({ poll, locale }: PollFormProps) {
       {showBanner ? (
         <div
           className="
-            mb-[24px] flex items-center justify-between
-            border border-text-primary/20 px-[16px] py-[12px]
-            text-[14px] leading-[20px] text-text-primary/70
+            mb-[32px] flex items-center justify-between
+            border-b border-[#636363] px-[1px] py-[10px]
+            font-sans text-[16px] leading-[23px] text-[#636363]
+            [font-feature-settings:'onum'_1,'pnum'_1]
           "
         >
           <span>
@@ -120,7 +121,7 @@ export function PollForm({ poll, locale }: PollFormProps) {
           <button
             type="button"
             onClick={() => setShowBanner(false)}
-            className="ml-[12px] text-text-primary underline"
+            className="ml-[12px] font-serif text-text-primary underline"
           >
             {locale === "hr" ? "Zatvori" : "Dismiss"}
           </button>
