@@ -19,6 +19,14 @@ const untitledSerif = localFont({
   display: "swap",
 });
 
+const untitledSans = localFont({
+  src: [
+    { path: "../fonts/untitled-sans-regular.woff2", weight: "400", style: "normal" },
+  ],
+  variable: "--font-untitled-sans",
+  display: "swap",
+});
+
 const siteUrl = process.env.SITE_URL ?? "https://grgurevic.hr";
 
 export const metadata: Metadata = {
@@ -46,7 +54,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang={DEFAULT_LOCALE} className={untitledSerif.variable}>
+    <html lang={DEFAULT_LOCALE} className={`${untitledSerif.variable} ${untitledSans.variable}`}>
       <body className="antialiased">
         {children}
       </body>
