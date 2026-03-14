@@ -68,7 +68,7 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
         className="
           content-wrapper
           pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[328px]
-          pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
+          pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[408px]
           pb-[24px] md:pb-[38px] lg:pb-[54px] xl:pb-[47px]
         "
       >
@@ -76,12 +76,15 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
           <BlocksRenderer
             content={data.content}
             className="
-              text-[16px] leading-[23px]
-              md:text-[20px] md:leading-[28px]
-              lg:text-[28px] lg:leading-[38px]
-              xl:text-[28px] xl:leading-[38px]
               text-text-primary whitespace-pre-line
-              max-w-[296px] md:max-w-[506px] lg:max-w-[644px] xl:max-w-[784px]
+              [&_p]:text-[16px] [&_p]:leading-[23px]
+              [&_p]:xl:text-[20px] [&_p]:xl:leading-[28px]
+              [&_p]:mb-0
+              [&_ul]:text-[16px] [&_ul]:leading-[23px]
+              [&_ol]:text-[16px] [&_ol]:leading-[23px]
+              [&_h2]:italic [&_h2]:text-[20px] [&_h2]:leading-normal [&_h2]:mb-[8px]
+              [&_h3]:italic [&_h3]:text-[20px] [&_h3]:leading-normal [&_h3]:mb-[8px]
+              [&_h4]:italic [&_h4]:text-[20px] [&_h4]:leading-normal [&_h4]:mb-[8px]
             "
           />
         ) : null}
