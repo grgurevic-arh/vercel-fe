@@ -88,6 +88,7 @@ export default async function PollDetailPage({ params }: PageProps) {
               lg:text-[28px] lg:leading-[38px]
               [font-feature-settings:'onum'_1,'pnum'_1]
               lg:[font-feature-settings:normal]
+              mb-[58px] md:mb-[60px]
             "
           >
             {poll.projectName}

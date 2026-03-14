@@ -229,8 +229,8 @@ export function PollForm({ poll, locale }: PollFormProps) {
           {/* Remaining questions — single column */}
           <div
             className="
-              mt-[86px] md:mt-[164px]
-              space-y-[96px] md:space-y-[104px]
+              mt-[32px] md:mt-[92px]
+              space-y-[24px] md:space-y-[32px]
             "
           >
             {poll.questions.slice(2).map((q) => (
