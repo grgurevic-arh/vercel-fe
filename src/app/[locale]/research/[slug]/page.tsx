@@ -57,27 +57,48 @@ export default async function PollDetailPage({ params }: PageProps) {
 
   return (
     <main>
-      <section
+      {/* Title — uses content padding */}
+      <h1
         className="
-          pt-[120px] md:pt-[148px] lg:pt-[148px] xl:pt-[180px]
-          pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[408px]
-          pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
-          pb-[80px] md:pb-[120px] lg:pb-[140px] xl:pb-[180px]
+          content-wrapper
+          px-[12px] md:px-[44px] lg:px-[160px] xl:px-[328px]
+          font-sans text-text-primary
+          pt-[86px] md:pt-[184px] lg:pt-[216px] xl:pt-[190px]
+          text-[28px] leading-[38px]
+          md:text-[38px] md:leading-[50px] md:text-center
+          lg:text-[66px] lg:leading-normal lg:text-center
+          xl:text-left
+          mb-[34px] md:mb-[26px] lg:mb-[66px] xl:mb-[94px]
         "
       >
-        <h1
+        {locale === "hr" ? "Vaše mišljenje" : "Your opinion"}
+      </h1>
+
+      {/* Divider — full width */}
+      <hr className="border-divider" />
+
+      {/* Content — uses content padding */}
+      <section
+        className="
+          content-wrapper
+          px-[12px] md:px-[44px] lg:px-[160px] xl:px-[328px]
+          pb-[80px] md:pb-[120px] lg:pb-[140px] xl:pb-[180px]
+          mt-[32px] md:mt-[52px] lg:mt-[80px] xl:mt-[52px]
+        "
+      >
+        <h2
           className="
-            pb-[24px] md:pb-[32px] lg:pb-[40px]
+            font-sans text-text-primary
             text-[20px] leading-[28px]
+            md:text-[22px] md:leading-[32px]
+            lg:text-[28px] lg:leading-[38px]
             [font-feature-settings:'onum'_1,'pnum'_1]
-            min-[320px]:text-[28px] min-[320px]:leading-[38px]
-            md:text-[38px] md:leading-[50px]
-            md:[font-feature-settings:normal]
-            text-text-primary
+            lg:[font-feature-settings:normal]
+            mb-[58px] md:mb-[60px]
           "
         >
           {poll.projectName}
-        </h1>
+        </h2>
 
         <PollForm poll={poll} locale={locale} />
       </section>

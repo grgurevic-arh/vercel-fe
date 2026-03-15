@@ -13,6 +13,7 @@
   --color-divider: var(--divider);
   --color-text-primary: var(--text-primary);
   --font-serif: var(--font-untitled-serif), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-untitled-sans), system-ui, sans-serif;
   --breakpoint-xl: 90rem;
 }
 
