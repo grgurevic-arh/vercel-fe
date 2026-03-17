@@ -78,11 +78,13 @@ function CompositionImage({
   alt,
   caption,
   side,
+  variant = "photo",
 }: {
   media: StrapiMedia;
   alt: string;
   caption: string | null;
   side: "left" | "right";
+  variant?: "photo" | "plan";
 }) {
   const attrs = getStrapiMediaAttributes(media);
   const url = getStrapiMediaUrl(media);
@@ -92,15 +94,29 @@ function CompositionImage({
   const height = attrs?.height ?? 900;
   const isPortrait = height >= width;
 
-  const widthClass = isPortrait
-    ? "w-full md:w-[340px] lg:w-[412px] xl:w-[472px]"
-    : "w-full md:w-[680px] lg:w-[824px] xl:w-[944px]";
+  let widthClass: string;
+  let sizes: string;
 
-  const alignmentClass = isPortrait
-    ? side === "left"
-      ? ""
-      : "md:ml-auto"
-    : "";
+  if (variant === "plan") {
+    // Floor plans render at natural size, capped at content area width
+    // They don't stretch to fill — they maintain natural proportions
+    widthClass = "w-full md:max-w-[680px] lg:max-w-[824px] xl:max-w-[944px]";
+    sizes = "(min-width: 1440px) 944px, (min-width: 1024px) 824px, (min-width: 768px) 680px, 100vw";
+  } else if (isPortrait) {
+    widthClass = "w-full md:w-[340px] lg:w-[412px] xl:w-[472px]";
+    sizes = "(min-width: 1440px) 472px, (min-width: 1024px) 412px, (min-width: 768px) 340px, 100vw";
+  } else {
+    widthClass = "w-full md:w-[680px] lg:w-[824px] xl:w-[944px]";
+    sizes = "(min-width: 1440px) 944px, (min-width: 1024px) 824px, (min-width: 768px) 680px, 100vw";
+  }
+
+  // Alignment: portrait photos and plans stick to left or right edge
+  const alignmentClass =
+    variant === "plan" || isPortrait
+      ? side === "left"
+        ? ""
+        : "md:ml-auto"
+      : "";
 
   return (
     <figure
@@ -117,11 +133,7 @@ function CompositionImage({
           alt={alt}
           width={width}
           height={height}
-          sizes={
-            isPortrait
-              ? "(min-width: 1440px) 472px, (min-width: 1024px) 412px, (min-width: 768px) 340px, 100vw"
-              : "(min-width: 1440px) 944px, (min-width: 1024px) 824px, (min-width: 768px) 680px, 100vw"
-          }
+          sizes={sizes}
           className="h-auto w-full"
         />
         {caption ? (
@@ -313,6 +325,7 @@ export function ProjectDetailContent({
                 alt={alt}
                 caption={floorPlan.label}
                 side={side}
+                variant="plan"
               />
             );
           })}
