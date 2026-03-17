@@ -60,7 +60,7 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
             leading-[100%] text-text-primary
           "
         >
-          Privacy Policy
+          {t(locale).pages.privacyPolicy}
         </h1>
       </section>
 

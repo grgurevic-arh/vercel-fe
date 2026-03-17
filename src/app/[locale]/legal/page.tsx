@@ -68,7 +68,7 @@ export default async function LegalPage({ params }: PageProps) {
             leading-[100%] text-text-primary
           "
         >
-          Legal
+          {t(locale).pages.legal}
         </h1>
       </section>
 

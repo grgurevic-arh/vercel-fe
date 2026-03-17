@@ -37,7 +37,7 @@ export default async function ThankYouPage({ params }: PageProps) {
           mb-[34px] md:mb-[26px] lg:mb-[66px] xl:mb-[94px]
         "
       >
-        {locale === "hr" ? "Vaše mišljenje" : "Your opinion"}
+        {t(locale).pages.yourOpinion}
       </h1>
 
       <hr className="border-divider" />
