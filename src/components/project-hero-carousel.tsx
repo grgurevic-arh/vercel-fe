@@ -3,19 +3,13 @@
 import Image from "next/image";
 import { useState } from "react";
 
-export interface CarouselSlide {
-  url: string;
-  alt: string;
-  width: number;
-  height: number;
-  description?: string | null;
-}
+import type { CarouselSlide } from "@/components/homepage-carousel";
 
-interface HomepageCarouselProps {
+interface ProjectHeroCarouselProps {
   slides: CarouselSlide[];
 }
 
-export function HomepageCarousel({ slides }: HomepageCarouselProps) {
+export function ProjectHeroCarousel({ slides }: ProjectHeroCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   if (!slides.length) return null;
@@ -23,32 +17,48 @@ export function HomepageCarousel({ slides }: HomepageCarouselProps) {
   const current = slides[Math.min(activeIndex, slides.length - 1)];
 
   return (
-    <section>
-      {/* Full-width image */}
+    <section className="content-wrapper pt-[138px] lg:pt-[144px] xl:pt-[152px]">
+      {/* Hero image — inset from left, NOT full-width */}
       <div
         className="
-          relative w-full overflow-hidden
-          h-[300px] md:h-[632px] xl:h-[810px]
+          relative overflow-hidden
+          w-full md:w-[680px] lg:w-[824px] xl:w-[944px]
+          h-[208px] md:h-[440px] lg:h-[531px] xl:h-[608px]
+          ml-0 md:ml-[44px] lg:ml-[100px] xl:ml-[248px]
         "
       >
         <Image
           src={current.url}
           alt={current.alt}
           fill
-          sizes="100vw"
+          sizes="(min-width: 1440px) 944px, (min-width: 1024px) 824px, (min-width: 768px) 680px, 100vw"
           className="object-cover"
           priority
         />
       </div>
 
-      {/* Pagination + Caption */}
+      {/* Caption + Pagination row */}
       <div
         className="
-          content-wrapper
-          mt-[16px] md:mt-[28px] lg:mt-[28px] xl:mt-[33px]
-          px-[12px] md:px-[44px] lg:px-[40px] xl:px-[88px]
+          flex justify-between items-baseline
+          mt-[8px] md:mt-[12px]
+          pl-[12px] md:pl-[44px] lg:pl-[100px] xl:pl-[248px]
+          pr-[12px] md:pr-[44px] lg:pr-[100px] xl:pr-[248px]
         "
       >
+        {/* Caption */}
+        {current.description ? (
+          <p
+            className="
+              text-[16px] leading-[23px] text-text-primary
+              [font-feature-settings:'onum'_1,'pnum'_1]
+            "
+          >
+            {current.description}
+          </p>
+        ) : <span />}
+
+        {/* Pagination numbers */}
         {slides.length > 1 ? (
           <nav
             className="flex gap-[14px] md:gap-[24px] lg:gap-[14px] xl:gap-[24px]"
@@ -76,18 +86,6 @@ export function HomepageCarousel({ slides }: HomepageCarouselProps) {
               );
             })}
           </nav>
-        ) : null}
-
-        {current.description ? (
-          <p
-            className="
-              mt-[12px]
-              text-[16px] leading-[23px] text-text-primary
-              [font-feature-settings:'onum'_1,'pnum'_1]
-            "
-          >
-            {current.description}
-          </p>
         ) : null}
       </div>
     </section>
