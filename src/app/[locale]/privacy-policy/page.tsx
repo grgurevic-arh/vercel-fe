@@ -70,7 +70,7 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
           content-wrapper
           pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[328px]
           pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[408px]
-          pb-[24px] md:pb-[38px] lg:pb-[54px] xl:pb-[47px]
+          pb-[80px] md:pb-[100px] lg:pb-[120px] xl:pb-[160px]
         "
       >
         {data.content?.length ? (
