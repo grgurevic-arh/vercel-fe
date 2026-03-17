@@ -1,16 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { Locale } from "@/lib/i18n";
+import { t } from "@/lib/translations";
 
 interface SiteFooterProps {
-  locale: string;
+  locale: Locale;
 }
-
-const footerNavLinks = [
-  { label: "Legal", path: "/legal" },
-  { label: "Research", path: "/research" },
-  { label: "eu projects", path: "/eu-projects" },
-  { label: "Privacy policy", path: "/privacy-policy" },
-];
 
 const languages = [
   { label: "Croatian", locale: "hr" },
@@ -18,6 +13,14 @@ const languages = [
 ];
 
 export function SiteFooter({ locale }: SiteFooterProps) {
+  const trans = t(locale);
+
+  const footerNavLinks = [
+    { label: trans.footer.legal, path: "/legal" },
+    { label: trans.footer.research, path: "/research" },
+    { label: trans.footer.euProjects, path: "/eu-projects" },
+    { label: trans.footer.privacyPolicy, path: "/privacy-policy" },
+  ];
   return (
     <footer className="content-wrapper relative bg-white h-[360px] md:h-[240px] xl:h-[300px]">
       {/* Navigation links */}
@@ -38,14 +41,7 @@ export function SiteFooter({ locale }: SiteFooterProps) {
                 href={`/${locale}${path}`}
                 className="text-[16px] leading-[23px] text-text-primary"
               >
-                {label === "eu projects" ? (
-                  <>
-                    <span className="tracking-[0.48px]">eu</span>
-                    {" projects"}
-                  </>
-                ) : (
-                  label
-                )}
+                {label}
               </Link>
             </li>
           ))}
