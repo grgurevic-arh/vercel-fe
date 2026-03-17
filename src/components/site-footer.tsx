@@ -82,7 +82,7 @@ export function SiteFooter({ locale }: SiteFooterProps) {
           text-[16px] leading-[23px] text-text-primary
         "
       >
-        Grgurević & partneri, 2025
+        {trans.footer.copyright}
       </p>
 
       {/* EU funded badge */}

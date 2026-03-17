@@ -9,34 +9,36 @@ const translations = {
       feed: "Feed",
     },
     secondaryNav: {
-      research: "Research",
-      euProjects: "eu projects",
-      legal: "Legal",
+      research: "Participation",
+      euProjects: "EU projects",
+      legal: "Impressum",
     },
     footer: {
-      legal: "Legal",
+      legal: "Impressum",
       research: "Research",
-      euProjects: "eu projects",
-      privacyPolicy: "Privacy policy",
+      euProjects: "EU projects",
+      privacyPolicy: "Privacy",
+      copyright: "Grgurević & Partners, 2026",
     },
   },
   hr: {
     siteTitle: "Grgurević & partneri",
     nav: {
-      work: "Work",       // TODO: replace with Croatian from spreadsheet
-      office: "Office",   // TODO: replace with Croatian from spreadsheet
-      feed: "Feed",       // TODO: replace with Croatian from spreadsheet
+      work: "Rad",       
+      office: "Ured",   
+      feed: "Objave",       
     },
     secondaryNav: {
-      research: "Research",     // TODO: replace with Croatian from spreadsheet
-      euProjects: "eu projects", // TODO: replace with Croatian from spreadsheet
-      legal: "Legal",           // TODO: replace with Croatian from spreadsheet
+      research: "Participacija",     
+      euProjects: "EU projekti", 
+      legal: "Impresum",           
     },
     footer: {
-      legal: "Legal",              // TODO: replace with Croatian from spreadsheet
-      research: "Research",        // TODO: replace with Croatian from spreadsheet
-      euProjects: "eu projects",   // TODO: replace with Croatian from spreadsheet
-      privacyPolicy: "Privacy policy", // TODO: replace with Croatian from spreadsheet
+      legal: "Impresum",              
+      research: "Participacija",        
+      euProjects: "EU projekti",  
+      privacyPolicy: "Privatnost",
+      copyright: "Grgurević & partneri, 2026",
     },
   },
 } as const;
