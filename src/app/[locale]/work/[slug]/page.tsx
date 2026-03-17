@@ -7,6 +7,7 @@ import { getWorkProjectBySlug, getWorkProjectSlugs } from "@/lib/cms";
 import { SUPPORTED_LOCALES, DEFAULT_LOCALE } from "@/lib/i18n";
 import type { Locale } from "@/lib/i18n";
 import { resolveLocaleParam } from "@/lib/request-helpers";
+import { t } from "@/lib/translations";
 import { requireStrapiEntity, unwrapStrapiEntity } from "@/lib/strapi-entity";
 import { getStrapiMediaUrl } from "@/lib/strapi-media";
 import type { ProjectDetail, ProjectListing } from "@/types/cms";
@@ -98,7 +99,7 @@ export default async function WorkDetailPage({ params }: PageProps) {
       <ProjectDetailContent
         project={data}
         locale={locale}
-        titleFallback="Untitled project"
+        titleFallback={t(locale).fallbacks.untitledProject}
       />
 
       {previous && next ? (

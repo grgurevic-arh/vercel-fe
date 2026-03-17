@@ -60,9 +60,7 @@ export default async function ThankYouPage({ params }: PageProps) {
             lg:[font-feature-settings:normal]
           "
         >
-          {locale === "hr"
-            ? "Hvala na sudjelovanju u anketi!"
-            : "Thank you for participating in the survey!"}
+          {t(locale).pages.thankYouMessage}
         </p>
       </section>
     </main>

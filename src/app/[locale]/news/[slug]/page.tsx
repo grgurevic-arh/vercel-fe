@@ -8,6 +8,7 @@ import { getNewsArticleBySlug, getNewsArticles } from "@/lib/cms";
 import { SUPPORTED_LOCALES, DEFAULT_LOCALE } from "@/lib/i18n";
 import type { Locale } from "@/lib/i18n";
 import { resolveLocaleParam } from "@/lib/request-helpers";
+import { t } from "@/lib/translations";
 import { requireStrapiEntity, unwrapStrapiEntity } from "@/lib/strapi-entity";
 import { normalizeNewsArticles } from "@/lib/news-helpers";
 import {
@@ -71,7 +72,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
     "News article missing attributes",
   );
 
-  const articleTitle = data.title ?? "Untitled article";
+  const articleTitle = data.title ?? t(locale).fallbacks.untitledArticle;
   const heroImageUrl = getStrapiMediaUrl(data.heroImage);
   const heroImageAttributes = getStrapiMediaAttributes(data.heroImage);
   const heroWidth = heroImageAttributes?.width ?? 1600;
@@ -167,7 +168,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
         <NewsList
           locale={locale}
           articles={otherNews}
-          emptyMessage="No additional news available."
+          emptyMessage={t(locale).fallbacks.noAdditionalNews}
         />
       </section>
 

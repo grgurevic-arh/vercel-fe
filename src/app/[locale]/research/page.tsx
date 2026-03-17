@@ -41,8 +41,7 @@ export default async function ResearchPage({ params }: PageProps) {
     .map((item) => unwrapStrapiEntity(item))
     .filter((poll): poll is EntryPoll => poll !== null);
 
-  const emptyMessage =
-    locale === "hr" ? "Nema aktivnih anketa" : "No active polls";
+  const emptyMessage = t(locale).pages.noActivePolls;
 
   return (
     <main>

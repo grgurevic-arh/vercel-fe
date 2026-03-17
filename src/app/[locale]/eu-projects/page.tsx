@@ -47,24 +47,24 @@ export default async function EuProjectsPage({ params }: PageProps) {
 
   const metadataRows = [
     data.projectWorth && {
-      label: locale === "hr" ? "Ukupna vrijednost projekta" : "Project Worth",
+      label: t(locale).euProjects.projectWorth,
       value: data.projectWorth,
     },
     data.euFinanced && {
-      label: locale === "hr" ? "Iznos koji sufinancira EU" : "EU Financed",
+      label: t(locale).euProjects.euFinanced,
       value: data.euFinanced,
     },
     data.timeOfProject && {
-      label: locale === "hr" ? "Razdoblje provedbe projekta" : "Time of Project",
+      label: t(locale).euProjects.timeOfProject,
       value: data.timeOfProject,
     },
     data.contact && {
-      label: locale === "hr" ? "Kontakt za više informacija" : "Contact",
+      label: t(locale).euProjects.contact,
       value: data.contact,
       href: `mailto:${data.contact}`,
     },
     ...(data.usefulLinks?.map((link) => ({
-      label: locale === "hr" ? "Korisni linkovi" : "Useful Links",
+      label: t(locale).euProjects.usefulLinks,
       value: link.label,
       href: link.url,
       external: true,
@@ -184,7 +184,7 @@ export default async function EuProjectsPage({ params }: PageProps) {
           {/* EU Badge */}
           <Image
             src="/eu-funded-badge.svg"
-            alt={locale === "hr" ? "Financira Europska unija" : "Funded by the European Union"}
+            alt={t(locale).euProjects.euBadgeAlt}
             width={363}
             height={68}
             className="w-[200px] md:w-[280px] xl:w-[363px] h-auto mb-[32px] xl:mb-[40px]"

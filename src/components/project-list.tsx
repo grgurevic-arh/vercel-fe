@@ -1,6 +1,8 @@
 import Link from "next/link";
 
+import type { Locale } from "@/lib/i18n";
 import type { NormalizedProjectListing } from "@/lib/project-helpers";
+import { t } from "@/lib/translations";
 
 interface ProjectListProps {
   locale: string;
@@ -12,7 +14,7 @@ export function ProjectList({ locale, projects, emptyMessage }: ProjectListProps
   if (!projects.length) {
     return (
       <p className="text-[16px] leading-[23px] text-text-primary pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[88px]">
-        {emptyMessage ?? "No published projects yet."}
+        {emptyMessage ?? t(locale as Locale).fallbacks.noProjects}
       </p>
     );
   }

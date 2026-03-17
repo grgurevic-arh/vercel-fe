@@ -25,7 +25,7 @@ export async function generateMetadata({
       default: siteTitle,
       template: `%s | ${siteTitle}`,
     },
-    description: "Architecture and urban planning studio based in Zagreb.",
+    description: t(locale).siteDescription,
     openGraph: {
       siteName: siteTitle,
     },

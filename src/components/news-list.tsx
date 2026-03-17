@@ -1,10 +1,12 @@
 import Link from "next/link";
 
+import type { Locale } from "@/lib/i18n";
 import {
   formatNewsDayMonth,
   getNewsYearFromCustom,
   type NormalizedNewsArticle,
 } from "@/lib/news-helpers";
+import { t } from "@/lib/translations";
 
 interface NewsListProps {
   locale: string;
@@ -16,7 +18,7 @@ export function NewsList({ locale, articles, emptyMessage }: NewsListProps) {
   if (!articles.length) {
     return (
       <p className="text-[16px] leading-[23px] text-text-primary pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[88px]">
-        {emptyMessage ?? "No news entries available."}
+        {emptyMessage ?? t(locale as Locale).fallbacks.noNews}
       </p>
     );
   }
@@ -32,7 +34,7 @@ export function NewsList({ locale, articles, emptyMessage }: NewsListProps) {
           article.publishedAtCustom,
           article.publishedAt,
         );
-        const title = article.title ?? "Untitled article";
+        const title = article.title ?? t(locale as Locale).fallbacks.untitledArticle;
         const summary = article.summary ?? "";
         const href = `/${locale}/news/${article.slug}`;
 

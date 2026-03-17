@@ -101,7 +101,7 @@ export function SiteFooter({ locale }: SiteFooterProps) {
         <Link href={`/${locale}/eu-projects`}>
           <Image
             src="/eu-funded-badge.svg"
-            alt="Funded by the European Union"
+            alt={trans.footer.euBadgeAlt}
             width={193}
             height={36}
             className="h-full w-auto object-contain"

@@ -170,14 +170,14 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
         type="button"
         aria-expanded={menuOpen}
         aria-controls="mobile-menu"
-        aria-label={menuOpen ? "Close menu" : "Open menu"}
+        aria-label={menuOpen ? trans.nav.closeMenu : trans.nav.openMenu}
         onClick={() => setMenuOpen(!menuOpen)}
         className="
           md:hidden
           text-[16px] leading-[23px] text-text-primary py-[8px]
         "
       >
-        {menuOpen ? "Close" : "Menu"}
+        {menuOpen ? trans.nav.close : trans.nav.menu}
       </button>
     </div>
     </header>
@@ -203,11 +203,11 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
           <button
             ref={closeButtonRef}
             type="button"
-            aria-label="Close menu"
+            aria-label={trans.nav.closeMenu}
             onClick={() => setMenuOpen(false)}
             className="text-[16px] leading-[23px] text-text-primary py-[8px]"
           >
-            Close
+            {trans.nav.close}
           </button>
         </div>
 

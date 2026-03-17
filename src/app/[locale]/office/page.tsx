@@ -27,10 +27,7 @@ export async function generateMetadata({
 
   return {
     title: t(locale).pages.office,
-    description:
-      locale === "hr"
-        ? "Upoznajte naš tim arhitekata i partnera."
-        : "Meet our team of architects and partners.",
+    description: t(locale).pages.officeDescription,
     alternates: {
       languages: Object.fromEntries(
         SUPPORTED_LOCALES.map((l) => [l, `/${l}/office`]),
@@ -113,7 +110,7 @@ export default async function OfficePage({ params }: PageProps) {
               text-text-primary
             "
           >
-            Team
+            {t(locale).pages.team}
           </h2>
           <div className="border-t border-divider">
             {(() => {
@@ -162,7 +159,7 @@ export default async function OfficePage({ params }: PageProps) {
               text-text-primary
             "
           >
-            Clients & partner institutions
+            {t(locale).pages.clientsAndPartners}
           </h2>
           <div className="border-t border-divider">
             {(() => {
