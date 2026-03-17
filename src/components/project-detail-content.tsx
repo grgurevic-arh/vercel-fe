@@ -2,7 +2,8 @@ import Image from "next/image";
 
 import { BlocksRenderer } from "@/components/blocks-renderer";
 import { BorderedSection } from "@/components/bordered-section";
-import { HomepageCarousel, type CarouselSlide } from "@/components/homepage-carousel";
+import type { CarouselSlide } from "@/components/homepage-carousel";
+import { ProjectHeroCarousel } from "@/components/project-hero-carousel";
 import {
   getStrapiMediaAttributes,
   getStrapiMediaUrl,
@@ -148,7 +149,7 @@ export function ProjectDetailContent({
     <>
       {/* Hero carousel */}
       {heroSlides.length ? (
-        <HomepageCarousel slides={heroSlides} />
+        <ProjectHeroCarousel slides={heroSlides} />
       ) : null}
 
       {/* Title */}
@@ -156,12 +157,11 @@ export function ProjectDetailContent({
         className="
           content-wrapper
           pt-[32px] md:pt-[40px] lg:pt-[48px]
-          pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[408px]
-          pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
+          pl-[12px] md:pl-[44px] lg:pl-[100px] xl:pl-[248px]
+          pr-[12px] md:pr-[44px] lg:pr-[100px] xl:pr-[248px]
           pb-[24px] md:pb-[32px]
           text-[20px] leading-[28px]
-          min-[320px]:text-[28px] min-[320px]:leading-[38px]
-          md:text-[38px] md:leading-[50px]
+          md:text-[28px] md:leading-[38px]
           text-text-primary
         "
       >
@@ -173,8 +173,8 @@ export function ProjectDetailContent({
         <p
           className="
             content-wrapper
-            pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[408px]
-            pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
+            pl-[12px] md:pl-[44px] lg:pl-[100px] xl:pl-[248px]
+            pr-[12px] md:pr-[44px] lg:pr-[100px] xl:pr-[248px]
             pb-[16px] md:pb-[20px]
             text-[16px] leading-[23px] text-text-primary uppercase tracking-wide
           "
@@ -188,9 +188,10 @@ export function ProjectDetailContent({
         <div
           className="
             content-wrapper
-            pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[408px]
-            pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
+            pl-[12px] md:pl-[44px] lg:pl-[100px] xl:pl-[248px]
+            pr-[12px] md:pr-[44px] lg:pr-[100px] xl:pr-[248px]
             pb-[40px] md:pb-[48px] lg:pb-[56px]
+            max-w-[296px] md:max-w-[680px] lg:max-w-[824px] xl:max-w-[864px]
           "
         >
           <BlocksRenderer
@@ -198,9 +199,6 @@ export function ProjectDetailContent({
             className="
               text-[16px] leading-[23px]
               [font-feature-settings:'onum'_1,'pnum'_1]
-              min-[320px]:text-[20px] min-[320px]:leading-[28px]
-              md:text-[22px] md:leading-[32px]
-              lg:text-[28px] lg:leading-[38px]
               text-text-primary
               [&>p]:mb-[16px] [&>p:last-child]:mb-0
             "
