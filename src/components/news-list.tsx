@@ -17,7 +17,7 @@ interface NewsListProps {
 export function NewsList({ locale, articles, emptyMessage }: NewsListProps) {
   if (!articles.length) {
     return (
-      <p className="text-[16px] leading-[23px] text-text-primary pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[88px]">
+      <p className="content-wrapper text-[16px] leading-[23px] text-text-primary pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[88px]">
         {emptyMessage ?? t(locale as Locale).fallbacks.noNews}
       </p>
     );
