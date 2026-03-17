@@ -6,6 +6,7 @@ import { ContactInfo } from "@/components/contact-info";
 import { getFooter, getOfficePage } from "@/lib/cms";
 import { SUPPORTED_LOCALES } from "@/lib/i18n";
 import { resolveLocaleParam } from "@/lib/request-helpers";
+import { t } from "@/lib/translations";
 import {
   requireStrapiEntity,
   unwrapStrapiEntity,
@@ -25,11 +26,8 @@ export async function generateMetadata({
   const locale = await resolveLocaleParam(params);
 
   return {
-    title: locale === "hr" ? "Ured" : "Office",
-    description:
-      locale === "hr"
-        ? "Upoznajte naš tim arhitekata i partnera."
-        : "Meet our team of architects and partners.",
+    title: t(locale).pages.office,
+    description: t(locale).pages.officeDescription,
     alternates: {
       languages: Object.fromEntries(
         SUPPORTED_LOCALES.map((l) => [l, `/${l}/office`]),
@@ -112,7 +110,7 @@ export default async function OfficePage({ params }: PageProps) {
               text-text-primary
             "
           >
-            Team
+            {t(locale).pages.team}
           </h2>
           <div className="border-t border-divider">
             {(() => {
@@ -124,12 +122,12 @@ export default async function OfficePage({ params }: PageProps) {
                 <BorderedSection
                   key={rowIndex}
                   border="border-b border-divider"
-                  className={`grid grid-cols-1 min-[321px]:grid-cols-2`}
+                  className={`grid grid-cols-1 md:grid-cols-2`}
                 >
                   {row.map((member, i) => (
                     <div
                       key={`${member.name}-${member.role}-${i}`}
-                      className={`${itemInnerClass} ${i === 0 && row.length > 1 ? "border-b border-divider min-[321px]:border-b-0" : ""}`}
+                      className={`${itemInnerClass} ${i === 0 && row.length > 1 ? "border-b border-divider md:border-b-0" : ""}`}
                     >
                       <span className={labelClass}>{member.role}</span>
                       <div>
@@ -161,7 +159,7 @@ export default async function OfficePage({ params }: PageProps) {
               text-text-primary
             "
           >
-            Clients & partner institutions
+            {t(locale).pages.clientsAndPartners}
           </h2>
           <div className="border-t border-divider">
             {(() => {
@@ -173,12 +171,12 @@ export default async function OfficePage({ params }: PageProps) {
                 <BorderedSection
                   key={rowIndex}
                   border="border-b border-divider"
-                  className={`grid grid-cols-1 min-[321px]:grid-cols-2`}
+                  className={`grid grid-cols-1 md:grid-cols-2`}
                 >
                   {row.map((client, i) => (
                     <div
                       key={`${client.title}-${client.role}-${i}`}
-                      className={`${itemInnerClass} ${i === 0 && row.length > 1 ? "border-b border-divider min-[321px]:border-b-0" : ""}`}
+                      className={`${itemInnerClass} ${i === 0 && row.length > 1 ? "border-b border-divider md:border-b-0" : ""}`}
                     >
                       <span className={labelClass}>{client.role}</span>
                       <div>

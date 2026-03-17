@@ -6,6 +6,7 @@ import { getEntryPollBySlug } from "@/lib/cms";
 import { SUPPORTED_LOCALES, DEFAULT_LOCALE } from "@/lib/i18n";
 import type { Locale } from "@/lib/i18n";
 import { resolveLocaleParam } from "@/lib/request-helpers";
+import { t } from "@/lib/translations";
 import { unwrapStrapiEntity, requireStrapiEntity } from "@/lib/strapi-entity";
 import type { EntryPoll } from "@/types/cms";
 
@@ -71,7 +72,7 @@ export default async function PollDetailPage({ params }: PageProps) {
           mb-[34px] md:mb-[26px] lg:mb-[66px] xl:mb-[94px]
         "
       >
-        {locale === "hr" ? "Vaše mišljenje" : "Your opinion"}
+        {t(locale).pages.yourOpinion}
       </h1>
 
       {/* Divider — full width */}

@@ -7,6 +7,7 @@ import { BorderedSection } from "@/components/bordered-section";
 import { getEuProjectPage } from "@/lib/cms";
 import { SUPPORTED_LOCALES } from "@/lib/i18n";
 import { resolveLocaleParam } from "@/lib/request-helpers";
+import { t } from "@/lib/translations";
 import { requireStrapiEntity } from "@/lib/strapi-entity";
 import type { EuProjectPage } from "@/types/cms";
 
@@ -18,7 +19,7 @@ export async function generateMetadata({
   const locale = await resolveLocaleParam(params);
 
   return {
-    title: locale === "hr" ? "EU projekti" : "EU Projects",
+    title: t(locale).pages.euProjects,
     alternates: {
       languages: Object.fromEntries(
         SUPPORTED_LOCALES.map((l) => [l, `/${l}/eu-projects`]),
@@ -46,24 +47,24 @@ export default async function EuProjectsPage({ params }: PageProps) {
 
   const metadataRows = [
     data.projectWorth && {
-      label: locale === "hr" ? "Ukupna vrijednost projekta" : "Project Worth",
+      label: t(locale).euProjects.projectWorth,
       value: data.projectWorth,
     },
     data.euFinanced && {
-      label: locale === "hr" ? "Iznos koji sufinancira EU" : "EU Financed",
+      label: t(locale).euProjects.euFinanced,
       value: data.euFinanced,
     },
     data.timeOfProject && {
-      label: locale === "hr" ? "Razdoblje provedbe projekta" : "Time of Project",
+      label: t(locale).euProjects.timeOfProject,
       value: data.timeOfProject,
     },
     data.contact && {
-      label: locale === "hr" ? "Kontakt za više informacija" : "Contact",
+      label: t(locale).euProjects.contact,
       value: data.contact,
       href: `mailto:${data.contact}`,
     },
     ...(data.usefulLinks?.map((link) => ({
-      label: locale === "hr" ? "Korisni linkovi" : "Useful Links",
+      label: t(locale).euProjects.usefulLinks,
       value: link.label,
       href: link.url,
       external: true,
@@ -170,18 +171,20 @@ export default async function EuProjectsPage({ params }: PageProps) {
 
       {/* EU Directive */}
       {data.euDirective && (
-        <section
+        <section className="border-b border-divider mt-[40px] md:mt-[54px] lg:mt-[54px] xl:mt-[90px] mb-0 md:mb-[54px] lg:mb-[54px] xl:mb-[320px]">
+        <div
           className="
             content-wrapper
-            pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[328px]
-            pr-[12px] md:pr-[20px] lg:pr-[160px] xl:pr-[408px]
-            py-[40px] md:py-[50px] xl:py-[60px]
+            pl-[12px] md:pl-[160px] lg:pl-[160px] xl:pl-[328px]
+            pr-[12px] md:pr-[103px] lg:pr-[102px] xl:pr-[408px]
+            pt-[60px] md:pt-[61px] lg:pt-[60px] xl:pt-[60px]
+            pb-[40px] md:pb-[50px] lg:pb-[50px] xl:pb-[60px]
           "
         >
           {/* EU Badge */}
           <Image
             src="/eu-funded-badge.svg"
-            alt={locale === "hr" ? "Financira Europska unija" : "Funded by the European Union"}
+            alt={t(locale).euProjects.euBadgeAlt}
             width={363}
             height={68}
             className="w-[200px] md:w-[280px] xl:w-[363px] h-auto mb-[32px] xl:mb-[40px]"
@@ -195,6 +198,7 @@ export default async function EuProjectsPage({ params }: PageProps) {
             content={data.euDirective.content}
             className="text-[16px] leading-[23px] xl:text-[20px] xl:leading-[28px] text-[#636363]"
           />
+        </div>
         </section>
       )}
     </main>

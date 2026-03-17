@@ -1,16 +1,14 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import type { Locale } from "@/lib/i18n";
+import { t } from "@/lib/translations";
 
 interface SiteFooterProps {
-  locale: string;
+  locale: Locale;
 }
-
-const footerNavLinks = [
-  { label: "Legal", path: "/legal" },
-  { label: "Research", path: "/research" },
-  { label: "eu projects", path: "/eu-projects" },
-  { label: "Privacy policy", path: "/privacy-policy" },
-];
 
 const languages = [
   { label: "Croatian", locale: "hr" },
@@ -18,6 +16,15 @@ const languages = [
 ];
 
 export function SiteFooter({ locale }: SiteFooterProps) {
+  const pathname = usePathname();
+  const trans = t(locale);
+
+  const footerNavLinks = [
+    { label: trans.footer.legal, path: "/legal" },
+    { label: trans.footer.research, path: "/research" },
+    { label: trans.footer.euProjects, path: "/eu-projects" },
+    { label: trans.footer.privacyPolicy, path: "/privacy-policy" },
+  ];
   return (
     <footer className="content-wrapper relative bg-white h-[360px] md:h-[240px] xl:h-[300px]">
       {/* Navigation links */}
@@ -38,14 +45,7 @@ export function SiteFooter({ locale }: SiteFooterProps) {
                 href={`/${locale}${path}`}
                 className="text-[16px] leading-[23px] text-text-primary"
               >
-                {label === "eu projects" ? (
-                  <>
-                    <span className="tracking-[0.48px]">eu</span>
-                    {" projects"}
-                  </>
-                ) : (
-                  label
-                )}
+                {label}
               </Link>
             </li>
           ))}
@@ -64,7 +64,7 @@ export function SiteFooter({ locale }: SiteFooterProps) {
           {languages.map(({ label, locale: langLocale }) => (
             <li key={langLocale} className="py-[8px]">
               <Link
-                href={`/${langLocale}`}
+                href={pathname.replace(new RegExp(`^/${locale}(?=/|$)`), `/${langLocale}`)}
                 className={`
                   text-[16px] leading-[23px] text-text-primary text-right
                   ${langLocale === locale ? "underline" : ""}
@@ -86,7 +86,7 @@ export function SiteFooter({ locale }: SiteFooterProps) {
           text-[16px] leading-[23px] text-text-primary
         "
       >
-        Grgurević & partneri, 2025
+        {trans.footer.copyright}
       </p>
 
       {/* EU funded badge */}
@@ -98,13 +98,15 @@ export function SiteFooter({ locale }: SiteFooterProps) {
           h-[36px] w-[193px]
         "
       >
-        <Image
-          src="/eu-funded-badge.svg"
-          alt="Funded by the European Union"
-          width={193}
-          height={36}
-          className="h-full w-auto object-contain"
-        />
+        <Link href={`/${locale}/eu-projects`}>
+          <Image
+            src="/eu-funded-badge.svg"
+            alt={trans.footer.euBadgeAlt}
+            width={193}
+            height={36}
+            className="h-full w-auto object-contain"
+          />
+        </Link>
       </div>
     </footer>
   );

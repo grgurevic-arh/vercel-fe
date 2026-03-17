@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import type { Locale } from "@/lib/i18n";
+import { t } from "@/lib/translations";
 import type { EntryPoll } from "@/types/cms";
 
 interface PollFormProps {
@@ -14,6 +15,7 @@ interface PollFormProps {
 
 export function PollForm({ poll, locale }: PollFormProps) {
   const router = useRouter();
+  const trans = t(locale);
   const storageKey = `poll-submitted-${poll.documentId}`;
 
   const hasSubmittedBefore = (() => {
@@ -70,16 +72,12 @@ export function PollForm({ poll, locale }: PollFormProps) {
         if (body?.error?.details?.missingQuestionIds) {
           const missing: string[] = body.error.details.missingQuestionIds;
           for (const qId of missing) {
-            setError(qId, { message: "This field is required" });
+            setError(qId, { message: trans.pollForm.fieldRequired });
           }
           return;
         }
 
-        setSubmitError(
-          locale === "hr"
-            ? "Nešto je pošlo po krivu. Pokušajte ponovno."
-            : "Something went wrong. Please try again.",
-        );
+        setSubmitError(trans.pollForm.somethingWentWrong);
         return;
       }
 
@@ -91,16 +89,11 @@ export function PollForm({ poll, locale }: PollFormProps) {
 
       router.push(`/${locale}/research/${poll.slug}/thank-you`);
     } catch {
-      setSubmitError(
-        locale === "hr"
-          ? "Nešto je pošlo po krivu. Pokušajte ponovno."
-          : "Something went wrong. Please try again.",
-      );
+      setSubmitError(trans.pollForm.somethingWentWrong);
     }
   };
 
-  const requiredMessage =
-    locale === "hr" ? "Ovo polje je obavezno" : "This field is required";
+  const requiredMessage = trans.pollForm.fieldRequired;
 
   return (
     <div>
@@ -114,25 +107,21 @@ export function PollForm({ poll, locale }: PollFormProps) {
           "
         >
           <span>
-            {locale === "hr"
-              ? "Već ste odgovorili na ovu anketu."
-              : "You have already submitted this poll."}
+            {trans.pollForm.alreadySubmitted}
           </span>
           <button
             type="button"
             onClick={() => setShowBanner(false)}
             className="ml-[12px] font-serif text-text-primary underline"
           >
-            {locale === "hr" ? "Zatvori" : "Dismiss"}
+            {trans.pollForm.dismiss}
           </button>
         </div>
       ) : null}
 
       {pollClosed ? (
         <p className="text-[18px] leading-[26px] text-text-primary">
-          {locale === "hr"
-            ? "Ova anketa je zatvorena."
-            : "This poll has been closed."}
+          {trans.pollForm.pollClosed}
         </p>
       ) : (
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -193,7 +182,7 @@ export function PollForm({ poll, locale }: PollFormProps) {
                 ) : null}
 
                 {q.inputType === "select" ? (
-                  <div className="flex items-center gap-[20px] py-[10px]">
+                  <div className="flex flex-wrap items-center gap-[20px] py-[10px]">
                     {q.options?.map((opt) => (
                       <label
                         key={opt.value}
@@ -247,12 +236,8 @@ export function PollForm({ poll, locale }: PollFormProps) {
               "
             >
               {isSubmitting
-                ? locale === "hr"
-                  ? "Šaljem..."
-                  : "Submitting..."
-                : locale === "hr"
-                  ? "Pošalji"
-                  : "Submit"}
+                ? trans.pollForm.submitting
+                : trans.pollForm.submit}
             </button>
           </div>
         </form>

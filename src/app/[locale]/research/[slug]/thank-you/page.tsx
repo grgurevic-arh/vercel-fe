@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { resolveLocaleParam } from "@/lib/request-helpers";
+import { t } from "@/lib/translations";
 
 export async function generateMetadata({
   params,
@@ -10,7 +11,7 @@ export async function generateMetadata({
   const locale = await resolveLocaleParam(params);
 
   return {
-    title: locale === "hr" ? "Hvala" : "Thank You",
+    title: t(locale).pages.thankYou,
   };
 }
 
@@ -36,7 +37,7 @@ export default async function ThankYouPage({ params }: PageProps) {
           mb-[34px] md:mb-[26px] lg:mb-[66px] xl:mb-[94px]
         "
       >
-        {locale === "hr" ? "Vaše mišljenje" : "Your opinion"}
+        {t(locale).pages.yourOpinion}
       </h1>
 
       <hr className="border-divider" />
@@ -59,9 +60,7 @@ export default async function ThankYouPage({ params }: PageProps) {
             lg:[font-feature-settings:normal]
           "
         >
-          {locale === "hr"
-            ? "Hvala na sudjelovanju u anketi!"
-            : "Thank you for participating in the survey!"}
+          {t(locale).pages.thankYouMessage}
         </p>
       </section>
     </main>

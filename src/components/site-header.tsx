@@ -3,22 +3,12 @@
 import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import type { Locale } from "@/lib/i18n";
+import { t } from "@/lib/translations";
 
 interface SiteHeaderProps {
-  locale: string;
+  locale: Locale;
 }
-
-const navLinks = [
-  { label: "Work", path: "/work" },
-  { label: "Office", path: "/office" },
-  { label: "Feed", path: "/news" },
-];
-
-const secondaryNavLinks = [
-  { label: "Research", path: "/research" },
-  { label: "eu projects", path: "/eu-projects" },
-  { label: "Legal", path: "/legal" },
-];
 
 const languages = [
   { label: "English", locale: "en" },
@@ -26,6 +16,20 @@ const languages = [
 ];
 
 export function SiteHeader({ locale }: SiteHeaderProps) {
+  const trans = t(locale);
+
+  const navLinks = [
+    { label: trans.nav.work, path: "/work" },
+    { label: trans.nav.office, path: "/office" },
+    { label: trans.nav.feed, path: "/news" },
+  ];
+
+  const secondaryNavLinks = [
+    { label: trans.secondaryNav.research, path: "/research" },
+    { label: trans.secondaryNav.euProjects, path: "/eu-projects" },
+    { label: trans.secondaryNav.legal, path: "/legal" },
+  ];
+
   const [menuOpen, setMenuOpen] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const triggerButtonRef = useRef<HTMLButtonElement>(null);
@@ -166,14 +170,14 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
         type="button"
         aria-expanded={menuOpen}
         aria-controls="mobile-menu"
-        aria-label={menuOpen ? "Close menu" : "Open menu"}
+        aria-label={menuOpen ? trans.nav.closeMenu : trans.nav.openMenu}
         onClick={() => setMenuOpen(!menuOpen)}
         className="
           md:hidden
           text-[16px] leading-[23px] text-text-primary py-[8px]
         "
       >
-        {menuOpen ? "Close" : "Menu"}
+        {menuOpen ? trans.nav.close : trans.nav.menu}
       </button>
     </div>
     </header>
@@ -199,11 +203,11 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
           <button
             ref={closeButtonRef}
             type="button"
-            aria-label="Close menu"
+            aria-label={trans.nav.closeMenu}
             onClick={() => setMenuOpen(false)}
             className="text-[16px] leading-[23px] text-text-primary py-[8px]"
           >
-            Close
+            {trans.nav.close}
           </button>
         </div>
 
@@ -236,14 +240,7 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
                 ${isActive(path) ? "underline" : ""}
               `}
             >
-              {label === "eu projects" ? (
-                <>
-                  <span className="tracking-[0.48px]">eu</span>
-                  {" projects"}
-                </>
-              ) : (
-                label
-              )}
+              {label}
             </Link>
           ))}
         </nav>

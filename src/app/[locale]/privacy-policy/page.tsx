@@ -5,6 +5,7 @@ import { BlocksRenderer } from "@/components/blocks-renderer";
 import { getPrivacyPolicy } from "@/lib/cms";
 import { SUPPORTED_LOCALES } from "@/lib/i18n";
 import { resolveLocaleParam } from "@/lib/request-helpers";
+import { t } from "@/lib/translations";
 import { requireStrapiEntity } from "@/lib/strapi-entity";
 import type { PrivacyPolicy } from "@/types/cms";
 
@@ -16,7 +17,7 @@ export async function generateMetadata({
   const locale = await resolveLocaleParam(params);
 
   return {
-    title: locale === "hr" ? "Politika privatnosti" : "Privacy Policy",
+    title: t(locale).pages.privacyPolicy,
     alternates: {
       languages: Object.fromEntries(
         SUPPORTED_LOCALES.map((l) => [l, `/${l}/privacy-policy`]),
@@ -59,7 +60,7 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
             leading-[100%] text-text-primary
           "
         >
-          Privacy Policy
+          {t(locale).pages.privacyPolicy}
         </h1>
       </section>
 
@@ -69,7 +70,7 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
           content-wrapper
           pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[328px]
           pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[408px]
-          pb-[24px] md:pb-[38px] lg:pb-[54px] xl:pb-[47px]
+          pb-[80px] md:pb-[100px] lg:pb-[120px] xl:pb-[160px]
         "
       >
         {data.content?.length ? (

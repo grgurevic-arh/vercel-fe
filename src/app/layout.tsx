@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import localFont from "next/font/local";
 
 import { allowIndexing } from "@/lib/env";
-import { DEFAULT_LOCALE } from "@/lib/i18n";
+import { DEFAULT_LOCALE, isLocale } from "@/lib/i18n";
 import "./globals.css";
 
 const untitledSerif = localFont({
@@ -31,30 +31,29 @@ const siteUrl = process.env.SITE_URL ?? "https://grgurevic.hr";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: {
-    default: "Grgurević & partneri",
-    template: "%s | Grgurević & partneri",
-  },
-  description: "Architecture and urban planning studio based in Zagreb.",
   openGraph: {
     type: "website",
-    siteName: "Grgurević & partneri",
     images: [{ url: "/og-default.jpg", width: 1200, height: 630 }],
   },
   icons: {
     icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
   },
   ...(!allowIndexing && {
     robots: { index: false, follow: false },
   }),
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
-}: Readonly<{ children: ReactNode }>) {
+  params,
+}: Readonly<{ children: ReactNode; params: Promise<{ locale?: string }> }>) {
+  const resolvedParams = await params;
+  const lang = resolvedParams?.locale && isLocale(resolvedParams.locale)
+    ? resolvedParams.locale
+    : DEFAULT_LOCALE;
+
   return (
-    <html lang={DEFAULT_LOCALE} className={`${untitledSerif.variable} ${untitledSans.variable}`}>
+    <html lang={lang} className={`${untitledSerif.variable} ${untitledSans.variable}`}>
       <body className="antialiased">
         {children}
       </body>

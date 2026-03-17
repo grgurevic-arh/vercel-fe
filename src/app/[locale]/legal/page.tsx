@@ -6,6 +6,7 @@ import { ContactInfo } from "@/components/contact-info";
 import { getFooter, getLegalPage } from "@/lib/cms";
 import { SUPPORTED_LOCALES } from "@/lib/i18n";
 import { resolveLocaleParam } from "@/lib/request-helpers";
+import { t } from "@/lib/translations";
 import { requireStrapiEntity, unwrapStrapiEntity } from "@/lib/strapi-entity";
 import type { Footer, LegalPage } from "@/types/cms";
 
@@ -17,7 +18,7 @@ export async function generateMetadata({
   const locale = await resolveLocaleParam(params);
 
   return {
-    title: locale === "hr" ? "Pravne informacije" : "Legal",
+    title: t(locale).pages.legal,
     alternates: {
       languages: Object.fromEntries(
         SUPPORTED_LOCALES.map((l) => [l, `/${l}/legal`]),
@@ -67,7 +68,7 @@ export default async function LegalPage({ params }: PageProps) {
             leading-[100%] text-text-primary
           "
         >
-          Legal
+          {t(locale).pages.legal}
         </h1>
       </section>
 

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { getEntryPolls } from "@/lib/cms";
 import { SUPPORTED_LOCALES } from "@/lib/i18n";
 import { resolveLocaleParam } from "@/lib/request-helpers";
+import { t } from "@/lib/translations";
 import { unwrapStrapiEntity } from "@/lib/strapi-entity";
 import type { EntryPoll } from "@/types/cms";
 
@@ -15,7 +16,7 @@ export async function generateMetadata({
   const locale = await resolveLocaleParam(params);
 
   return {
-    title: locale === "hr" ? "Istraživanje" : "Research",
+    title: t(locale).pages.research,
     alternates: {
       languages: Object.fromEntries(
         SUPPORTED_LOCALES.map((l) => [l, `/${l}/research`]),
@@ -40,13 +41,13 @@ export default async function ResearchPage({ params }: PageProps) {
     .map((item) => unwrapStrapiEntity(item))
     .filter((poll): poll is EntryPoll => poll !== null);
 
-  const emptyMessage =
-    locale === "hr" ? "Nema aktivnih anketa" : "No active polls";
+  const emptyMessage = t(locale).pages.noActivePolls;
 
   return (
     <main>
       <section
         className="
+          content-wrapper
           pt-[120px] md:pt-[148px] lg:pt-[148px] xl:pt-[180px]
           pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[408px]
           pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
