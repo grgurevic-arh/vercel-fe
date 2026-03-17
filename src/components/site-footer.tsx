@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type { Locale } from "@/lib/i18n";
 import { t } from "@/lib/translations";
 
@@ -13,6 +16,7 @@ const languages = [
 ];
 
 export function SiteFooter({ locale }: SiteFooterProps) {
+  const pathname = usePathname();
   const trans = t(locale);
 
   const footerNavLinks = [
@@ -60,7 +64,7 @@ export function SiteFooter({ locale }: SiteFooterProps) {
           {languages.map(({ label, locale: langLocale }) => (
             <li key={langLocale} className="py-[8px]">
               <Link
-                href={`/${langLocale}`}
+                href={pathname.replace(new RegExp(`^/${locale}(?=/|$)`), `/${langLocale}`)}
                 className={`
                   text-[16px] leading-[23px] text-text-primary text-right
                   ${langLocale === locale ? "underline" : ""}
