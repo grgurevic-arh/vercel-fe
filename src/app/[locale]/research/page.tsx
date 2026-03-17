@@ -4,6 +4,7 @@ import Link from "next/link";
 import { getEntryPolls } from "@/lib/cms";
 import { SUPPORTED_LOCALES } from "@/lib/i18n";
 import { resolveLocaleParam } from "@/lib/request-helpers";
+import { t } from "@/lib/translations";
 import { unwrapStrapiEntity } from "@/lib/strapi-entity";
 import type { EntryPoll } from "@/types/cms";
 
@@ -15,7 +16,7 @@ export async function generateMetadata({
   const locale = await resolveLocaleParam(params);
 
   return {
-    title: locale === "hr" ? "Istraživanje" : "Research",
+    title: t(locale).pages.research,
     alternates: {
       languages: Object.fromEntries(
         SUPPORTED_LOCALES.map((l) => [l, `/${l}/research`]),

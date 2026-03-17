@@ -6,6 +6,7 @@ import { ContactInfo } from "@/components/contact-info";
 import { getFooter, getOfficePage } from "@/lib/cms";
 import { SUPPORTED_LOCALES } from "@/lib/i18n";
 import { resolveLocaleParam } from "@/lib/request-helpers";
+import { t } from "@/lib/translations";
 import {
   requireStrapiEntity,
   unwrapStrapiEntity,
@@ -25,7 +26,7 @@ export async function generateMetadata({
   const locale = await resolveLocaleParam(params);
 
   return {
-    title: locale === "hr" ? "Ured" : "Office",
+    title: t(locale).pages.office,
     description:
       locale === "hr"
         ? "Upoznajte naš tim arhitekata i partnera."

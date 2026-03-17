@@ -5,6 +5,7 @@ import { BlocksRenderer } from "@/components/blocks-renderer";
 import { getPrivacyPolicy } from "@/lib/cms";
 import { SUPPORTED_LOCALES } from "@/lib/i18n";
 import { resolveLocaleParam } from "@/lib/request-helpers";
+import { t } from "@/lib/translations";
 import { requireStrapiEntity } from "@/lib/strapi-entity";
 import type { PrivacyPolicy } from "@/types/cms";
 
@@ -16,7 +17,7 @@ export async function generateMetadata({
   const locale = await resolveLocaleParam(params);
 
   return {
-    title: locale === "hr" ? "Politika privatnosti" : "Privacy Policy",
+    title: t(locale).pages.privacyPolicy,
     alternates: {
       languages: Object.fromEntries(
         SUPPORTED_LOCALES.map((l) => [l, `/${l}/privacy-policy`]),

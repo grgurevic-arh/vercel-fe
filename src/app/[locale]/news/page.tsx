@@ -7,6 +7,7 @@ import { Pagination } from "@/components/pagination";
 import { getNewsArticles } from "@/lib/cms";
 import { SUPPORTED_LOCALES } from "@/lib/i18n";
 import { resolveLocaleParam, resolvePageParam } from "@/lib/request-helpers";
+import { t } from "@/lib/translations";
 import { normalizeNewsArticles } from "@/lib/news-helpers";
 
 export async function generateMetadata({
@@ -17,7 +18,7 @@ export async function generateMetadata({
   const locale = await resolveLocaleParam(params);
 
   return {
-    title: locale === "hr" ? "Novosti" : "News",
+    title: t(locale).pages.news,
     alternates: {
       languages: Object.fromEntries(
         SUPPORTED_LOCALES.map((l) => [l, `/${l}/news`]),

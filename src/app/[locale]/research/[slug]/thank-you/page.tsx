@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { resolveLocaleParam } from "@/lib/request-helpers";
+import { t } from "@/lib/translations";
 
 export async function generateMetadata({
   params,
@@ -10,7 +11,7 @@ export async function generateMetadata({
   const locale = await resolveLocaleParam(params);
 
   return {
-    title: locale === "hr" ? "Hvala" : "Thank You",
+    title: t(locale).pages.thankYou,
   };
 }
 

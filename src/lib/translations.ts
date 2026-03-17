@@ -20,6 +20,16 @@ const translations = {
       privacyPolicy: "Privacy",
       copyright: "Grgurević & Partners, 2026",
     },
+    pages: {
+      work: "Work",
+      office: "Office",
+      news: "News",
+      legal: "Impressum",
+      research: "Research",
+      euProjects: "EU Projects",
+      privacyPolicy: "Privacy Policy",
+      thankYou: "Thank You",
+    },
   },
   hr: {
     siteTitle: "Grgurević & partneri",
@@ -39,6 +49,16 @@ const translations = {
       euProjects: "EU projekti",  
       privacyPolicy: "Privatnost",
       copyright: "Grgurević & partneri, 2026",
+    },
+    pages: {
+      work: "Projekti",
+      office: "Ured",
+      news: "Novosti",
+      legal: "Impresum",
+      research: "Istraživanje",
+      euProjects: "EU projekti",
+      privacyPolicy: "Politika privatnosti",
+      thankYou: "Hvala",
     },
   },
 } as const;

@@ -7,6 +7,7 @@ import { BorderedSection } from "@/components/bordered-section";
 import { getEuProjectPage } from "@/lib/cms";
 import { SUPPORTED_LOCALES } from "@/lib/i18n";
 import { resolveLocaleParam } from "@/lib/request-helpers";
+import { t } from "@/lib/translations";
 import { requireStrapiEntity } from "@/lib/strapi-entity";
 import type { EuProjectPage } from "@/types/cms";
 
@@ -18,7 +19,7 @@ export async function generateMetadata({
   const locale = await resolveLocaleParam(params);
 
   return {
-    title: locale === "hr" ? "EU projekti" : "EU Projects",
+    title: t(locale).pages.euProjects,
     alternates: {
       languages: Object.fromEntries(
         SUPPORTED_LOCALES.map((l) => [l, `/${l}/eu-projects`]),
