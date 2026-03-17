@@ -232,7 +232,7 @@ export function ProjectDetailContent({
                   key={rowIndex}
                   border="border-b border-divider"
                   className={`
-                    grid grid-cols-1 min-[321px]:grid-cols-2
+                    grid grid-cols-1 md:grid-cols-2
                     h-[70px] lg:h-[90px] xl:h-[80px]
                   `}
                 >
@@ -244,7 +244,7 @@ export function ProjectDetailContent({
                         py-[12px] md:py-[12px] lg:py-0 xl:py-0
                         pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[88px]
                         pr-[12px] md:pr-[20px]
-                        ${i === 0 && row.length > 1 ? "border-b border-divider min-[321px]:border-b-0" : ""}
+                        ${i === 0 && row.length > 1 ? "border-b border-divider md:border-b-0" : ""}
                       `}
                     >
                       <span
