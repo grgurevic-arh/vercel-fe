@@ -60,7 +60,7 @@ export function NewsList({ locale, articles, emptyMessage }: NewsListProps) {
                 {year}
               </span>
               <span className="shrink-0 w-[48px]">{dayMonth}</span>
-              <span className="shrink-0 min-w-0 md:w-[200px] lg:w-[240px] xl:w-[280px] truncate">
+              <span className="min-w-0 flex-1 md:flex-none md:shrink-0 md:w-[200px] lg:w-[240px] xl:w-[280px] truncate">
                 {title}
               </span>
               <span className="hidden md:inline flex-1 min-w-0 truncate">
