@@ -233,7 +233,7 @@ export function ProjectDetailContent({
                   border="border-b border-divider"
                   className={`
                     grid grid-cols-1 md:grid-cols-2
-                    h-[70px] lg:h-[90px] xl:h-[80px]
+                    md:h-[70px] lg:h-[90px] xl:h-[80px]
                   `}
                 >
                   {row.map((pair, i) => (
