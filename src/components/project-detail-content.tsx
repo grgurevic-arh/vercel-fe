@@ -202,18 +202,19 @@ export function ProjectDetailContent({
             pl-[12px] md:pl-[44px] lg:pl-[100px] xl:pl-[248px]
             pr-[12px] md:pr-[44px] lg:pr-[100px] xl:pr-[248px]
             pb-[40px] md:pb-[48px] lg:pb-[56px]
-            max-w-[296px] md:max-w-[680px] lg:max-w-[824px] xl:max-w-[864px]
           "
         >
-          <BlocksRenderer
-            content={project.description}
-            className="
-              text-[16px] leading-[23px]
-              [font-feature-settings:'onum'_1,'pnum'_1]
-              text-text-primary
-              [&>p]:mb-[16px] [&>p:last-child]:mb-0
-            "
-          />
+          <div className="max-w-[296px] md:max-w-[680px] lg:max-w-[824px] xl:max-w-[864px]">
+            <BlocksRenderer
+              content={project.description}
+              className="
+                text-[16px] leading-[23px]
+                [font-feature-settings:'onum'_1,'pnum'_1]
+                text-text-primary
+                [&>p]:mb-[16px] [&>p:last-child]:mb-0
+              "
+            />
+          </div>
         </div>
       ) : null}
 
