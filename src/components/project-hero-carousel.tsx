@@ -78,7 +78,7 @@ export function ProjectHeroCarousel({ slides }: ProjectHeroCarouselProps) {
                     text-[16px] leading-[23px] text-text-primary
                     [font-feature-settings:'onum'_1,'pnum'_1]
                     [text-decoration-skip-ink:none]
-                    ${isActive ? "underline" : ""}
+                    ${isActive ? "underline underline-offset-[4px]" : ""}
                   `}
                 >
                   {index + 1}
