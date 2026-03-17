@@ -140,14 +140,14 @@ export default async function LocaleHomepage({ params }: PageProps) {
       </section>
 
       {/* Contact Info */}
-      <div className="mt-[60px]">
-        <ContactInfo
-          email={footer?.email ?? null}
-          telephone={footer?.phoneNumber ?? null}
-          companyName={footer?.companyName ?? undefined}
-          address={footer?.address ?? undefined}
-        />
-      </div>
+      <ContactInfo
+        email={footer?.email ?? null}
+        telephone={footer?.phoneNumber ?? null}
+        companyName={footer?.companyName ?? undefined}
+        address={footer?.address ?? undefined}
+        showTopBorder
+        className="mt-[123px] md:mt-[206px] lg:mt-[150px] xl:mt-[134px]"
+      />
 
       <JsonLd
         data={{
