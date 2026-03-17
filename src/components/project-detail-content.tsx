@@ -90,27 +90,38 @@ function CompositionImage({
 
   const width = attrs?.width ?? 1600;
   const height = attrs?.height ?? 900;
+  const isPortrait = height >= width;
 
-  const alignmentClass =
-    side === "left"
-      ? "mr-auto ml-0"
-      : "ml-auto mr-0";
+  const widthClass = isPortrait
+    ? "w-full md:w-[340px] lg:w-[412px] xl:w-[472px]"
+    : "w-full md:w-[680px] lg:w-[824px] xl:w-[944px]";
+
+  const alignmentClass = isPortrait
+    ? side === "left"
+      ? ""
+      : "md:ml-auto"
+    : "";
 
   return (
     <figure
       className="
         content-wrapper
-        px-[12px] md:px-[44px] lg:px-[40px] xl:px-[88px]
-        mb-[40px] md:mb-[60px] lg:mb-[80px]
+        pl-0 md:pl-[44px] lg:pl-[100px] xl:pl-[248px]
+        pr-0 md:pr-[44px] lg:pr-[100px] xl:pr-[248px]
+        mb-[90px]
       "
     >
-      <div className={`w-full md:w-[70%] lg:w-[60%] ${alignmentClass}`}>
+      <div className={`${widthClass} ${alignmentClass}`}>
         <Image
           src={url}
           alt={alt}
           width={width}
           height={height}
-          sizes="(min-width: 1024px) 60vw, (min-width: 768px) 70vw, 100vw"
+          sizes={
+            isPortrait
+              ? "(min-width: 1440px) 472px, (min-width: 1024px) 412px, (min-width: 768px) 340px, 100vw"
+              : "(min-width: 1440px) 944px, (min-width: 1024px) 824px, (min-width: 768px) 680px, 100vw"
+          }
           className="h-auto w-full"
         />
         {caption ? (
@@ -265,7 +276,7 @@ export function ProjectDetailContent({
 
       {/* Site images — composition layout */}
       {siteImages.length ? (
-        <section className="mt-[20px] md:mt-[40px]">
+        <section>
           {siteImages.map((siteImage, index) => {
             const attrs = getStrapiMediaAttributes(siteImage.image);
             const alt =
@@ -287,7 +298,7 @@ export function ProjectDetailContent({
 
       {/* Floor plans — same composition layout */}
       {floorPlans.length ? (
-        <section className="mt-[20px] md:mt-[40px]">
+        <section>
           {floorPlans.map((floorPlan, index) => {
             const attrs = getStrapiMediaAttributes(floorPlan.plan);
             const alt =
