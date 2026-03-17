@@ -17,7 +17,7 @@ export function ProjectHeroCarousel({ slides }: ProjectHeroCarouselProps) {
   const current = slides[Math.min(activeIndex, slides.length - 1)];
 
   return (
-    <section className="content-wrapper">
+    <section className="content-wrapper pt-[138px] lg:pt-[144px] xl:pt-[152px]">
       {/* Hero image — inset from left, NOT full-width */}
       <div
         className="
