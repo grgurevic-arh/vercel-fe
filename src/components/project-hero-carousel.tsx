@@ -61,7 +61,7 @@ export function ProjectHeroCarousel({ slides }: ProjectHeroCarouselProps) {
         {/* Pagination numbers */}
         {slides.length > 1 ? (
           <nav
-            className="flex gap-[24px]"
+            className="flex gap-[14px] md:gap-[24px] lg:gap-[14px] xl:gap-[24px]"
             aria-label="Image pagination"
           >
             {slides.map((_, index) => {
@@ -74,8 +74,10 @@ export function ProjectHeroCarousel({ slides }: ProjectHeroCarouselProps) {
                   aria-label={`Show image ${index + 1}`}
                   aria-current={isActive ? "true" : undefined}
                   className={`
+                    text-left md:min-w-[34px] lg:min-w-[39px] xl:min-w-[56px]
                     text-[16px] leading-[23px] text-text-primary
                     [font-feature-settings:'onum'_1,'pnum'_1]
+                    [text-decoration-skip-ink:none]
                     ${isActive ? "underline" : ""}
                   `}
                 >
