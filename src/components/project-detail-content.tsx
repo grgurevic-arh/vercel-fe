@@ -208,12 +208,8 @@ export function ProjectDetailContent({
 
       {/* Meta grid */}
       {metaPairs.length ? (
-        <section
-          className="
-            pb-[40px] md:pb-[60px] lg:pb-[80px]
-          "
-        >
-          <BorderedSection border="border-t border-divider" className="px-[12px] md:px-[44px] lg:px-[40px] xl:px-[88px]">
+        <section className="pb-[40px] md:pb-[60px] lg:pb-[80px]">
+          <div className="border-t border-divider">
             {(() => {
               const rows: Array<typeof metaPairs> = [];
               for (let i = 0; i < metaPairs.length; i += 2) {
@@ -223,18 +219,39 @@ export function ProjectDetailContent({
                 <BorderedSection
                   key={rowIndex}
                   border="border-b border-divider"
-                  className="
-                    grid grid-cols-1 md:grid-cols-2
-                    gap-x-[40px] lg:gap-x-[80px]
-                    py-[12px] md:py-[16px]
-                  "
+                  className={`
+                    grid grid-cols-1 min-[321px]:grid-cols-2
+                    h-[70px] lg:h-[90px] xl:h-[80px]
+                  `}
                 >
-                  {row.map((pair) => (
-                    <div key={pair.label} className="flex gap-x-[24px] md:gap-x-[40px]">
-                      <span className="shrink-0 w-[120px] md:w-[140px] uppercase text-[16px] leading-[23px] text-text-primary tracking-wide">
+                  {row.map((pair, i) => (
+                    <div
+                      key={pair.label}
+                      className={`
+                        flex flex-col lg:flex-row lg:items-center
+                        py-[12px] md:py-[12px] lg:py-0 xl:py-0
+                        pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[88px]
+                        pr-[12px] md:pr-[20px]
+                        ${i === 0 && row.length > 1 ? "border-b border-divider min-[321px]:border-b-0" : ""}
+                      `}
+                    >
+                      <span
+                        className="
+                          shrink-0 uppercase
+                          text-[16px] leading-[22px] tracking-[0.48px]
+                          text-text-primary
+                          [font-feature-settings:'onum'_1,'pnum'_1]
+                          lg:w-[130px] xl:w-[150px]
+                        "
+                      >
                         {pair.label}
                       </span>
-                      <span className="text-[16px] leading-[23px] text-text-primary">
+                      <span
+                        className="
+                          text-[16px] leading-[23px] text-text-primary
+                          [font-feature-settings:'onum'_1,'pnum'_1]
+                        "
+                      >
                         {pair.value}
                       </span>
                     </div>
@@ -242,7 +259,7 @@ export function ProjectDetailContent({
                 </BorderedSection>
               ));
             })()}
-          </BorderedSection>
+          </div>
         </section>
       ) : null}
 
