@@ -1,20 +1,59 @@
-import Link from "next/link";
+"use client";
+
+import { useParams } from "next/navigation";
+import type { Locale } from "@/lib/i18n";
+import { t } from "@/lib/translations";
 
 export default function LocaleNotFound() {
+  const params = useParams<{ locale: string }>();
+  const locale = (params?.locale ?? "en") as Locale;
+  const trans = t(locale);
+
   return (
-    <main className="flex min-h-[60vh] flex-col items-center justify-center px-6 text-center">
-      <h1 className="font-[family-name:var(--font-untitled-serif)] text-4xl font-bold">
-        404
-      </h1>
-      <p className="mt-4 text-lg text-neutral-600">
-        The page you are looking for does not exist.
-      </p>
-      <Link
-        href="/"
-        className="mt-8 text-sm underline underline-offset-4 hover:text-neutral-600"
+    <main>
+      <section
+        className="
+          content-wrapper
+          pl-[12px] md:pl-[160px] lg:pl-[160px] xl:pl-[328px]
+          pt-[86px] md:pt-[184px] lg:pt-[216px] xl:pt-[190px]
+        "
       >
-        Go to homepage
-      </Link>
+        <h1
+          className="
+            text-[28px] leading-[38px]
+            md:text-[38px] md:leading-[50px]
+            lg:text-[66px] lg:leading-[normal]
+            text-text-primary
+          "
+        >
+          {trans.pages.notFound}
+        </h1>
+
+        <p
+          className="
+            mt-[16px] md:mt-[16px] lg:mt-[16px]
+            text-[16px] leading-[23px]
+            md:text-[20px] md:leading-[28px]
+            lg:text-[28px] lg:leading-[38px]
+            text-text-primary
+            max-w-[296px] md:max-w-[448px] lg:max-w-[784px]
+          "
+        >
+          {trans.pages.notFoundDescription}
+        </p>
+
+        <p
+          className="
+            mt-[62px] md:mt-[62px] lg:mt-[120px]
+            text-[16px] leading-[23px]
+            lg:text-[22px] lg:leading-[32px]
+            text-[var(--text-secondary,#636363)]
+            max-w-[297px] md:max-w-[448px] lg:max-w-[784px]
+          "
+        >
+          {trans.pages.errorCode}
+        </p>
+      </section>
     </main>
   );
 }
