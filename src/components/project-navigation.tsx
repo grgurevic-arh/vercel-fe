@@ -81,7 +81,7 @@ export function ProjectNavigation({
             md:text-[28px] md:leading-[38px]
             text-text-primary
             [font-feature-settings:'onum'_1,'pnum'_1]
-            underline
+            hover:underline
             focus-visible:outline focus-visible:outline-2
             focus-visible:outline-offset-2 focus-visible:outline-black
           "
