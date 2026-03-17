@@ -171,12 +171,14 @@ export default async function EuProjectsPage({ params }: PageProps) {
 
       {/* EU Directive */}
       {data.euDirective && (
-        <section
+        <section className="border-b border-divider">
+        <div
           className="
             content-wrapper
-            pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[328px]
-            pr-[12px] md:pr-[20px] lg:pr-[160px] xl:pr-[408px]
-            py-[40px] md:py-[50px] xl:py-[60px]
+            pl-[12px] md:pl-[160px] lg:pl-[160px] xl:pl-[328px]
+            pr-[12px] md:pr-[103px] lg:pr-[102px] xl:pr-[408px]
+            pt-[60px] md:pt-[61px] lg:pt-[60px] xl:pt-[60px]
+            pb-[40px] md:pb-[50px] lg:pb-[50px] xl:pb-[60px]
           "
         >
           {/* EU Badge */}
@@ -196,6 +198,7 @@ export default async function EuProjectsPage({ params }: PageProps) {
             content={data.euDirective.content}
             className="text-[16px] leading-[23px] xl:text-[20px] xl:leading-[28px] text-[#636363]"
           />
+        </div>
         </section>
       )}
     </main>
