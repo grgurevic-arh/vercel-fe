@@ -11,56 +11,85 @@ export function ProjectNavigation({
   previousSlug,
   nextSlug,
 }: ProjectNavigationProps) {
+  const hr = locale === "hr";
   const prevHref = `/${locale}/work/${previousSlug}`;
   const allHref = `/${locale}/work`;
   const nextHref = `/${locale}/work/${nextSlug}`;
 
+  const prevLabel = hr ? "Prethodni projekt" : "Previous project";
+  const allLabel = hr ? "Svi radovi" : "All work";
+  const nextLabel = hr ? "Sljedeći projekt" : "Next project";
+
   return (
     <nav
-      className="
-        content-wrapper
-        flex items-baseline justify-between
-        px-[12px] md:px-[44px] lg:px-[40px] xl:px-[88px]
-        pt-[60px] md:pt-[80px] lg:pt-[100px]
-        pb-[60px] md:pb-[80px] lg:pb-[100px]
-        text-[16px] leading-[23px] text-text-primary
-      "
+      className="border-t border-b border-divider"
       aria-label="Project navigation"
     >
-      <Link
-        href={prevHref}
+      <div
         className="
-          hover:underline
-          focus-visible:outline focus-visible:outline-2
-          focus-visible:outline-offset-2 focus-visible:outline-black
+          content-wrapper relative
+          h-[132px] md:h-[240px] lg:h-[444px] xl:h-[544px]
         "
       >
-        <span className="md:hidden">&larr;</span>
-        <span className="hidden md:inline">Previous project</span>
-      </Link>
+        {/* Previous project */}
+        <Link
+          href={prevHref}
+          className="
+            absolute
+            left-[12px] md:left-[44px] lg:left-[40px] xl:left-[88px]
+            top-[52px] md:top-[101px] lg:top-[203px] xl:top-[253px]
+            text-[20px] leading-[28px]
+            md:text-[28px] md:leading-[38px]
+            text-text-primary
+            [font-feature-settings:'onum'_1,'pnum'_1]
+            hover:underline
+            focus-visible:outline focus-visible:outline-2
+            focus-visible:outline-offset-2 focus-visible:outline-black
+          "
+        >
+          <span className="md:hidden">&larr;</span>
+          <span className="hidden md:inline">{prevLabel}</span>
+        </Link>
 
-      <Link
-        href={allHref}
-        className="
-          hover:underline
-          focus-visible:outline focus-visible:outline-2
-          focus-visible:outline-offset-2 focus-visible:outline-black
-        "
-      >
-        All work
-      </Link>
+        {/* All work */}
+        <Link
+          href={allHref}
+          className="
+            absolute
+            left-1/2 -translate-x-1/2
+            top-[52px] md:top-[101px] lg:top-[203px] xl:top-[253px]
+            text-[20px] leading-[28px]
+            md:text-[28px] md:leading-[38px]
+            text-text-primary
+            [font-feature-settings:'onum'_1,'pnum'_1]
+            hover:underline
+            focus-visible:outline focus-visible:outline-2
+            focus-visible:outline-offset-2 focus-visible:outline-black
+          "
+        >
+          {allLabel}
+        </Link>
 
-      <Link
-        href={nextHref}
-        className="
-          underline
-          focus-visible:outline focus-visible:outline-2
-          focus-visible:outline-offset-2 focus-visible:outline-black
-        "
-      >
-        <span className="md:hidden">&rarr;</span>
-        <span className="hidden md:inline">Next project</span>
-      </Link>
+        {/* Next project */}
+        <Link
+          href={nextHref}
+          className="
+            absolute
+            right-[12px] md:right-[44px] lg:right-[40px] xl:right-[88px]
+            top-[52px] md:top-[101px] lg:top-[203px] xl:top-[253px]
+            text-[20px] leading-[28px]
+            md:text-[28px] md:leading-[38px]
+            text-text-primary
+            [font-feature-settings:'onum'_1,'pnum'_1]
+            underline
+            focus-visible:outline focus-visible:outline-2
+            focus-visible:outline-offset-2 focus-visible:outline-black
+          "
+        >
+          <span className="md:hidden">&rarr;</span>
+          <span className="hidden md:inline">{nextLabel}</span>
+        </Link>
+      </div>
     </nav>
   );
 }
