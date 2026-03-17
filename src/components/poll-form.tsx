@@ -182,7 +182,7 @@ export function PollForm({ poll, locale }: PollFormProps) {
                 ) : null}
 
                 {q.inputType === "select" ? (
-                  <div className="flex items-center gap-[20px] py-[10px]">
+                  <div className="flex flex-wrap items-center gap-[20px] py-[10px]">
                     {q.options?.map((opt) => (
                       <label
                         key={opt.value}
