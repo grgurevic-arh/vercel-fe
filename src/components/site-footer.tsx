@@ -94,13 +94,15 @@ export function SiteFooter({ locale }: SiteFooterProps) {
           h-[36px] w-[193px]
         "
       >
-        <Image
-          src="/eu-funded-badge.svg"
-          alt="Funded by the European Union"
-          width={193}
-          height={36}
-          className="h-full w-auto object-contain"
-        />
+        <Link href={`/${locale}/eu-projects`}>
+          <Image
+            src="/eu-funded-badge.svg"
+            alt="Funded by the European Union"
+            width={193}
+            height={36}
+            className="h-full w-auto object-contain"
+          />
+        </Link>
       </div>
     </footer>
   );
