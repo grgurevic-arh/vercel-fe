@@ -3,6 +3,8 @@ interface ContactInfoProps {
   telephone: string | null;
   companyName?: string;
   address?: string;
+  showTopBorder?: boolean;
+  className?: string;
 }
 
 export function ContactInfo({
@@ -10,13 +12,17 @@ export function ContactInfo({
   telephone,
   companyName,
   address,
+  showTopBorder = false,
+  className,
 }: ContactInfoProps) {
   return (
     <section
-      className="
+      className={`
         bg-white
-        border-t border-b border-divider
-      "
+        border-b border-divider
+        ${showTopBorder ? "border-t" : ""}
+        ${className ?? ""}
+      `}
     >
       <div
         className="
