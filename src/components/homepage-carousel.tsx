@@ -66,7 +66,9 @@ export function HomepageCarousel({ slides }: HomepageCarouselProps) {
                   className={`
                     text-left md:min-w-[34px] lg:min-w-[39px] xl:min-w-[56px]
                     text-[16px] leading-[23px] text-text-primary
-                    ${isActive ? "underline" : ""}
+                    [font-feature-settings:'onum'_1,'pnum'_1]
+                    [text-decoration-skip-ink:none]
+                    ${isActive ? "underline underline-offset-[4px]" : ""}
                   `}
                 >
                   {index + 1}
