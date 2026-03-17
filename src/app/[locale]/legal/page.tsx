@@ -92,6 +92,7 @@ export default async function LegalPage({ params }: PageProps) {
         telephone={footer?.phoneNumber ?? null}
         companyName={footer?.companyName ?? undefined}
         address={footer?.address ?? undefined}
+        showTopBorder
       />
     </main>
   );
