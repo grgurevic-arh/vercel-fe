@@ -122,12 +122,12 @@ export default async function OfficePage({ params }: PageProps) {
                 <BorderedSection
                   key={rowIndex}
                   border="border-b border-divider"
-                  className={`grid grid-cols-1 min-[321px]:grid-cols-2`}
+                  className={`grid grid-cols-1 md:grid-cols-2`}
                 >
                   {row.map((member, i) => (
                     <div
                       key={`${member.name}-${member.role}-${i}`}
-                      className={`${itemInnerClass} ${i === 0 && row.length > 1 ? "border-b border-divider min-[321px]:border-b-0" : ""}`}
+                      className={`${itemInnerClass} ${i === 0 && row.length > 1 ? "border-b border-divider md:border-b-0" : ""}`}
                     >
                       <span className={labelClass}>{member.role}</span>
                       <div>
@@ -171,12 +171,12 @@ export default async function OfficePage({ params }: PageProps) {
                 <BorderedSection
                   key={rowIndex}
                   border="border-b border-divider"
-                  className={`grid grid-cols-1 min-[321px]:grid-cols-2`}
+                  className={`grid grid-cols-1 md:grid-cols-2`}
                 >
                   {row.map((client, i) => (
                     <div
                       key={`${client.title}-${client.role}-${i}`}
-                      className={`${itemInnerClass} ${i === 0 && row.length > 1 ? "border-b border-divider min-[321px]:border-b-0" : ""}`}
+                      className={`${itemInnerClass} ${i === 0 && row.length > 1 ? "border-b border-divider md:border-b-0" : ""}`}
                     >
                       <span className={labelClass}>{client.role}</span>
                       <div>
