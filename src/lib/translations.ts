@@ -80,10 +80,10 @@ const translations = {
       work: "Rad",
       office: "Ured",
       feed: "Objave",
-      menu: "Izbornik",
+      menu: "Menu",
       close: "Zatvori",
-      openMenu: "Otvori izbornik",
-      closeMenu: "Zatvori izbornik",
+      openMenu: "Otvori menu",
+      closeMenu: "Zatvori menu",
     },
     secondaryNav: {
       research: "Participacija",
