@@ -87,14 +87,13 @@ export default async function LegalPage({ params }: PageProps) {
       />
 
       {/* Contact Info */}
-      <div className="mt-[60px] md:mt-[80px] lg:mt-[120px] xl:mt-[200px]">
-        <ContactInfo
-          email={footer?.email ?? null}
-          telephone={footer?.phoneNumber ?? null}
-          companyName={footer?.companyName ?? undefined}
-          address={footer?.address ?? undefined}
-        />
-      </div>
+      <ContactInfo
+        email={footer?.email ?? null}
+        telephone={footer?.phoneNumber ?? null}
+        companyName={footer?.companyName ?? undefined}
+        address={footer?.address ?? undefined}
+        showTopBorder
+      />
     </main>
   );
 }
