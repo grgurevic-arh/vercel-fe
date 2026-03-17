@@ -171,7 +171,7 @@ export default async function EuProjectsPage({ params }: PageProps) {
 
       {/* EU Directive */}
       {data.euDirective && (
-        <section className="border-b border-divider mb-0 md:mb-[54px] lg:mb-[54px] xl:mb-[320px]">
+        <section className="border-b border-divider mt-[40px] md:mt-[54px] lg:mt-[54px] xl:mt-[90px] mb-0 md:mb-[54px] lg:mb-[54px] xl:mb-[320px]">
         <div
           className="
             content-wrapper
