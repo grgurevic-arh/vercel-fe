@@ -30,6 +30,10 @@ try {
       port: strapiUrl.port || undefined,
       pathname: "/uploads/**",
     },
+    {
+      protocol: "https",
+      hostname: "*.media.strapiapp.com",
+    },
   ];
 
   disableImageOptimization = isLocalHost;
