@@ -5,7 +5,7 @@ Next.js (App Router) application that consumes the Strapi-powered CMS described 
 ## Prerequisites
 - Node.js 18.17+ (Next.js requirement)
 - npm 9+
-- Access to the Strapi instance with the two API tokens described below
+- Access to the Strapi instance with the two API tokens described beloow
 
 ## Environment configuration
 1. Copy the sample file and set the real values provided by the backend team:
