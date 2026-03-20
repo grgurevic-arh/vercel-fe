@@ -37,8 +37,16 @@ export function PollForm({ poll, locale }: PollFormProps) {
     setError,
   } = useForm<Record<string, string>>();
 
+  const [accessCodeError, setAccessCodeError] = useState<string | null>(null);
+
   const onSubmit = async (formData: Record<string, string>) => {
     setSubmitError(null);
+    setAccessCodeError(null);
+
+    if (poll.requiresAccessCode && !formData.__accessCode?.trim()) {
+      setAccessCodeError(trans.pollForm.accessCodeRequired);
+      return;
+    }
 
     const answers = poll.questions.map((q) => ({
       questionId: q.questionId,
@@ -53,6 +61,9 @@ export function PollForm({ poll, locale }: PollFormProps) {
           entryPoll: poll.documentId,
           locale,
           answers,
+          ...(poll.requiresAccessCode
+            ? { accessCode: formData.__accessCode.trim() }
+            : {}),
           metadata: {
             userAgent: navigator.userAgent,
             submittedAt: new Date().toISOString(),
@@ -66,6 +77,16 @@ export function PollForm({ poll, locale }: PollFormProps) {
 
         if (message.includes("not accepting submissions")) {
           setPollClosed(true);
+          return;
+        }
+
+        if (message.includes("requires an access code")) {
+          setAccessCodeError(trans.pollForm.accessCodeRequired);
+          return;
+        }
+
+        if (message.includes("Invalid access code")) {
+          setAccessCodeError(trans.pollForm.accessCodeInvalid);
           return;
         }
 
@@ -126,6 +147,41 @@ export function PollForm({ poll, locale }: PollFormProps) {
       ) : (
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <div className="space-y-[24px] md:space-y-[32px]">
+            {poll.requiresAccessCode ? (
+              <div className="flex flex-col gap-[6px]">
+                <label
+                  htmlFor="__accessCode"
+                  className="
+                    font-sans text-[16px] leading-[23px]
+                    [font-feature-settings:'onum'_1,'pnum'_1]
+                    text-text-primary
+                  "
+                >
+                  {trans.pollForm.accessCodeLabel}
+                  <span className="ml-[4px] text-red-600">*</span>
+                </label>
+                <input
+                  id="__accessCode"
+                  type="text"
+                  placeholder={trans.pollForm.accessCodePlaceholder}
+                  {...register("__accessCode")}
+                  className="
+                    font-sans w-full border-0 border-b border-[#636363]
+                    bg-transparent px-[1px] py-[10px]
+                    text-[16px] leading-[23px]
+                    text-text-primary
+                    placeholder:text-[#636363] placeholder:tracking-[-0.1px]
+                    focus:outline-none
+                  "
+                />
+                {accessCodeError ? (
+                  <p className="mt-[4px] text-[14px] text-red-600">
+                    {accessCodeError}
+                  </p>
+                ) : null}
+              </div>
+            ) : null}
+
             {poll.questions.map((q) => (
               <div key={q.questionId} className="flex flex-col gap-[6px]">
                 <label

@@ -64,6 +64,10 @@ const translations = {
       dismiss: "Dismiss",
       submitting: "Submitting...",
       submit: "Submit",
+      accessCodeLabel: "Access code",
+      accessCodePlaceholder: "Enter access code",
+      accessCodeRequired: "This poll requires an access code",
+      accessCodeInvalid: "Invalid access code",
     },
     fallbacks: {
       noProjects: "No published projects yet.",
@@ -136,6 +140,10 @@ const translations = {
       dismiss: "Zatvori",
       submitting: "Šaljem...",
       submit: "Pošalji",
+      accessCodeLabel: "Pristupni kod",
+      accessCodePlaceholder: "Unesite pristupni kod",
+      accessCodeRequired: "Ova anketa zahtijeva pristupni kod",
+      accessCodeInvalid: "Nevažeći pristupni kod",
     },
     fallbacks: {
       noProjects: "Još nema objavljenih projekata.",

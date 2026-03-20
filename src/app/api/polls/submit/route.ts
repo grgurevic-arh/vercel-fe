@@ -9,11 +9,12 @@ interface SubmissionBody {
   entryPoll?: string;
   locale?: string;
   answers?: PollAnswer[];
+  accessCode?: string;
   metadata?: Record<string, unknown>;
 }
 
 export async function POST(request: Request) {
-  const { entryPoll, locale, answers, metadata }: SubmissionBody =
+  const { entryPoll, locale, answers, accessCode, metadata }: SubmissionBody =
     await request.json();
 
   if (!entryPoll || typeof entryPoll !== "string") {
@@ -42,6 +43,7 @@ export async function POST(request: Request) {
       entryPoll,
       locale,
       answers,
+      ...(accessCode ? { accessCode } : {}),
       metadata,
     });
 

@@ -257,6 +257,7 @@ export interface EntryPoll extends LocalizedEntity {
   projectName: string;
   description: string | null;
   status: "open";
+  requiresAccessCode: boolean;
   questions: PollQuestion[];
   createdAt: string;
   updatedAt: string;
@@ -271,5 +272,6 @@ export interface PollSubmissionPayload {
   entryPoll: string;
   locale: "en" | "hr";
   answers: PollAnswer[];
+  accessCode?: string;
   metadata?: Record<string, unknown>;
 }
