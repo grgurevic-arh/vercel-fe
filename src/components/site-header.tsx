@@ -154,10 +154,12 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
           <Link
             key={path}
             href={`/${locale}${path}`}
-            className="
+            className={`
               text-[16px] leading-[23px] xl:text-[20px] xl:leading-[28px]
               text-text-primary py-[8px]
-            "
+              hover:underline hover:underline-offset-[4px]
+              ${isActive(path) ? "underline underline-offset-[4px]" : ""}
+            `}
           >
             {label}
           </Link>

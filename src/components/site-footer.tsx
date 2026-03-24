@@ -43,9 +43,19 @@ export function SiteFooter({ locale }: SiteFooterProps) {
             >
               <Link
                 href={`/${locale}${path}`}
-                className="text-[16px] leading-[23px] text-text-primary"
+                className="text-[16px] leading-[23px] text-text-primary hover:underline"
               >
-                {label}
+                {path === "/eu-projects" ? (
+                  <>
+                    <span className="lowercase [font-variant-caps:small-caps] tracking-[0.48px]">
+                      {label.split(" ")[0]}
+                    </span>
+                    {" "}
+                    {label.split(" ").slice(1).join(" ")}
+                  </>
+                ) : (
+                  label
+                )}
               </Link>
             </li>
           ))}
