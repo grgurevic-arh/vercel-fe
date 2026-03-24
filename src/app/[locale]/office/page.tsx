@@ -65,7 +65,7 @@ export default async function OfficePage({ params }: PageProps) {
   const clients = (data.clients ?? []) as ClientPartnerCard[];
 
   const labelClass =
-    "shrink-0 tracking-[0.03em] lowercase [font-variant-caps:small-caps] text-[16px] leading-[23px] text-text-primary lg:w-[130px] xl:w-[150px]";
+    "shrink-0 tracking-[0.03em] lowercase [font-variant-caps:small-caps] text-[16px] leading-[23px] text-text-primary lg:w-[180px] xl:w-[240px]";
   const itemInnerClass =
     "flex flex-col lg:flex-row py-[12px] md:py-[16px] xl:py-[20px] pl-[12px] md:pl-[102px] lg:pl-[40px] xl:pl-[88px] pr-[12px] md:pr-[20px]";
   const textClass = "text-[16px] leading-[23px] text-text-primary";
@@ -102,7 +102,7 @@ export default async function OfficePage({ params }: PageProps) {
           <h2
             className="
               content-wrapper
-              pl-[12px] md:pl-[102px] lg:pl-[170px] xl:pl-[238px]
+              pl-[12px] md:pl-[102px] lg:pl-[220px] xl:pl-[328px]
               pb-[24px] md:pb-[32px] xl:pb-[40px]
               text-[20px] leading-[28px]
               lg:text-[28px] lg:leading-[38px]
@@ -159,7 +159,7 @@ export default async function OfficePage({ params }: PageProps) {
             className="
               content-wrapper
               pt-[80px] md:pt-[120px] lg:pt-[140px] xl:pt-[180px]
-              pl-[12px] md:pl-[102px] lg:pl-[170px] xl:pl-[238px]
+              pl-[12px] md:pl-[102px] lg:pl-[220px] xl:pl-[328px]
               pb-[24px] md:pb-[32px] xl:pb-[40px]
               text-[20px] leading-[28px]
               lg:text-[28px] lg:leading-[38px]
