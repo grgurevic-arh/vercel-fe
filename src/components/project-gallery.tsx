@@ -119,7 +119,10 @@ export function ProjectGallery({ locale, projects }: ProjectGalleryProps) {
       {/* Mobile + md layout (stacked, shown below lg) */}
       <div className="lg:hidden space-y-[52px] md:space-y-[32px]">
         {projects.map((project) => (
-          <div key={`${project.slug}-${project.id}`} className="md:mx-auto md:w-[564px]">
+          <div
+            key={`${project.slug}-${project.id}`}
+            className="md:mx-auto md:w-[564px]"
+          >
             <GalleryItem project={project} locale={locale} />
           </div>
         ))}
@@ -146,15 +149,9 @@ export function ProjectGallery({ locale, projects }: ProjectGalleryProps) {
           }
 
           return (
-            <div
-              key={`row-${rowIndex}`}
-              className="flex justify-center"
-            >
+            <div key={`row-${rowIndex}`} className="flex justify-center">
               <div className="w-[464px]">
-                <GalleryItem
-                  project={row.projects[0]}
-                  locale={locale}
-                />
+                <GalleryItem project={row.projects[0]} locale={locale} />
               </div>
             </div>
           );

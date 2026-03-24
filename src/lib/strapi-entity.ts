@@ -7,7 +7,8 @@ const hasAttributesWrapper = (
     typeof value === "object" &&
     value !== null &&
     "attributes" in value &&
-    typeof (value as StrapiData<Record<string, unknown>>).attributes === "object"
+    typeof (value as StrapiData<Record<string, unknown>>).attributes ===
+      "object"
   );
 };
 

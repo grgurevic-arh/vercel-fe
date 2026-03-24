@@ -44,7 +44,7 @@ export default async function ResearchPage({ params }: PageProps) {
   const emptyMessage = t(locale).pages.noActivePolls;
 
   return (
-    <main>
+    <main className="min-h-[calc(100vh-414px)] md:min-h-[calc(100vh-294px)] xl:min-h-[calc(100vh-380px)]">
       <section
         className="
           content-wrapper
@@ -80,7 +80,7 @@ export default async function ResearchPage({ params }: PageProps) {
                     md:[font-feature-settings:normal]
                     text-text-primary
                     hover:underline
-                    focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black
+                    focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-black
                   "
                 >
                   {poll.projectName}
@@ -91,9 +91,7 @@ export default async function ResearchPage({ params }: PageProps) {
                       mt-[4px] md:mt-[8px]
                       text-[16px] leading-[23px]
                       md:text-[20px] md:leading-[28px]
-                      text-text-primary/70
-                      line-clamp-2
-                    "
+                      text-text-primary/70"
                   >
                     {stripHtml(poll.description)}
                   </p>

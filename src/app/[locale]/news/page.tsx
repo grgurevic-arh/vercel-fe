@@ -94,7 +94,7 @@ export default async function NewsListingPage({
           locale={locale}
           currentPage={pagination?.page ?? requestedPage}
           pageCount={pageCount}
-          />
+        />
       </div>
     </main>
   );

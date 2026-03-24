@@ -6,12 +6,12 @@ type StrapiAsset = StrapiMedia | StrapiMediaAttributes | null | undefined;
 const uploadsBaseUrl = env.strapiBaseUrl.replace(/\/api\/?$/, "");
 
 const hasDataWrapper = (value: unknown): value is StrapiMedia => {
-  return (
-    typeof value === "object" && value !== null && "data" in value
-  );
+  return typeof value === "object" && value !== null && "data" in value;
 };
 
-const hasDirectAttributes = (value: unknown): value is StrapiMediaAttributes => {
+const hasDirectAttributes = (
+  value: unknown,
+): value is StrapiMediaAttributes => {
   return (
     typeof value === "object" &&
     value !== null &&

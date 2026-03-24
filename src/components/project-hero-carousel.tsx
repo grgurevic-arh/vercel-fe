@@ -58,14 +58,13 @@ export function ProjectHeroCarousel({ slides }: ProjectHeroCarouselProps) {
           >
             {current.description}
           </p>
-        ) : <span className="hidden md:inline" />}
+        ) : (
+          <span className="hidden md:inline" />
+        )}
 
         {/* Pagination numbers */}
         {slides.length > 1 ? (
-          <nav
-            className="flex gap-[32px]"
-            aria-label="Image pagination"
-          >
+          <nav className="flex gap-[32px]" aria-label="Image pagination">
             {slides.map((_, index) => {
               const isActive = index === activeIndex;
               return (

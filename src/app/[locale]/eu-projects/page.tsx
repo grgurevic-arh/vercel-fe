@@ -128,7 +128,10 @@ export default async function EuProjectsPage({ params }: PageProps) {
           <h2 className="italic text-[20px] leading-normal text-text-primary pb-[8px]">
             {block.title}
           </h2>
-          <BlocksRenderer content={block.content} className="text-[16px] leading-[23px] text-text-primary [&_p:empty]:hidden [&>*+*]:mt-[16px]" />
+          <BlocksRenderer
+            content={block.content}
+            className="text-[16px] leading-[23px] text-text-primary [&_p:empty]:hidden [&>*+*]:mt-[16px]"
+          />
         </section>
       ))}
 
@@ -154,7 +157,9 @@ export default async function EuProjectsPage({ params }: PageProps) {
               {row.href ? (
                 <a
                   href={row.href}
-                  {...(row.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  {...(row.external
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
                   className={`text-[16px] leading-[23px] text-text-primary xl:absolute xl:left-[45%] ${row.external ? "underline" : ""}`}
                 >
                   {row.value}
@@ -172,33 +177,33 @@ export default async function EuProjectsPage({ params }: PageProps) {
       {/* EU Directive */}
       {data.euDirective && (
         <section className="border-b border-divider mt-[40px] md:mt-[54px] lg:mt-[54px] xl:mt-[90px] mb-0 md:mb-[54px] lg:mb-[54px] xl:mb-[320px]">
-        <div
-          className="
+          <div
+            className="
             content-wrapper
             pl-[12px] md:pl-[102px] lg:pl-[160px] xl:pl-[328px]
             pr-[12px] md:pr-[160px] lg:pr-[102px] xl:pr-[408px]
             pt-[60px] md:pt-[61px] lg:pt-[60px] xl:pt-[60px]
             pb-[102px] md:pb-[50px] lg:pb-[50px] xl:pb-[60px]
           "
-        >
-          {/* EU Badge */}
-          <Image
-            src="/eu-funded-badge.svg"
-            alt={t(locale).euProjects.euBadgeAlt}
-            width={363}
-            height={68}
-            className="w-[200px] md:w-[280px] xl:w-[363px] h-auto mb-[32px] xl:mb-[40px]"
-          />
-          {/* Title */}
-          <p className="text-[16px] leading-[23px] xl:text-[20px] xl:leading-[28px] text-text-primary mb-[8px]">
-            {data.euDirective.title}
-          </p>
-          {/* Disclaimer */}
-          <BlocksRenderer
-            content={data.euDirective.content}
-            className="text-[16px] leading-[23px] xl:text-[20px] xl:leading-[28px] text-[#636363]"
-          />
-        </div>
+          >
+            {/* EU Badge */}
+            <Image
+              src="/eu-funded-badge.svg"
+              alt={t(locale).euProjects.euBadgeAlt}
+              width={363}
+              height={68}
+              className="w-[200px] md:w-[280px] xl:w-[363px] h-auto mb-[32px] xl:mb-[40px]"
+            />
+            {/* Title */}
+            <p className="text-[16px] leading-[23px] xl:text-[20px] xl:leading-[28px] text-text-primary mb-[8px]">
+              {data.euDirective.title}
+            </p>
+            {/* Disclaimer */}
+            <BlocksRenderer
+              content={data.euDirective.content}
+              className="text-[16px] leading-[23px] xl:text-[20px] xl:leading-[28px] text-[#636363]"
+            />
+          </div>
         </section>
       )}
     </main>

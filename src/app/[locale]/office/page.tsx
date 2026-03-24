@@ -7,10 +7,7 @@ import { getFooter, getOfficePage } from "@/lib/cms";
 import { SUPPORTED_LOCALES } from "@/lib/i18n";
 import { resolveLocaleParam } from "@/lib/request-helpers";
 import { t } from "@/lib/translations";
-import {
-  requireStrapiEntity,
-  unwrapStrapiEntity,
-} from "@/lib/strapi-entity";
+import { requireStrapiEntity, unwrapStrapiEntity } from "@/lib/strapi-entity";
 import type {
   ClientPartnerCard,
   Footer,
@@ -133,13 +130,20 @@ export default async function OfficePage({ params }: PageProps) {
                         <p className={textClass}>{member.name}</p>
                         {member.title ? (
                           <p className="text-[12px] xl:text-[16px] leading-[20px] xl:leading-[23px] text-[#636363]">
-                            {member.title.split(/(\b[A-Z]{2,}\b)/).map((part: string, idx: number) =>
-                              /^[A-Z]{2,}$/.test(part) ? (
-                                <span key={idx} className="lowercase [font-variant-caps:small-caps] tracking-[0.48px]">{part}</span>
-                              ) : (
-                                part
-                              )
-                            )}
+                            {member.title
+                              .split(/(\b[A-Z]{2,}\b)/)
+                              .map((part: string, idx: number) =>
+                                /^[A-Z]{2,}$/.test(part) ? (
+                                  <span
+                                    key={idx}
+                                    className="lowercase [font-variant-caps:small-caps] tracking-[0.48px]"
+                                  >
+                                    {part}
+                                  </span>
+                                ) : (
+                                  part
+                                ),
+                              )}
                           </p>
                         ) : null}
                       </div>

@@ -8,9 +8,19 @@ export default function RootError({
 }) {
   return (
     <html lang="en">
-      <body style={{ fontFamily: "system-ui, sans-serif", textAlign: "center", paddingTop: "20vh" }}>
-        <h1 style={{ fontSize: "2rem", fontWeight: "bold" }}>Something went wrong</h1>
-        <p style={{ marginTop: "1rem", color: "#666" }}>An unexpected error occurred.</p>
+      <body
+        style={{
+          fontFamily: "system-ui, sans-serif",
+          textAlign: "center",
+          paddingTop: "20vh",
+        }}
+      >
+        <h1 style={{ fontSize: "2rem", fontWeight: "bold" }}>
+          Something went wrong
+        </h1>
+        <p style={{ marginTop: "1rem", color: "#666" }}>
+          An unexpected error occurred.
+        </p>
         <button
           onClick={reset}
           style={{
