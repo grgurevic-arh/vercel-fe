@@ -56,14 +56,14 @@ export function NewsList({ locale, articles, emptyMessage }: NewsListProps) {
                 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black
               "
             >
-              <span className="hidden md:inline shrink-0 w-[48px]">
+              <span className="hidden lg:inline shrink-0 w-[48px]">
                 {year}
               </span>
               <span className="shrink-0 w-[48px]">{dayMonth}</span>
-              <span className="min-w-0 flex-1 md:flex-none md:shrink-0 md:w-[200px] lg:w-[240px] xl:w-[280px] truncate">
+              <span className="min-w-0 flex-1 md:flex-none md:shrink-0 md:w-[200px] lg:w-[240px] xl:w-[280px] line-clamp-2 md:truncate md:line-clamp-none">
                 {title}
               </span>
-              <span className="hidden md:inline flex-1 min-w-0 truncate">
+              <span className="hidden lg:inline flex-1 min-w-0 truncate">
                 {summary}
               </span>
             </Link>

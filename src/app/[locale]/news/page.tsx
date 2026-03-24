@@ -57,7 +57,7 @@ export default async function NewsListingPage({
           pt-[120px] md:pt-[148px] lg:pt-[148px] xl:pt-[180px]
           pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[408px]
           pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
-          pb-[80px] md:pb-[120px] lg:pb-[140px] xl:pb-[180px]
+          pb-[140px] md:pb-[176px] lg:pb-[230px] xl:pb-[279px]
         "
       >
         <ul className="space-y-[20px] md:space-y-[16px] lg:space-y-[20px] xl:space-y-[24px]">
