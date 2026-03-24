@@ -261,7 +261,7 @@ export function ProjectDetailContent({
                     >
                       <span
                         className="
-                          shrink-0 uppercase
+                          shrink-0 lowercase [font-variant-caps:small-caps]
                           text-[16px] leading-[22px] tracking-[0.48px]
                           text-text-primary
                           [font-feature-settings:'onum'_1,'pnum'_1]

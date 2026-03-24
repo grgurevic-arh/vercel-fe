@@ -50,7 +50,7 @@ export function ProjectList({ locale, projects, emptyMessage }: ProjectListProps
               <span className="shrink-0 w-[77px] md:w-[58px] lg:w-[120px] xl:w-[160px]">
                 {year}
               </span>
-              <span className="hidden md:inline shrink-0 w-[174px] lg:w-[120px] xl:w-[160px] uppercase tracking-[0.48px]">
+              <span className="hidden md:inline shrink-0 w-[174px] lg:w-[120px] xl:w-[160px] lowercase [font-variant-caps:small-caps] tracking-[0.48px]">
                 {discipline}
               </span>
               <span className="shrink-0 min-w-0 flex-1 md:flex-none md:w-[220px] lg:w-[344px] xl:w-[384px] truncate">
