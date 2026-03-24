@@ -95,7 +95,7 @@ export default async function LocaleHomepage({ params }: PageProps) {
           pt-[156px] md:pt-[184px] lg:pt-[178px] xl:pt-[232px]
           pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[408px]
           pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
-          pb-[24px] md:pb-[38px] lg:pb-[54px] xl:pb-[47px]
+          pb-[63px] md:pb-[148px] lg:pb-[204px] xl:pb-[169px]
         "
       >
         {homepage.heading ? (
@@ -118,7 +118,7 @@ export default async function LocaleHomepage({ params }: PageProps) {
       <section
         className="
           content-wrapper
-          pt-[156px] md:pt-[184px] lg:pt-[178px] xl:pt-[232px]
+          pt-[41px] md:pt-[111px] lg:pt-[98px] xl:pt-[167px]
           pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[408px]
           pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
           pb-[24px] md:pb-[38px] lg:pb-[54px] xl:pb-[47px]
