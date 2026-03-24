@@ -75,7 +75,7 @@ export function SiteFooter({ locale }: SiteFooterProps) {
                   `/${langLocale}`,
                 )}
                 className={`
-                  text-[16px] leading-[23px] text-text-primary text-right
+                  text-[16px] leading-[23px] text-text-primary text-right hover:underline
                   ${langLocale === locale ? "underline" : ""}
                 `}
               >
