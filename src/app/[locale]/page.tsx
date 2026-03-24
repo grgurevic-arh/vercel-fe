@@ -134,6 +134,9 @@ export default async function LocaleHomepage({ params }: PageProps) {
               xl:text-[28px] xl:leading-[38px]
               text-text-primary whitespace-pre-line
               max-w-[296px] md:max-w-[506px] lg:max-w-[644px] xl:max-w-[784px]
+              [&_h3]:mb-[10px] [&_h3]:md:mb-[12px] [&_h3]:lg:mb-[16px] [&_h3]:xl:mb-[12px]
+              [&_h3]:mt-[47px] [&_h3]:md:mt-[40px] [&_h3]:lg:mt-[70px] [&_h3]:xl:mt-[54px]
+              [&_h3:first-child]:mt-0
             "
           />
         ) : null}
