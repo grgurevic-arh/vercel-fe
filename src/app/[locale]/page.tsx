@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { getHomepage, getFooter } from "@/lib/cms";
+import Link from "next/link";
+
+import { getHomepage, getFooter, getNewsArticles } from "@/lib/cms";
 import { SUPPORTED_LOCALES } from "@/lib/i18n";
 import { resolveLocaleParam } from "@/lib/request-helpers";
 import { requireStrapiEntity, unwrapStrapiEntity } from "@/lib/strapi-entity";
@@ -10,10 +12,10 @@ import {
   getStrapiMediaUrl,
 } from "@/lib/strapi-media";
 import { HomepageCarousel } from "@/components/homepage-carousel";
-import { BlocksRenderer } from "@/components/blocks-renderer";
 import { ContactInfo } from "@/components/contact-info";
 import { JsonLd } from "@/components/json-ld";
 import type { Homepage, Footer, StrapiMedia } from "@/types/cms";
+import { normalizeNewsArticles } from "@/lib/news-helpers";
 import type { CarouselSlide } from "@/components/homepage-carousel";
 
 interface PageProps {
@@ -68,9 +70,10 @@ export default async function LocaleHomepage({ params }: PageProps) {
   const locale = await resolveLocaleParam(params);
 
   // Fetch all data in parallel
-  const [homepageData, footerData] = await Promise.all([
+  const [homepageData, footerData, newsResponse] = await Promise.all([
     getHomepage(locale),
     getFooter(locale),
+    getNewsArticles(locale, 1, 3),
   ]);
 
   if (!homepageData) {
@@ -87,6 +90,7 @@ export default async function LocaleHomepage({ params }: PageProps) {
     : null;
 
   const slides = buildCarouselSlides(homepage.hero, homepage.heading ?? "Hero");
+  const newsArticles = normalizeNewsArticles(newsResponse.data);
 
   return (
     <main>
@@ -116,30 +120,54 @@ export default async function LocaleHomepage({ params }: PageProps) {
       {/* Hero Carousel */}
       <HomepageCarousel slides={slides} />
 
-      {/* Content */}
+      {/* Latest News */}
       <section
         className="
           content-wrapper
-          pt-[41px] md:pt-[111px] lg:pt-[98px] xl:pt-[167px]
+          pt-[42px] md:pt-[111px] lg:pt-[98px] xl:pt-[167px]
           pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[408px]
           pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
         "
       >
-        {homepage.content?.length ? (
-          <BlocksRenderer
-            content={homepage.content}
-            className="
-              text-[16px] leading-[23px]
-              md:text-[20px] md:leading-[28px]
-              lg:text-[28px] lg:leading-[38px]
-              xl:text-[28px] xl:leading-[38px]
-              text-text-primary whitespace-pre-line
-              md:max-w-[506px] lg:max-w-[644px] xl:max-w-[784px]
-              [&_h3]:mb-[10px] [&_h3]:md:mb-[12px] [&_h3]:lg:mb-[16px] [&_h3]:xl:mb-[12px]
-              [&_h3]:mt-[47px] [&_h3]:md:mt-[40px] [&_h3]:lg:mt-[70px] [&_h3]:xl:mt-[54px]
-              [&_h3:first-child]:mt-0
-            "
-          />
+        {newsArticles.length > 0 ? (
+          <ul className="space-y-[47px] md:space-y-[40px] lg:space-y-[70px] xl:space-y-[54px]">
+            {newsArticles.map((article) => (
+              <li key={article.slug}>
+                <Link
+                  href={`/${locale}/news/${article.slug}`}
+                  className="group block"
+                >
+                  <h3
+                    className="
+                      text-[16px] leading-[23px]
+                      md:text-[20px] md:leading-[28px]
+                      lg:text-[28px] lg:leading-[38px]
+                      xl:text-[28px] xl:leading-[38px]
+                      text-text-primary
+                      group-hover:underline
+                    "
+                  >
+                    {article.title}
+                  </h3>
+                  {article.summary ? (
+                    <p
+                      className="
+                        mt-[10px] md:mt-[12px] lg:mt-[16px] xl:mt-[12px]
+                        text-[16px] leading-[23px]
+                        md:text-[20px] md:leading-[28px]
+                        lg:text-[28px] lg:leading-[38px]
+                        xl:text-[28px] xl:leading-[38px]
+                        text-text-primary
+                        group-hover:underline
+                      "
+                    >
+                      {article.summary}
+                    </p>
+                  ) : null}
+                </Link>
+              </li>
+            ))}
+          </ul>
         ) : null}
       </section>
 
