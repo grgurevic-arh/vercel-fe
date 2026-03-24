@@ -1,6 +1,6 @@
 # Grgurevic Architecture Frontend
 
-Next.js (App Router) application that consumes the Strapi-powered CMS described in `/docs`. The current stage focuses on wiring authenticated data fetching for every site section; UI layers will be added later.
+Next.js (App Router) aplication that consumes the Strapi-powered CMS described in `/docs`. The current stage focuses on wiring authenticated data fetching for every site section; UI layers will be added later.
 
 ## Prerequisites
 - Node.js 18.17+ (Next.js requirement)
