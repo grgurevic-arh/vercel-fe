@@ -94,9 +94,9 @@ export default async function NewsDetailPage({ params }: PageProps) {
         className="
           content-wrapper
           pt-[120px] md:pt-[148px] lg:pt-[148px] xl:pt-[180px]
-          pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[248px]
-          pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
-          pb-[24px] md:pb-[32px] lg:pb-[40px]
+          pl-[12px] md:pl-[102px] lg:pl-[160px] xl:pl-[248px]
+          pr-[12px] md:pr-[102px] lg:pr-[160px] xl:pr-[248px]
+          pb-[20px] md:pb-[16px] lg:pb-[24px] xl:pb-[27px]
           text-[20px] leading-[28px]
           [font-feature-settings:'onum'_1,'pnum'_1]
           min-[320px]:text-[28px] min-[320px]:leading-[38px]
@@ -113,8 +113,8 @@ export default async function NewsDetailPage({ params }: PageProps) {
         <div
           className="
             content-wrapper
-            pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[248px]
-            pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
+            pl-[12px] md:pl-[102px] lg:pl-[160px] xl:pl-[248px]
+            pr-[12px] md:pr-[102px] lg:pr-[160px] xl:pr-[248px]
             pb-[40px] md:pb-[48px] lg:pb-[56px]
             text-[16px] leading-[23px]
             [font-feature-settings:'onum'_1,'pnum'_1]
@@ -133,9 +133,8 @@ export default async function NewsDetailPage({ params }: PageProps) {
         <figure
           className="
             content-wrapper
-            pl-[0px] md:pl-[160px] lg:pl-[248px] xl:pl-[248px]
-            pr-[0px] md:pr-[44px] lg:pr-[248px] xl:pr-[248px]
-            min-[320px]:pl-[102px] min-[320px]:pr-[40px]
+            pl-[0px] md:pl-[102px] lg:pl-[160px] xl:pl-[248px]
+            pr-[0px] md:pr-[44px] lg:pr-[100px] xl:pr-[248px]
             pb-[40px] md:pb-[48px] lg:pb-[56px]
           "
         >
@@ -150,7 +149,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
           {heroCaption ? (
             <figcaption
               className="
-                mt-[8px] md:mt-[12px]
+                mt-[8px] md:mt-[12px] xl:mt-[16px]
                 text-[16px] leading-[23px]
                 md:leading-[24px]
                 [font-feature-settings:'onum'_1,'pnum'_1]
