@@ -179,7 +179,7 @@ export function ProjectDetailContent({
       <h1
         className="
           content-wrapper
-          pt-[32px] md:pt-[40px] lg:pt-[48px]
+          pt-[8px] md:pt-[8px] lg:pt-[8px] xl:pt-[8px]
           pl-[12px] md:pl-[44px] lg:pl-[100px] xl:pl-[248px]
           pr-[12px] md:pr-[44px] lg:pr-[100px] xl:pr-[248px]
           pb-[24px] md:pb-[32px]
@@ -213,7 +213,7 @@ export function ProjectDetailContent({
             content-wrapper
             pl-[12px] md:pl-[44px] lg:pl-[100px] xl:pl-[248px]
             pr-[12px] md:pr-[44px] lg:pr-[100px] xl:pr-[248px]
-            pb-[40px] md:pb-[48px] lg:pb-[56px]
+            pb-[40px] md:pb-[60px] lg:pb-[80px] xl:pb-[134px]
           "
         >
           <div className="max-w-[296px] md:max-w-[680px] lg:max-w-[824px] xl:max-w-[864px]">
@@ -232,7 +232,7 @@ export function ProjectDetailContent({
 
       {/* Meta grid */}
       {metaPairs.length ? (
-        <section className="pb-[40px] md:pb-[60px] lg:pb-[80px]">
+        <section className="pb-[60px] md:pb-[80px] lg:pb-[120px] xl:pb-[176px]">
           <div className="border-t border-divider">
             {(() => {
               const rows: Array<typeof metaPairs> = [];
