@@ -1,4 +1,5 @@
 import type { Block, BlockText } from "@/types/cms";
+import Image from "next/image";
 
 function renderTextNode(node: BlockText, index: number) {
   let content: React.ReactNode = node.text;
@@ -81,7 +82,7 @@ export function BlocksRenderer({
             );
           case "image":
             return (
-              <img
+              <Image
                 key={index}
                 src={block.image.url}
                 alt={block.image.alternativeText ?? ""}
