@@ -61,7 +61,7 @@ export function CompanyMetadata({
       <div
         className="
           content-wrapper relative
-          h-[550px] md:h-[360px] lg:h-[400px] xl:h-[544px]
+          h-[550px] md:h-[522px] lg:h-[400px] xl:h-[544px]
         "
       >
       {/* Banking & Registration group */}
@@ -86,8 +86,8 @@ export function CompanyMetadata({
       <div
         className="
           absolute
-          left-[12px] md:left-[420px] lg:left-[540px] xl:left-[808px]
-          top-[246px] md:top-[100px] lg:top-[120px] xl:top-[152px]
+          left-[12px] md:left-[44px] lg:left-[540px] xl:left-[808px]
+          top-[246px] md:top-[264px] lg:top-[120px] xl:top-[152px]
         "
       >
         {companyFields.map((f) => (

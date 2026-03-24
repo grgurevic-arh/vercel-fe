@@ -58,7 +58,7 @@ export default async function LegalPage({ params }: PageProps) {
         className="
           content-wrapper
           pt-[120px] md:pt-[144px] lg:pt-[154px] xl:pt-[270px]
-          pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[328px]
+          pl-[12px] md:pl-[160px] lg:pl-[160px] xl:pl-[328px]
           pb-[24px] md:pb-[32px] lg:pb-[40px] xl:pb-[100px]
         "
       >
