@@ -184,7 +184,7 @@ export function ProjectDetailContent({
           pr-[12px] md:pr-[44px] lg:pr-[100px] xl:pr-[248px]
           pb-[24px] md:pb-[32px]
           text-[20px] leading-[28px]
-          md:text-[28px] md:leading-[38px]
+          md:text-[28px] md:leading-[38px] lg:text-[38px] lg:leading-[50px]
           text-text-primary
         "
       >
