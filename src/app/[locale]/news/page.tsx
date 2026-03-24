@@ -55,9 +55,9 @@ export default async function NewsListingPage({
         className="
           content-wrapper
           min-h-[50vh]
-          pt-[120px] md:pt-[148px] lg:pt-[148px] xl:pt-[180px]
-          pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[408px]
-          pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
+          pt-[236px] md:pt-[114px] lg:pt-[156px] xl:pt-[130px]
+          pl-[12px] md:pl-[160px] lg:pl-[160px] xl:pl-[408px]
+          pr-[12px] md:pr-[44px] lg:pr-[160px] xl:pr-[248px]
           pb-[140px] md:pb-[176px] lg:pb-[230px] xl:pb-[279px]
         "
       >
@@ -89,11 +89,13 @@ export default async function NewsListingPage({
       <NewsList locale={locale} articles={newsArticles} />
 
       {/* Pagination */}
-      <Pagination
-        locale={locale}
-        currentPage={pagination?.page ?? requestedPage}
-        pageCount={pageCount}
-      />
+      <div className="mb-[140px] md:mb-[240px]">
+        <Pagination
+          locale={locale}
+          currentPage={pagination?.page ?? requestedPage}
+          pageCount={pageCount}
+          />
+      </div>
     </main>
   );
 }

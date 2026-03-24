@@ -29,7 +29,7 @@ export function Pagination({
           h-[210px] lg:h-[340px] xl:h-[370px]
           pl-[12px] md:pl-[160px] lg:pl-[160px] xl:pl-[248px]
           pb-[89px]
-          gap-x-[24px] md:gap-x-[58px] lg:gap-x-[60px] xl:gap-x-[80px]
+          gap-x-[24px] md:gap-x-[48px] lg:gap-x-[51px] xl:gap-x-[70px]
         "
         aria-label="Pagination"
       >

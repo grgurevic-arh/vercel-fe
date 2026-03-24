@@ -58,8 +58,24 @@ export function ContactInfo({
           text-text-primary
         "
       >
-        <p>{companyName}</p>
-        <p>{address}</p>
+        <p>
+          {companyName?.split(/(\b[A-Z]{2,}\b)/).map((part, i) =>
+            /^[A-Z]{2,}$/.test(part) ? (
+              <span key={i} className="lowercase [font-variant-caps:small-caps]">{part}</span>
+            ) : (
+              part
+            )
+          )}
+        </p>
+        <p>
+          {address?.split(/(\b[A-Z]{2,}\b)/).map((part, i) =>
+            /^[A-Z]{2,}$/.test(part) ? (
+              <span key={i} className="lowercase [font-variant-caps:small-caps]">{part}</span>
+            ) : (
+              part
+            )
+          )}
+        </p>
       </div>
       </div>
     </section>

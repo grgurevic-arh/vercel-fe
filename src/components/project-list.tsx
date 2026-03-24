@@ -38,28 +38,32 @@ export function ProjectList({ locale, projects, emptyMessage }: ProjectListProps
               href={href}
               className="
                 content-wrapper
-                flex items-center h-[60px] md:h-[80px]
+                grid items-center h-[60px] md:h-[80px]
                 text-[16px] leading-[23px] text-text-primary
                 [font-feature-settings:'onum'_1,'pnum'_1]
                 pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[88px]
-                pr-[12px] md:pr-[44px] lg:pr-[40px] xl:pr-[88px]
+                pr-[12px] md:pr-[44px] lg:pr-[86px] xl:pr-[173px]
+                grid-cols-[77px_1fr] gap-x-0
+                md:grid-cols-[58px_174px_1fr] md:gap-x-0
+                lg:grid-cols-[120px_120px_384px_1fr_104px] lg:gap-x-0
+                xl:grid-cols-[160px_160px_480px_1fr_144px] xl:gap-x-0
                 focus-visible:outline focus-visible:outline-2
                 focus-visible:outline-offset-2 focus-visible:outline-black
               "
             >
-              <span className="shrink-0 w-[77px] md:w-[58px] lg:w-[120px] xl:w-[160px]">
+              <span className="truncate">
                 {year}
               </span>
-              <span className="hidden md:inline shrink-0 w-[174px] lg:w-[120px] xl:w-[160px] lowercase [font-variant-caps:small-caps] tracking-[0.48px]">
+              <span className="hidden md:inline lowercase [font-variant-caps:small-caps] tracking-[0.48px] truncate">
                 {discipline}
               </span>
-              <span className="shrink-0 min-w-0 flex-1 lg:flex-none lg:w-[344px] xl:w-[384px] truncate">
+              <span className="truncate lg:max-w-[345px] xl:max-w-[390px]">
                 {title}
               </span>
-              <span className="hidden lg:inline shrink-0 w-[240px] xl:w-[304px] truncate">
+              <span className="hidden lg:inline truncate">
                 {location}
               </span>
-              <span className="hidden lg:inline shrink-0 w-[104px] xl:w-[144px] text-right">
+              <span className="hidden lg:inline text-right truncate">
                 {size}
               </span>
             </Link>

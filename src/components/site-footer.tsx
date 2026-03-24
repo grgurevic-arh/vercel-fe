@@ -35,15 +35,14 @@ export function SiteFooter({ locale }: SiteFooterProps) {
           top-[16px] md:top-[24px]
         "
       >
-        <ul className="space-y-[16px] md:space-y-[0]">
+        <ul className="space-y-[16px]">
           {footerNavLinks.map(({ label, path }) => (
             <li
               key={label}
-              className="py-[8px]"
             >
               <Link
                 href={`/${locale}${path}`}
-                className="text-[16px] leading-[23px] text-text-primary hover:underline"
+                className={`text-[16px] leading-[23px] text-text-primary hover:underline ${pathname === `/${locale}${path}` ? "underline" : ""}`}
               >
                 {path === "/eu-projects" ? (
                   <>

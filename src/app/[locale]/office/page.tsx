@@ -65,9 +65,9 @@ export default async function OfficePage({ params }: PageProps) {
   const clients = (data.clients ?? []) as ClientPartnerCard[];
 
   const labelClass =
-    "shrink-0 tracking-[0.03em] [font-variant-caps:small-caps] text-[16px] leading-[23px] text-text-primary lg:w-[130px] xl:w-[150px]";
+    "shrink-0 tracking-[0.03em] lowercase [font-variant-caps:small-caps] text-[16px] leading-[23px] text-text-primary lg:w-[130px] xl:w-[150px]";
   const itemInnerClass =
-    "flex flex-col lg:flex-row py-[12px] md:py-[16px] xl:py-[20px] pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[88px] pr-[12px] md:pr-[20px]";
+    "flex flex-col lg:flex-row py-[12px] md:py-[16px] xl:py-[20px] pl-[12px] md:pl-[102px] lg:pl-[40px] xl:pl-[88px] pr-[12px] md:pr-[20px]";
   const textClass = "text-[16px] leading-[23px] text-text-primary";
 
   return (
@@ -76,10 +76,10 @@ export default async function OfficePage({ params }: PageProps) {
       <section
         className="
           content-wrapper
-          pt-[156px] md:pt-[184px] lg:pt-[178px] xl:pt-[232px]
+          pt-[236px] md:pt-[184px] lg:pt-[184px] xl:pt-[190px]
           pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[328px]
           pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
-          pb-[24px] md:pb-[38px] lg:pb-[54px] xl:pb-[47px]
+          pb-[93px] md:pb-[184px] lg:pb-[154px] xl:pb-[216px]
         "
       >
         {data.description ? (
@@ -102,8 +102,7 @@ export default async function OfficePage({ params }: PageProps) {
           <h2
             className="
               content-wrapper
-              pt-[80px] md:pt-[120px] lg:pt-[140px] xl:pt-[180px]
-              pl-[12px] md:pl-[102px] lg:pl-[220px] xl:pl-[328px]
+              pl-[12px] md:pl-[102px] lg:pl-[170px] xl:pl-[238px]
               pb-[24px] md:pb-[32px] xl:pb-[40px]
               text-[20px] leading-[28px]
               lg:text-[28px] lg:leading-[38px]
@@ -133,7 +132,15 @@ export default async function OfficePage({ params }: PageProps) {
                       <div>
                         <p className={textClass}>{member.name}</p>
                         {member.title ? (
-                          <p className={textClass}>{member.title}</p>
+                          <p className="text-[12px] xl:text-[16px] leading-[20px] xl:leading-[23px] text-[#636363]">
+                            {member.title.split(/(\b[A-Z]{2,}\b)/).map((part: string, idx: number) =>
+                              /^[A-Z]{2,}$/.test(part) ? (
+                                <span key={idx} className="lowercase [font-variant-caps:small-caps] tracking-[0.48px]">{part}</span>
+                              ) : (
+                                part
+                              )
+                            )}
+                          </p>
                         ) : null}
                       </div>
                     </div>
@@ -152,7 +159,7 @@ export default async function OfficePage({ params }: PageProps) {
             className="
               content-wrapper
               pt-[80px] md:pt-[120px] lg:pt-[140px] xl:pt-[180px]
-              pl-[12px] md:pl-[102px] lg:pl-[220px] xl:pl-[328px]
+              pl-[12px] md:pl-[102px] lg:pl-[170px] xl:pl-[238px]
               pb-[24px] md:pb-[32px] xl:pb-[40px]
               text-[20px] leading-[28px]
               lg:text-[28px] lg:leading-[38px]
@@ -200,7 +207,7 @@ export default async function OfficePage({ params }: PageProps) {
         telephone={footer?.phoneNumber ?? null}
         companyName={footer?.companyName ?? undefined}
         address={footer?.address ?? undefined}
-        className="mt-[140px] md:mt-[240px] lg:mt-[240px] xl:mt-[240px]"
+        className="mt-[140px] md:mt-[240px] lg:mt-[240px] xl:mt-[240px] lg:mb-[330px] xl:mb-[250px]"
       />
     </main>
   );

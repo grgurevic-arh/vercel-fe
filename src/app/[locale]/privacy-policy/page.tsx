@@ -50,7 +50,7 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
         className="
           content-wrapper
           pt-[120px] md:pt-[144px] lg:pt-[154px] xl:pt-[270px]
-          pl-[12px] md:pl-[160px] lg:pl-[160px] xl:pl-[328px]
+          pl-[12px] md:pl-[102px] lg:pl-[160px] xl:pl-[328px]
           pb-[24px] md:pb-[32px] lg:pb-[40px] xl:pb-[100px]
         "
       >
@@ -68,7 +68,7 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
       <section
         className="
           content-wrapper
-          pl-[12px] md:pl-[102px] lg:pl-[160px] xl:pl-[328px]
+          pl-[34px] md:pl-[102px] lg:pl-[160px] xl:pl-[328px]
           pr-[12px] md:pr-[102px] lg:pr-[160px] xl:pr-[408px]
           pb-[130px] md:pb-[130px] lg:pb-[192px] xl:pb-[192px]
         "
@@ -76,6 +76,7 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
         {data.content?.length ? (
           <BlocksRenderer
             content={data.content}
+            numberedHeadings
             className="
               text-text-primary whitespace-pre-line
               [&_p]:text-[16px] [&_p]:leading-[23px]

@@ -121,7 +121,6 @@ export default async function LocaleHomepage({ params }: PageProps) {
           pt-[41px] md:pt-[111px] lg:pt-[98px] xl:pt-[167px]
           pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[408px]
           pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
-          pb-[24px] md:pb-[38px] lg:pb-[54px] xl:pb-[47px]
         "
       >
         {homepage.content?.length ? (
@@ -133,7 +132,7 @@ export default async function LocaleHomepage({ params }: PageProps) {
               lg:text-[28px] lg:leading-[38px]
               xl:text-[28px] xl:leading-[38px]
               text-text-primary whitespace-pre-line
-              max-w-[296px] md:max-w-[506px] lg:max-w-[644px] xl:max-w-[784px]
+              md:max-w-[506px] lg:max-w-[644px] xl:max-w-[784px]
               [&_h3]:mb-[10px] [&_h3]:md:mb-[12px] [&_h3]:lg:mb-[16px] [&_h3]:xl:mb-[12px]
               [&_h3]:mt-[47px] [&_h3]:md:mt-[40px] [&_h3]:lg:mt-[70px] [&_h3]:xl:mt-[54px]
               [&_h3:first-child]:mt-0
@@ -149,7 +148,7 @@ export default async function LocaleHomepage({ params }: PageProps) {
         companyName={footer?.companyName ?? undefined}
         address={footer?.address ?? undefined}
         showTopBorder
-        className="mt-[123px] md:mt-[206px] lg:mt-[150px] xl:mt-[134px]"
+        className="mt-[123px] md:mt-[206px] lg:mt-[150px] xl:mt-[134px] mb-[222px] md:mb-0 lg:mb-[278px] xl:mb-[372px]"
       />
 
       <JsonLd

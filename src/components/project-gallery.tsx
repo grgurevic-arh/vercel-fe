@@ -93,6 +93,7 @@ function GalleryItem({
           text-text-primary
           [font-feature-settings:'onum'_1,'pnum'_1]
           pl-[12px] md:pl-0
+          truncate
         "
       >
         {project.title}

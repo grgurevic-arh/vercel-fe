@@ -20,9 +20,10 @@ function renderChildren(children: BlockText[]) {
 interface BlocksRendererProps {
   content: Block[];
   className?: string;
+  numberedHeadings?: boolean;
 }
 
-export function BlocksRenderer({ content, className }: BlocksRendererProps) {
+export function BlocksRenderer({ content, className, numberedHeadings }: BlocksRendererProps) {
   if (!Array.isArray(content)) return null;
   return (
     <div className={className}>
@@ -30,6 +31,18 @@ export function BlocksRenderer({ content, className }: BlocksRendererProps) {
         switch (block.type) {
           case "heading": {
             const Tag = `h${block.level}` as const;
+            const text = block.children?.map((c) => c.text).join("") ?? "";
+            const dotIdx = text.indexOf(". ");
+            if (numberedHeadings && dotIdx !== -1 && /^\d+$/.test(text.slice(0, dotIdx))) {
+              const number = text.slice(0, dotIdx + 2);
+              const rest = text.slice(dotIdx + 2);
+              return (
+                <Tag key={index} className="relative">
+                  <span className="absolute right-full pr-[4px] whitespace-nowrap">{number}</span>
+                  {rest}
+                </Tag>
+              );
+            }
             return <Tag key={index}>{renderChildren(block.children)}</Tag>;
           }
           case "paragraph":
