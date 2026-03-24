@@ -37,9 +37,7 @@ export function SiteFooter({ locale }: SiteFooterProps) {
       >
         <ul className="space-y-[16px]">
           {footerNavLinks.map(({ label, path }) => (
-            <li
-              key={label}
-            >
+            <li key={label}>
               <Link
                 href={`/${locale}${path}`}
                 className={`text-[16px] leading-[23px] text-text-primary hover:underline ${pathname === `/${locale}${path}` ? "underline" : ""}`}
@@ -48,8 +46,7 @@ export function SiteFooter({ locale }: SiteFooterProps) {
                   <>
                     <span className="lowercase [font-variant-caps:small-caps] tracking-[0.48px]">
                       {label.split(" ")[0]}
-                    </span>
-                    {" "}
+                    </span>{" "}
                     {label.split(" ").slice(1).join(" ")}
                   </>
                 ) : (
@@ -73,7 +70,10 @@ export function SiteFooter({ locale }: SiteFooterProps) {
           {languages.map(({ label, locale: langLocale }) => (
             <li key={langLocale} className="py-[8px]">
               <Link
-                href={pathname.replace(new RegExp(`^/${locale}(?=/|$)`), `/${langLocale}`)}
+                href={pathname.replace(
+                  new RegExp(`^/${locale}(?=/|$)`),
+                  `/${langLocale}`,
+                )}
                 className={`
                   text-[16px] leading-[23px] text-text-primary text-right
                   ${langLocale === locale ? "underline" : ""}

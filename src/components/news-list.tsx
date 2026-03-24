@@ -34,7 +34,8 @@ export function NewsList({ locale, articles, emptyMessage }: NewsListProps) {
           article.publishedAtCustom,
           article.publishedAt,
         );
-        const title = article.title ?? t(locale as Locale).fallbacks.untitledArticle;
+        const title =
+          article.title ?? t(locale as Locale).fallbacks.untitledArticle;
         const summary = article.summary ?? "";
         const href = `/${locale}/news/${article.slug}`;
 
@@ -56,9 +57,7 @@ export function NewsList({ locale, articles, emptyMessage }: NewsListProps) {
                 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black
               "
             >
-              <span className="hidden lg:inline shrink-0 w-[48px]">
-                {year}
-              </span>
+              <span className="hidden lg:inline shrink-0 w-[48px]">{year}</span>
               <span className="shrink-0 w-[48px] xl:w-[160px]">{dayMonth}</span>
               <span className="min-w-0 flex-1 md:flex-none md:shrink-0 md:w-[505px] lg:w-[345px] xl:w-[465px] line-clamp-2 md:truncate md:line-clamp-none">
                 {title}

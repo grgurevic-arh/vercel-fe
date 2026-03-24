@@ -1,4 +1,10 @@
-const mediaFieldNames = ["url", "alternativeText", "caption", "width", "height"] as const;
+const mediaFieldNames = [
+  "url",
+  "alternativeText",
+  "caption",
+  "width",
+  "height",
+] as const;
 
 export function buildPopulateKey(segments: string[]): string {
   return segments.reduce((acc, segment, index) => {

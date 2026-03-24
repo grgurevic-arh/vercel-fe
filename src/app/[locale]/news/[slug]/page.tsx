@@ -77,8 +77,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
   const heroImageAttributes = getStrapiMediaAttributes(data.heroImage);
   const heroWidth = heroImageAttributes?.width ?? 1600;
   const heroHeight = heroImageAttributes?.height ?? 900;
-  const heroAlt =
-    heroImageAttributes?.alternativeText ?? articleTitle;
+  const heroAlt = heroImageAttributes?.alternativeText ?? articleTitle;
   const heroCaption = heroImageAttributes?.caption;
 
   const otherNews = normalizeNewsArticles(newsResponse.data).filter(

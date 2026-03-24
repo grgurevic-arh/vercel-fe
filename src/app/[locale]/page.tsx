@@ -27,7 +27,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const locale = await resolveLocaleParam(params);
   const homepage = await getHomepage(locale);
-  const data = homepage ? unwrapStrapiEntity(homepage) as Homepage | null : null;
+  const data = homepage
+    ? (unwrapStrapiEntity(homepage) as Homepage | null)
+    : null;
 
   const description =
     data?.heading ?? "Architecture and urban planning studio based in Zagreb.";
@@ -35,9 +37,7 @@ export async function generateMetadata({
   return {
     description,
     alternates: {
-      languages: Object.fromEntries(
-        SUPPORTED_LOCALES.map((l) => [l, `/${l}`]),
-      ),
+      languages: Object.fromEntries(SUPPORTED_LOCALES.map((l) => [l, `/${l}`])),
     },
   };
 }
@@ -82,7 +82,9 @@ export default async function LocaleHomepage({ params }: PageProps) {
     "Homepage entry missing",
   );
 
-  const footer = footerData ? unwrapStrapiEntity(footerData) as Footer | null : null;
+  const footer = footerData
+    ? (unwrapStrapiEntity(footerData) as Footer | null)
+    : null;
 
   const slides = buildCarouselSlides(homepage.hero, homepage.heading ?? "Hero");
 

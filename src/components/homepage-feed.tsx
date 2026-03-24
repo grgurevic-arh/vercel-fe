@@ -25,10 +25,7 @@ export function HomepageFeed({ locale, items }: HomepageFeedProps) {
       >
         {items.map((item) => (
           <li key={item.slug}>
-            <Link
-              href={`/${locale}/news/${item.slug}`}
-              className="group block"
-            >
+            <Link href={`/${locale}/news/${item.slug}`} className="group block">
               <h3
                 className="
                   text-[20px] leading-[28px]

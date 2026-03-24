@@ -79,7 +79,8 @@ const translations = {
   },
   hr: {
     siteTitle: "Grgurević & partneri",
-    siteDescription: "Studio za arhitekturu i urbanizam sa sjedištem u Zagrebu.",
+    siteDescription:
+      "Studio za arhitekturu i urbanizam sa sjedištem u Zagrebu.",
     nav: {
       work: "Rad",
       office: "Ured",

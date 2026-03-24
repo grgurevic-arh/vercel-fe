@@ -23,10 +23,7 @@ const teamPortraitPopulateParams = buildMediaPopulateParams([
   "team",
   "portrait",
 ]);
-const clientsLogoPopulateParams = buildMediaPopulateParams([
-  "clients",
-  "logo",
-]);
+const clientsLogoPopulateParams = buildMediaPopulateParams(["clients", "logo"]);
 const workProjectNestedMediaPopulate = {
   "populate[heroImages][populate]": "image",
   "populate[siteImages][populate]": "image",
@@ -66,19 +63,18 @@ async function fetchCollectionWithFallback<T>(
   }
 }
 
-const withLocale = (
-  locale: string,
-): { locale: Locale } => {
+const withLocale = (locale: string): { locale: Locale } => {
   if (!isLocale(locale)) {
     throw new Error(`Unsupported locale: ${locale}`);
   }
   return { locale };
 };
 
-const fallbackSingleResponse = <T>() => ({
-  data: null,
-  meta: {},
-}) as StrapiSingleResponse<T>;
+const fallbackSingleResponse = <T>() =>
+  ({
+    data: null,
+    meta: {},
+  }) as StrapiSingleResponse<T>;
 
 async function fetchSingleWithFallback<T>(
   path: string,
@@ -115,9 +111,13 @@ async function fetchSingleWithFallback<T>(
 }
 
 export async function getHomepage(locale: string) {
-  const response = await fetchSingleWithFallback<Homepage>("/homepage", locale, {
-    "populate[hero][populate]": "*",
-  });
+  const response = await fetchSingleWithFallback<Homepage>(
+    "/homepage",
+    locale,
+    {
+      "populate[hero][populate]": "*",
+    },
+  );
   return response.data;
 }
 
@@ -210,11 +210,7 @@ export async function getWorkProjectSlugs(locale: string) {
   return response.data;
 }
 
-export async function getNewsArticles(
-  locale: string,
-  page = 1,
-  pageSize = 12,
-) {
+export async function getNewsArticles(locale: string, page = 1, pageSize = 12) {
   return fetchCollectionWithFallback<NewsArticle>(
     "/news-articles",
     {

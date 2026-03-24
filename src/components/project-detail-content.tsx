@@ -52,7 +52,10 @@ const buildMetaPairs = (project: ProjectDetail, locale: string) => {
     { label: hr ? "Investitor" : "Investor", value: project.investor },
     { label: hr ? "Trajanje" : "Duration", value: project.projectLength },
     { label: hr ? "Površina" : "Site Area", value: project.siteArea },
-    { label: hr ? "Investicija" : "Investment", value: project.investmentValue },
+    {
+      label: hr ? "Investicija" : "Investment",
+      value: project.investmentValue,
+    },
   ].filter((field) => field.value);
 };
 
@@ -101,13 +104,16 @@ function CompositionImage({
     // Floor plans render at natural size, capped at content area width
     // They don't stretch to fill — they maintain natural proportions
     widthClass = "w-full md:max-w-[680px] lg:max-w-[824px] xl:max-w-[944px]";
-    sizes = "(min-width: 1440px) 944px, (min-width: 1024px) 824px, (min-width: 768px) 680px, 100vw";
+    sizes =
+      "(min-width: 1440px) 944px, (min-width: 1024px) 824px, (min-width: 768px) 680px, 100vw";
   } else if (isPortrait) {
     widthClass = "w-full md:w-[340px] lg:w-[412px] xl:w-[472px]";
-    sizes = "(min-width: 1440px) 472px, (min-width: 1024px) 412px, (min-width: 768px) 340px, 100vw";
+    sizes =
+      "(min-width: 1440px) 472px, (min-width: 1024px) 412px, (min-width: 768px) 340px, 100vw";
   } else {
     widthClass = "w-full md:w-[680px] lg:w-[824px] xl:w-[944px]";
-    sizes = "(min-width: 1440px) 944px, (min-width: 1024px) 824px, (min-width: 768px) 680px, 100vw";
+    sizes =
+      "(min-width: 1440px) 944px, (min-width: 1024px) 824px, (min-width: 768px) 680px, 100vw";
   }
 
   // Alignment: portrait photos and plans stick to left or right edge
@@ -171,9 +177,7 @@ export function ProjectDetailContent({
   return (
     <>
       {/* Hero carousel */}
-      {heroSlides.length ? (
-        <ProjectHeroCarousel slides={heroSlides} />
-      ) : null}
+      {heroSlides.length ? <ProjectHeroCarousel slides={heroSlides} /> : null}
 
       {/* Title */}
       <h1
@@ -192,7 +196,9 @@ export function ProjectDetailContent({
       </h1>
 
       {/* Description */}
-      {project.description && Array.isArray(project.description) && project.description.length > 0 ? (
+      {project.description &&
+      Array.isArray(project.description) &&
+      project.description.length > 0 ? (
         <div
           className="
             content-wrapper

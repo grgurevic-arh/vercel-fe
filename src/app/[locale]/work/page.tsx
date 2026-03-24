@@ -34,7 +34,10 @@ interface PageProps {
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }
 
-export default async function WorkListingPage({ params, searchParams }: PageProps) {
+export default async function WorkListingPage({
+  params,
+  searchParams,
+}: PageProps) {
   const locale = await resolveLocaleParam(params);
   const requestedPage = await resolvePageParam(searchParams);
 
@@ -70,7 +73,7 @@ export default async function WorkListingPage({ params, searchParams }: PageProp
           basePath="/work"
           currentPage={pagination?.page ?? requestedPage}
           pageCount={pageCount}
-          />
+        />
       </div>
     </main>
   );

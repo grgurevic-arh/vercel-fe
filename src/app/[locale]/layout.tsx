@@ -43,7 +43,10 @@ export default async function LocaleLayout({
   const locale = await resolveLocaleParam(params);
 
   return (
-    <div className="min-h-screen bg-white text-[var(--text-primary)]" data-locale={locale}>
+    <div
+      className="min-h-screen bg-white text-[var(--text-primary)]"
+      data-locale={locale}
+    >
       <SiteHeader locale={locale} />
       {children}
       <SiteFooter locale={locale} />

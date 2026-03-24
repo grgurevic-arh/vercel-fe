@@ -10,7 +10,11 @@ interface ProjectListProps {
   emptyMessage?: string;
 }
 
-export function ProjectList({ locale, projects, emptyMessage }: ProjectListProps) {
+export function ProjectList({
+  locale,
+  projects,
+  emptyMessage,
+}: ProjectListProps) {
   if (!projects.length) {
     return (
       <p className="content-wrapper text-[16px] leading-[23px] text-text-primary pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[88px] py-[40px] md:py-[60px] xl:py-[80px]">
@@ -51,18 +55,14 @@ export function ProjectList({ locale, projects, emptyMessage }: ProjectListProps
                 focus-visible:outline-offset-2 focus-visible:outline-black
               "
             >
-              <span className="truncate">
-                {year}
-              </span>
+              <span className="truncate">{year}</span>
               <span className="hidden md:inline lowercase [font-variant-caps:small-caps] tracking-[0.48px] truncate">
                 {discipline}
               </span>
               <span className="truncate lg:max-w-[345px] xl:max-w-[390px]">
                 {title}
               </span>
-              <span className="hidden lg:inline truncate">
-                {location}
-              </span>
+              <span className="hidden lg:inline truncate">{location}</span>
               <span className="hidden lg:inline text-right truncate">
                 {size}
               </span>

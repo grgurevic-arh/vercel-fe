@@ -47,9 +47,9 @@ export function CompanyMetadata({
 
   if (!bankingFields.length && !companyFields.length) return null;
 
-  const labelBase =
-    "shrink-0 tracking-[0.03em] [font-variant-caps:small-caps]";
-  const rowBase = "flex gap-x-[12px] md:gap-x-[44px] text-[12px] leading-[20px] md:text-[16px] md:leading-[23px] text-text-primary";
+  const labelBase = "shrink-0 tracking-[0.03em] [font-variant-caps:small-caps]";
+  const rowBase =
+    "flex gap-x-[12px] md:gap-x-[44px] text-[12px] leading-[20px] md:text-[16px] md:leading-[23px] text-text-primary";
 
   return (
     <section
@@ -64,41 +64,41 @@ export function CompanyMetadata({
           h-[550px] md:h-[522px] lg:h-[400px] xl:h-[544px]
         "
       >
-      {/* Banking & Registration group */}
-      <div
-        className="
+        {/* Banking & Registration group */}
+        <div
+          className="
           absolute
           left-[12px] md:left-[44px] lg:left-[40px] xl:left-[87px]
           top-[75px] md:top-[100px] lg:top-[120px] xl:top-[152px]
         "
-      >
-        {bankingFields.map((f) => (
-          <div key={f.label} className={rowBase}>
-            <span className={`${labelBase} w-[73px] md:w-[80px] xl:w-[97px]`}>
-              {f.label}
-            </span>
-            <span>{f.value}</span>
-          </div>
-        ))}
-      </div>
+        >
+          {bankingFields.map((f) => (
+            <div key={f.label} className={rowBase}>
+              <span className={`${labelBase} w-[73px] md:w-[80px] xl:w-[97px]`}>
+                {f.label}
+              </span>
+              <span>{f.value}</span>
+            </div>
+          ))}
+        </div>
 
-      {/* Company Info group */}
-      <div
-        className="
+        {/* Company Info group */}
+        <div
+          className="
           absolute
           left-[12px] md:left-[44px] lg:left-[540px] xl:left-[808px]
           top-[246px] md:top-[264px] lg:top-[120px] xl:top-[152px]
         "
-      >
-        {companyFields.map((f) => (
-          <div key={f.label} className={rowBase}>
-            <span className={`${labelBase} w-[73px] md:w-[80px] xl:w-[97px]`}>
-              {f.label}
-            </span>
-            <span>{f.value}</span>
-          </div>
-        ))}
-      </div>
+        >
+          {companyFields.map((f) => (
+            <div key={f.label} className={rowBase}>
+              <span className={`${labelBase} w-[73px] md:w-[80px] xl:w-[97px]`}>
+                {f.label}
+              </span>
+              <span>{f.value}</span>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

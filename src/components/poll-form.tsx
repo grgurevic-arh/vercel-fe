@@ -127,9 +127,7 @@ export function PollForm({ poll, locale }: PollFormProps) {
             [font-feature-settings:'onum'_1,'pnum'_1]
           "
         >
-          <span>
-            {trans.pollForm.alreadySubmitted}
-          </span>
+          <span>{trans.pollForm.alreadySubmitted}</span>
           <button
             type="button"
             onClick={() => setShowBanner(false)}
@@ -291,9 +289,7 @@ export function PollForm({ poll, locale }: PollFormProps) {
                 disabled:opacity-50 disabled:cursor-not-allowed
               "
             >
-              {isSubmitting
-                ? trans.pollForm.submitting
-                : trans.pollForm.submit}
+              {isSubmitting ? trans.pollForm.submitting : trans.pollForm.submit}
             </button>
           </div>
         </form>
