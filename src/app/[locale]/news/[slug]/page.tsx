@@ -115,7 +115,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
             content-wrapper
             pl-[12px] md:pl-[102px] lg:pl-[160px] xl:pl-[248px]
             pr-[12px] md:pr-[102px] lg:pr-[160px] xl:pr-[248px]
-            pb-[40px] md:pb-[48px] lg:pb-[56px]
+            pb-[25px] md:pb-[16px] lg:pb-[20px] xl:pb-[52px]
             text-[16px] leading-[23px]
             [font-feature-settings:'onum'_1,'pnum'_1]
             min-[320px]:text-[20px] min-[320px]:leading-[28px]
@@ -163,7 +163,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
       ) : null}
 
       {/* All articles */}
-      <section className="mt-[60px] md:mt-[80px] lg:mt-[120px]">
+      <section className="mt-[60px] md:mt-[80px] lg:mt-[120px] xl:mt-[226px]">
         <NewsList
           locale={locale}
           articles={otherNews}
