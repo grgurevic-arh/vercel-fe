@@ -77,7 +77,7 @@ export default async function OfficePage({ params }: PageProps) {
         className="
           content-wrapper
           pt-[156px] md:pt-[184px] lg:pt-[178px] xl:pt-[232px]
-          pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[408px]
+          pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[328px]
           pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
           pb-[24px] md:pb-[38px] lg:pb-[54px] xl:pb-[47px]
         "
@@ -103,7 +103,7 @@ export default async function OfficePage({ params }: PageProps) {
             className="
               content-wrapper
               pt-[80px] md:pt-[120px] lg:pt-[140px] xl:pt-[180px]
-              pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[88px]
+              pl-[12px] md:pl-[102px] lg:pl-[220px] xl:pl-[328px]
               pb-[24px] md:pb-[32px] xl:pb-[40px]
               text-[20px] leading-[28px]
               lg:text-[28px] lg:leading-[38px]
@@ -152,7 +152,7 @@ export default async function OfficePage({ params }: PageProps) {
             className="
               content-wrapper
               pt-[80px] md:pt-[120px] lg:pt-[140px] xl:pt-[180px]
-              pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[88px]
+              pl-[12px] md:pl-[102px] lg:pl-[220px] xl:pl-[328px]
               pb-[24px] md:pb-[32px] xl:pb-[40px]
               text-[20px] leading-[28px]
               lg:text-[28px] lg:leading-[38px]
