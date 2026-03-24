@@ -154,10 +154,12 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
           <Link
             key={path}
             href={`/${locale}${path}`}
-            className="
+            className={`
               text-[16px] leading-[23px] xl:text-[20px] xl:leading-[28px]
               text-text-primary py-[8px]
-            "
+              hover:underline hover:underline-offset-[4px]
+              ${isActive(path) ? "underline underline-offset-[4px]" : ""}
+            `}
           >
             {label}
           </Link>
@@ -211,39 +213,42 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
           </button>
         </div>
 
-        {/* Primary nav */}
-        <nav aria-label="Main navigation" className="absolute right-[12px] top-[78px]">
-          {navLinks.map(({ label, path }) => (
-            <Link
-              key={path}
-              href={`/${locale}${path}`}
-              className={`
-                block text-right py-[8px]
-                text-[38px] leading-[50px] text-text-primary
-                ${isActive(path) ? "underline" : ""}
-              `}
-            >
-              {label}
-            </Link>
-          ))}
-        </nav>
+        {/* Navigation */}
+        <div className="absolute right-[12px] top-[78px]">
+          {/* Primary nav */}
+          <nav aria-label="Main navigation">
+            {navLinks.map(({ label, path }) => (
+              <Link
+                key={path}
+                href={`/${locale}${path}`}
+                className={`
+                  block text-right py-[8px]
+                  text-[38px] leading-[50px] text-text-primary
+                  ${isActive(path) ? "underline" : ""}
+                `}
+              >
+                {label}
+              </Link>
+            ))}
+          </nav>
 
-        {/* Secondary nav */}
-        <nav aria-label="Secondary navigation" className="absolute right-[12px] top-1/2 -translate-y-1/2">
-          {secondaryNavLinks.map(({ label, path }) => (
-            <Link
-              key={path}
-              href={`/${locale}${path}`}
-              className={`
-                block text-right py-[8px]
-                text-[20px] leading-[28px] text-text-primary
-                ${isActive(path) ? "underline" : ""}
-              `}
-            >
-              {label}
-            </Link>
-          ))}
-        </nav>
+          {/* Secondary nav */}
+          <nav aria-label="Secondary navigation" className="mt-[29px]">
+            {secondaryNavLinks.map(({ label, path }) => (
+              <Link
+                key={path}
+                href={`/${locale}${path}`}
+                className={`
+                  block text-right py-[8px]
+                  text-[20px] leading-[28px] text-text-primary
+                  ${isActive(path) ? "underline" : ""}
+                `}
+              >
+                {label}
+              </Link>
+            ))}
+          </nav>
+        </div>
 
         {/* Language switcher */}
         <div className="absolute left-[12px] bottom-[12px]">

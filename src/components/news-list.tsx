@@ -52,18 +52,18 @@ export function NewsList({ locale, articles, emptyMessage }: NewsListProps) {
                 [font-feature-settings:'onum'_1,'pnum'_1]
                 py-[12px] md:py-[14px] xl:py-[16px]
                 pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[88px]
-                pr-[12px] md:pr-[44px] lg:pr-[40px] xl:pr-[88px]
+                pr-[13px] md:pr-[102px] lg:pr-[100px] xl:pr-[88px]
                 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black
               "
             >
-              <span className="hidden md:inline shrink-0 w-[48px]">
+              <span className="hidden lg:inline shrink-0 w-[48px]">
                 {year}
               </span>
-              <span className="shrink-0 w-[48px]">{dayMonth}</span>
-              <span className="min-w-0 flex-1 md:flex-none md:shrink-0 md:w-[200px] lg:w-[240px] xl:w-[280px] truncate">
+              <span className="shrink-0 w-[48px] xl:w-[160px]">{dayMonth}</span>
+              <span className="min-w-0 flex-1 md:flex-none md:shrink-0 md:w-[505px] lg:w-[345px] xl:w-[465px] line-clamp-2 md:truncate md:line-clamp-none">
                 {title}
               </span>
-              <span className="hidden md:inline flex-1 min-w-0 truncate">
+              <span className="hidden lg:inline flex-1 min-w-0 truncate">
                 {summary}
               </span>
             </Link>

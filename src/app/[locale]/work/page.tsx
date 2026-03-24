@@ -57,19 +57,21 @@ export default async function WorkListingPage({ params, searchParams }: PageProp
       {/* All projects table */}
       <section
         className="
-          mt-[100px] md:mt-[100px] lg:mt-[100px] xl:mt-[120px]
+          mt-[140px] md:mt-[219px] lg:mt-[140px] xl:mt-[230px]
         "
       >
         <ProjectList locale={locale} projects={projects} />
       </section>
 
       {/* Pagination */}
-      <Pagination
-        locale={locale}
-        basePath="/work"
-        currentPage={pagination?.page ?? requestedPage}
-        pageCount={pageCount}
-      />
+      <div className="mb-[140px] lg:mb-[370px]">
+        <Pagination
+          locale={locale}
+          basePath="/work"
+          currentPage={pagination?.page ?? requestedPage}
+          pageCount={pageCount}
+          />
+      </div>
     </main>
   );
 }

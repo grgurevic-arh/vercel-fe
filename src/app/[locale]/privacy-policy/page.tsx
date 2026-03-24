@@ -50,7 +50,7 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
         className="
           content-wrapper
           pt-[120px] md:pt-[144px] lg:pt-[154px] xl:pt-[270px]
-          pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[328px]
+          pl-[12px] md:pl-[102px] lg:pl-[160px] xl:pl-[328px]
           pb-[24px] md:pb-[32px] lg:pb-[40px] xl:pb-[100px]
         "
       >
@@ -68,24 +68,26 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
       <section
         className="
           content-wrapper
-          pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[328px]
-          pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[408px]
-          pb-[80px] md:pb-[100px] lg:pb-[120px] xl:pb-[160px]
+          pl-[34px] md:pl-[102px] lg:pl-[160px] xl:pl-[328px]
+          pr-[12px] md:pr-[102px] lg:pr-[160px] xl:pr-[408px]
+          pb-[130px] md:pb-[130px] lg:pb-[192px] xl:pb-[192px]
         "
       >
         {data.content?.length ? (
           <BlocksRenderer
             content={data.content}
+            numberedHeadings
             className="
               text-text-primary whitespace-pre-line
               [&_p]:text-[16px] [&_p]:leading-[23px]
               [&_p]:xl:text-[20px] [&_p]:xl:leading-[28px]
-              [&_p]:mb-0
+              [&_p]:mb-[16px] [&_p:last-child]:mb-0
               [&_ul]:text-[16px] [&_ul]:leading-[23px]
               [&_ol]:text-[16px] [&_ol]:leading-[23px]
-              [&_h2]:italic [&_h2]:text-[20px] [&_h2]:leading-normal [&_h2]:mb-[8px]
-              [&_h3]:italic [&_h3]:text-[20px] [&_h3]:leading-normal [&_h3]:mb-[8px]
-              [&_h4]:italic [&_h4]:text-[20px] [&_h4]:leading-normal [&_h4]:mb-[8px]
+              [&_h2]:italic [&_h2]:text-[20px] [&_h2]:leading-normal [&_h2]:mb-[8px] [&_h2]:mt-[32px]
+              [&_h3]:italic [&_h3]:text-[20px] [&_h3]:leading-normal [&_h3]:mb-[8px] [&_h3]:mt-[32px]
+              [&_h4]:italic [&_h4]:text-[20px] [&_h4]:leading-normal [&_h4]:mb-[8px] [&_h4]:mt-[32px]
+              [&_h2:first-child]:mt-0 [&_h3:first-child]:mt-0 [&_h4:first-child]:mt-0
             "
           />
         ) : null}

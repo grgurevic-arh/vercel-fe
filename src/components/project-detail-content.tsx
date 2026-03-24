@@ -124,7 +124,7 @@ function CompositionImage({
         content-wrapper
         pl-0 md:pl-[44px] lg:pl-[100px] xl:pl-[248px]
         pr-0 md:pr-[44px] lg:pr-[100px] xl:pr-[248px]
-        mb-[90px]
+        mb-[45px] md:mb-[69px] lg:mb-[69px] xl:mb-[95px]
       "
     >
       <div className={`${widthClass} ${alignmentClass}`}>
@@ -179,32 +179,17 @@ export function ProjectDetailContent({
       <h1
         className="
           content-wrapper
-          pt-[32px] md:pt-[40px] lg:pt-[48px]
+          pt-[99px] md:pt-[81px] lg:pt-[80px] xl:pt-[145px]
           pl-[12px] md:pl-[44px] lg:pl-[100px] xl:pl-[248px]
           pr-[12px] md:pr-[44px] lg:pr-[100px] xl:pr-[248px]
-          pb-[24px] md:pb-[32px]
+          pb-[10px] md:pb-[24px] xl:pb-[27px]
           text-[20px] leading-[28px]
-          md:text-[28px] md:leading-[38px]
+          md:text-[28px] md:leading-[38px] lg:text-[38px] lg:leading-[50px]
           text-text-primary
         "
       >
         {heading}
       </h1>
-
-      {/* Project code */}
-      {project.projectCode ? (
-        <p
-          className="
-            content-wrapper
-            pl-[12px] md:pl-[44px] lg:pl-[100px] xl:pl-[248px]
-            pr-[12px] md:pr-[44px] lg:pr-[100px] xl:pr-[248px]
-            pb-[16px] md:pb-[20px]
-            text-[16px] leading-[23px] text-text-primary uppercase tracking-wide
-          "
-        >
-          {project.projectCode}
-        </p>
-      ) : null}
 
       {/* Description */}
       {project.description && Array.isArray(project.description) && project.description.length > 0 ? (
@@ -213,7 +198,7 @@ export function ProjectDetailContent({
             content-wrapper
             pl-[12px] md:pl-[44px] lg:pl-[100px] xl:pl-[248px]
             pr-[12px] md:pr-[44px] lg:pr-[100px] xl:pr-[248px]
-            pb-[40px] md:pb-[48px] lg:pb-[56px]
+            pb-[46px] md:pb-[114px] lg:pb-[134px]
           "
         >
           <div className="max-w-[296px] md:max-w-[680px] lg:max-w-[824px] xl:max-w-[864px]">
@@ -232,7 +217,7 @@ export function ProjectDetailContent({
 
       {/* Meta grid */}
       {metaPairs.length ? (
-        <section className="pb-[40px] md:pb-[60px] lg:pb-[80px]">
+        <section className="pb-[176px]">
           <div className="border-t border-divider">
             {(() => {
               const rows: Array<typeof metaPairs> = [];
@@ -261,7 +246,7 @@ export function ProjectDetailContent({
                     >
                       <span
                         className="
-                          shrink-0 uppercase
+                          shrink-0 lowercase [font-variant-caps:small-caps]
                           text-[16px] leading-[22px] tracking-[0.48px]
                           text-text-primary
                           [font-feature-settings:'onum'_1,'pnum'_1]

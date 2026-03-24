@@ -82,9 +82,9 @@ export default async function EuProjectsPage({ params }: PageProps) {
       <section
         className="
           content-wrapper
-          pt-[120px] md:pt-[144px] lg:pt-[154px] xl:pt-[270px]
-          pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[328px]
-          pb-[24px] md:pb-[32px] lg:pb-[40px] xl:pb-[105px]
+          pt-[86px] md:pt-[184px] lg:pt-[216px] xl:pt-[190px]
+          pl-[12px] md:pl-[160px] lg:pl-[160px] xl:pl-[328px]
+          pb-[32px] md:pb-[52px] lg:pb-[90px] xl:pb-[90px]
         "
       >
         <h1
@@ -102,14 +102,14 @@ export default async function EuProjectsPage({ params }: PageProps) {
         <section
           className="
             content-wrapper
-            pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[328px]
-            pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[408px]
-            pb-[24px] md:pb-[38px] lg:pb-[54px] xl:pb-[47px]
+            pl-[12px] md:pl-[102px] lg:pl-[160px] xl:pl-[328px]
+            pr-[12px] md:pr-[102px] lg:pr-[160px] xl:pr-[408px]
+            pb-[16px] md:pb-[16px] lg:pb-[16px] xl:pb-[16px]
           "
         >
           <BlocksRenderer
             content={data.description}
-            className="text-[16px] leading-[23px] xl:text-[20px] xl:leading-[28px] text-text-primary"
+            className="text-[16px] leading-[23px] xl:text-[20px] xl:leading-[28px] text-text-primary [&_p:empty]:hidden"
           />
         </section>
       )}
@@ -120,20 +120,20 @@ export default async function EuProjectsPage({ params }: PageProps) {
           key={block.id}
           className="
             content-wrapper
-            pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[328px]
-            pr-[12px] md:pr-[20px] lg:pr-[160px] xl:pr-[408px]
-            py-[24px] md:py-[32px] xl:py-[40px]
+            pl-[12px] md:pl-[102px] lg:pl-[160px] xl:pl-[328px]
+            pr-[12px] md:pr-[102px] lg:pr-[160px] xl:pr-[408px]
+            py-[16px] md:py-[16px] xl:py-[16px]
           "
         >
-          <h2 className="italic text-[20px] leading-normal text-text-primary pb-[8px] md:pb-[12px] xl:pb-[16px]">
+          <h2 className="italic text-[20px] leading-normal text-text-primary pb-[8px]">
             {block.title}
           </h2>
-          <BlocksRenderer content={block.content} className="text-[16px] leading-[23px] text-text-primary" />
+          <BlocksRenderer content={block.content} className="text-[16px] leading-[23px] text-text-primary [&_p:empty]:hidden [&>*+*]:mt-[16px]" />
         </section>
       ))}
 
       {/* Metadata Table */}
-      <section>
+      <section className="mt-[36px] md:mt-[74px]">
         {metadataRows.map((row, index) => (
           <BorderedSection
             key={`${row.label}-${index}`}
@@ -144,7 +144,7 @@ export default async function EuProjectsPage({ params }: PageProps) {
                 relative w-full bg-white
                 min-h-[60px] md:min-h-[70px] xl:h-[80px]
                 flex flex-col xl:flex-row xl:items-center
-                px-[12px] md:px-[44px] lg:px-[40px] xl:px-0
+                px-[12px] md:px-[102px] lg:px-[160px] xl:px-0
                 py-[16px] xl:py-0
               "
             >
@@ -175,10 +175,10 @@ export default async function EuProjectsPage({ params }: PageProps) {
         <div
           className="
             content-wrapper
-            pl-[12px] md:pl-[160px] lg:pl-[160px] xl:pl-[328px]
-            pr-[12px] md:pr-[103px] lg:pr-[102px] xl:pr-[408px]
+            pl-[12px] md:pl-[102px] lg:pl-[160px] xl:pl-[328px]
+            pr-[12px] md:pr-[160px] lg:pr-[102px] xl:pr-[408px]
             pt-[60px] md:pt-[61px] lg:pt-[60px] xl:pt-[60px]
-            pb-[40px] md:pb-[50px] lg:pb-[50px] xl:pb-[60px]
+            pb-[102px] md:pb-[50px] lg:pb-[50px] xl:pb-[60px]
           "
         >
           {/* EU Badge */}

@@ -49,7 +49,7 @@ export function CompanyMetadata({
 
   const labelBase =
     "shrink-0 tracking-[0.03em] [font-variant-caps:small-caps]";
-  const rowBase = "flex text-[12px] leading-[20px] md:text-[16px] md:leading-[23px] text-text-primary";
+  const rowBase = "flex gap-x-[12px] md:gap-x-[44px] text-[12px] leading-[20px] md:text-[16px] md:leading-[23px] text-text-primary";
 
   return (
     <section
@@ -61,7 +61,7 @@ export function CompanyMetadata({
       <div
         className="
           content-wrapper relative
-          h-[550px] md:h-[360px] lg:h-[400px] xl:h-[544px]
+          h-[550px] md:h-[522px] lg:h-[400px] xl:h-[544px]
         "
       >
       {/* Banking & Registration group */}
@@ -74,7 +74,7 @@ export function CompanyMetadata({
       >
         {bankingFields.map((f) => (
           <div key={f.label} className={rowBase}>
-            <span className={`${labelBase} w-[73px] md:w-[68px] xl:w-[80px]`}>
+            <span className={`${labelBase} w-[73px] md:w-[80px] xl:w-[97px]`}>
               {f.label}
             </span>
             <span>{f.value}</span>
@@ -86,8 +86,8 @@ export function CompanyMetadata({
       <div
         className="
           absolute
-          left-[12px] md:left-[420px] lg:left-[540px] xl:left-[808px]
-          top-[246px] md:top-[100px] lg:top-[120px] xl:top-[152px]
+          left-[12px] md:left-[44px] lg:left-[540px] xl:left-[808px]
+          top-[246px] md:top-[264px] lg:top-[120px] xl:top-[152px]
         "
       >
         {companyFields.map((f) => (

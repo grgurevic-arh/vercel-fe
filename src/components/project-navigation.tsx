@@ -22,7 +22,7 @@ export function ProjectNavigation({
 
   return (
     <nav
-      className="border-t border-b border-divider"
+      className="border-t border-b border-divider mb-[60px] md:mb-[75px] lg:mb-0 xl:mb-[90px]"
       aria-label="Project navigation"
     >
       <div
@@ -39,7 +39,7 @@ export function ProjectNavigation({
             left-[12px] md:left-[44px] lg:left-[40px] xl:left-[88px]
             top-[52px] md:top-[101px] lg:top-[203px] xl:top-[253px]
             text-[20px] leading-[28px]
-            md:text-[28px] md:leading-[38px]
+            lg:text-[28px] lg:leading-[38px]
             text-text-primary
             [font-feature-settings:'onum'_1,'pnum'_1]
             hover:underline
@@ -59,7 +59,7 @@ export function ProjectNavigation({
             left-1/2 -translate-x-1/2
             top-[52px] md:top-[101px] lg:top-[203px] xl:top-[253px]
             text-[20px] leading-[28px]
-            md:text-[28px] md:leading-[38px]
+            lg:text-[28px] lg:leading-[38px]
             text-text-primary
             [font-feature-settings:'onum'_1,'pnum'_1]
             hover:underline
@@ -78,7 +78,7 @@ export function ProjectNavigation({
             right-[12px] md:right-[44px] lg:right-[40px] xl:right-[88px]
             top-[52px] md:top-[101px] lg:top-[203px] xl:top-[253px]
             text-[20px] leading-[28px]
-            md:text-[28px] md:leading-[38px]
+            lg:text-[28px] lg:leading-[38px]
             text-text-primary
             [font-feature-settings:'onum'_1,'pnum'_1]
             hover:underline

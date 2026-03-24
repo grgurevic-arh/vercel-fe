@@ -54,10 +54,11 @@ export default async function NewsListingPage({
       <section
         className="
           content-wrapper
-          pt-[120px] md:pt-[148px] lg:pt-[148px] xl:pt-[180px]
-          pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[408px]
-          pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
-          pb-[80px] md:pb-[120px] lg:pb-[140px] xl:pb-[180px]
+          min-h-[50vh]
+          pt-[236px] md:pt-[114px] lg:pt-[156px] xl:pt-[130px]
+          pl-[12px] md:pl-[160px] lg:pl-[160px] xl:pl-[408px]
+          pr-[12px] md:pr-[44px] lg:pr-[160px] xl:pr-[248px]
+          pb-[140px] md:pb-[176px] lg:pb-[230px] xl:pb-[279px]
         "
       >
         <ul className="space-y-[20px] md:space-y-[16px] lg:space-y-[20px] xl:space-y-[24px]">
@@ -88,11 +89,13 @@ export default async function NewsListingPage({
       <NewsList locale={locale} articles={newsArticles} />
 
       {/* Pagination */}
-      <Pagination
-        locale={locale}
-        currentPage={pagination?.page ?? requestedPage}
-        pageCount={pageCount}
-      />
+      <div className="mb-[140px] md:mb-[240px]">
+        <Pagination
+          locale={locale}
+          currentPage={pagination?.page ?? requestedPage}
+          pageCount={pageCount}
+          />
+      </div>
     </main>
   );
 }
