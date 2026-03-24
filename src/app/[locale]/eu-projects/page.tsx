@@ -109,7 +109,7 @@ export default async function EuProjectsPage({ params }: PageProps) {
         >
           <BlocksRenderer
             content={data.description}
-            className="text-[16px] leading-[23px] xl:text-[20px] xl:leading-[28px] text-text-primary"
+            className="text-[16px] leading-[23px] xl:text-[20px] xl:leading-[28px] text-text-primary [&_p:empty]:hidden"
           />
         </section>
       )}
@@ -128,7 +128,7 @@ export default async function EuProjectsPage({ params }: PageProps) {
           <h2 className="italic text-[20px] leading-normal text-text-primary pb-[8px]">
             {block.title}
           </h2>
-          <BlocksRenderer content={block.content} className="text-[16px] leading-[23px] text-text-primary" />
+          <BlocksRenderer content={block.content} className="text-[16px] leading-[23px] text-text-primary [&_p:empty]:hidden" />
         </section>
       ))}
 
