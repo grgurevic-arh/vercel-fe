@@ -246,7 +246,7 @@ export interface PollQuestion {
   id: number;
   questionId: string;
   prompt: string;
-  inputType: "text" | "textarea" | "select";
+  inputType: "text" | "textarea" | "select" | "checkbox";
   required: boolean;
   options: Array<{ label: string; value: string }> | null;
   placeholder: string | null;

@@ -35,23 +35,27 @@ export function PollForm({ poll, locale }: PollFormProps) {
     handleSubmit,
     formState: { errors, isSubmitting },
     setError,
-  } = useForm<Record<string, string>>();
+  } = useForm<Record<string, string | string[]>>();
 
   const [accessCodeError, setAccessCodeError] = useState<string | null>(null);
 
-  const onSubmit = async (formData: Record<string, string>) => {
+  const onSubmit = async (formData: Record<string, string | string[]>) => {
     setSubmitError(null);
     setAccessCodeError(null);
 
-    if (poll.requiresAccessCode && !formData.__accessCode?.trim()) {
+    const accessCode = formData.__accessCode as string | undefined;
+    if (poll.requiresAccessCode && !accessCode?.trim()) {
       setAccessCodeError(trans.pollForm.accessCodeRequired);
       return;
     }
 
-    const answers = poll.questions.map((q) => ({
-      questionId: q.questionId,
-      value: formData[q.questionId] ?? "",
-    }));
+    const answers = poll.questions.map((q) => {
+      const raw = formData[q.questionId] ?? "";
+      return {
+        questionId: q.questionId,
+        value: Array.isArray(raw) ? raw.join(",") : raw,
+      };
+    });
 
     try {
       const res = await fetch("/api/polls/submit", {
@@ -62,7 +66,7 @@ export function PollForm({ poll, locale }: PollFormProps) {
           locale,
           answers,
           ...(poll.requiresAccessCode
-            ? { accessCode: formData.__accessCode.trim() }
+            ? { accessCode: (accessCode as string).trim() }
             : {}),
           metadata: {
             userAgent: navigator.userAgent,
@@ -251,6 +255,35 @@ export function PollForm({ poll, locale }: PollFormProps) {
                           value={opt.value}
                           {...register(q.questionId, {
                             required: q.required ? requiredMessage : false,
+                          })}
+                          className="size-[12px] accent-text-primary"
+                        />
+                        {opt.label}
+                      </label>
+                    ))}
+                  </div>
+                ) : null}
+
+                {q.inputType === "checkbox" ? (
+                  <div className="flex flex-wrap items-center gap-[20px] py-[10px]">
+                    {q.options?.map((opt) => (
+                      <label
+                        key={opt.value}
+                        className="
+                          flex items-center gap-[7px] cursor-pointer
+                          font-sans text-[16px] leading-[23px]
+                          text-text-primary tracking-[-0.1px]
+                        "
+                      >
+                        <input
+                          type="checkbox"
+                          value={opt.value}
+                          {...register(q.questionId, {
+                            validate: q.required
+                              ? (v) =>
+                                  (Array.isArray(v) ? v.length > 0 : !!v) ||
+                                  requiredMessage
+                              : undefined,
                           })}
                           className="size-[12px] accent-text-primary"
                         />

@@ -63,7 +63,9 @@ export default function LocaleNotFound() {
             text-[16px] leading-[23px]
             lg:text-[22px] lg:leading-[32px]
             text-[var(--text-secondary,#636363)]
+            hover:text-text-primary transition-colors
             underline underline-offset-4
+            cursor-pointer
           "
         >
           {trans.pages.tryAgain}
