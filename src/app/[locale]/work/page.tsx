@@ -50,7 +50,9 @@ export default async function WorkListingPage({
     notFound();
   }
 
-  const featured = projects.slice(0, FEATURED_COUNT);
+  const featured = projects
+    .filter((p) => p.disableRedirect !== true)
+    .slice(0, FEATURED_COUNT);
 
   return (
     <main>

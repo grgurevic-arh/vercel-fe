@@ -174,7 +174,8 @@ export async function getWorkProjects(locale: string, page = 1, pageSize = 10) {
       ...withLocale(locale),
       "pagination[page]": page,
       "pagination[pageSize]": pageSize,
-      sort: "year:desc",
+      "sort[0]": "disableRedirect:asc",
+      "sort[1]": "year:desc",
       "populate[heroImages][populate][0]": "image",
     },
     { page, pageSize },
@@ -197,13 +198,17 @@ export async function getWorkProjectBySlug(locale: string, slug: string) {
 
 export async function getWorkProjectSlugs(locale: string) {
   const response = await strapiFetch<
-    StrapiCollectionResponse<Pick<ProjectListing, "title" | "slug">>
+    StrapiCollectionResponse<
+      Pick<ProjectListing, "title" | "slug" | "disableRedirect">
+    >
   >("/work-projects", {
     searchParams: {
       ...withLocale(locale),
       "fields[0]": "title",
       "fields[1]": "slug",
-      sort: "year:desc",
+      "fields[2]": "disableRedirect",
+      "sort[0]": "disableRedirect:asc",
+      "sort[1]": "year:desc",
       "pagination[pageSize]": 200,
     },
   });

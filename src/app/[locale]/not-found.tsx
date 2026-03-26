@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import type { Locale } from "@/lib/i18n";
 import { t } from "@/lib/translations";
@@ -53,6 +54,20 @@ export default function LocaleNotFound() {
         >
           {trans.pages.errorCode}
         </p>
+
+        <Link
+          href={`/${locale}`}
+          className="
+            mt-[24px] md:mt-[24px] lg:mt-[32px]
+            inline-block
+            text-[16px] leading-[23px]
+            lg:text-[22px] lg:leading-[32px]
+            text-[var(--text-secondary,#636363)]
+            underline underline-offset-4
+          "
+        >
+          {trans.pages.tryAgain}
+        </Link>
       </section>
     </main>
   );

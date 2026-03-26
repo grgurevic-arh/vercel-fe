@@ -90,7 +90,14 @@ export default async function WorkDetailPage({ params }: PageProps) {
 
   const allSlugs = allSlugsRaw
     .map((entry) => unwrapStrapiEntity(entry))
-    .filter((e): e is Pick<ProjectListing, "title" | "slug"> => !!e?.slug);
+    .filter(
+      (
+        e,
+      ): e is Pick<
+        ProjectListing,
+        "title" | "slug" | "disableRedirect"
+      > => !!e?.slug && e.disableRedirect !== true,
+    );
 
   const { previous, next } = getAdjacentSlugs(allSlugs, slug);
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import type { Locale } from "@/lib/i18n";
 import { t } from "@/lib/translations";
 
@@ -11,6 +11,7 @@ export default function LocaleError({
   reset: () => void;
 }) {
   const params = useParams<{ locale: string }>();
+  const router = useRouter();
   const locale = (params?.locale ?? "en") as Locale;
   const trans = t(locale);
 
@@ -48,7 +49,10 @@ export default function LocaleError({
         </p>
 
         <button
-          onClick={reset}
+          onClick={() => {
+            router.refresh();
+            reset();
+          }}
           className="
             mt-[62px] md:mt-[62px] lg:mt-[120px]
             text-[16px] leading-[23px]

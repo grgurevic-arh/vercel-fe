@@ -154,6 +154,7 @@ export interface ProjectListing extends LocalizedEntity {
   discipline: string | null;
   location: string | null;
   size: string | null;
+  disableRedirect: boolean | null;
   heroImages: ImageWithCaption[];
 }
 
