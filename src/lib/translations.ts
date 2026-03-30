@@ -47,6 +47,7 @@ const translations = {
       somethingWentWrong: "Something went wrong.",
       unexpectedError: "An unexpected error occurred.",
       tryAgain: "Try again",
+      loadMore: "Load more",
     },
     euProjects: {
       projectWorth: "Project Worth",
@@ -141,6 +142,7 @@ const translations = {
       somethingWentWrong: "Nešto je pošlo po krivu.",
       unexpectedError: "Došlo je do neočekivane greške.",
       tryAgain: "Pokušaj ponovo",
+      loadMore: "Učitaj više",
     },
     euProjects: {
       projectWorth: "Ukupna vrijednost projekta",
