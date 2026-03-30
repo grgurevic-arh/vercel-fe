@@ -31,14 +31,23 @@ export function HomepageCarousel({ slides }: HomepageCarouselProps) {
           h-[300px] md:h-[632px] xl:h-[clamp(810px,56.25vw,70vh)]
         "
       >
-        <Image
-          src={current.url}
-          alt={current.alt}
-          fill
-          sizes="100vw"
-          className="object-cover"
-          priority
-        />
+        <div
+          className="flex h-full transition-transform duration-[1500ms] ease-in-out"
+          style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+        >
+          {slides.map((slide) => (
+            <div key={slide.url} className="relative h-full w-full shrink-0">
+              <Image
+                src={slide.url}
+                alt={slide.alt}
+                fill
+                sizes="100vw"
+                className="object-cover"
+                priority
+              />
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Pagination + Caption */}
@@ -51,7 +60,7 @@ export function HomepageCarousel({ slides }: HomepageCarouselProps) {
       >
         {slides.length > 1 ? (
           <nav
-            className="flex gap-[14px] md:gap-[24px] lg:gap-[14px] xl:gap-[24px]"
+            className="flex gap-[38px] md:gap-[50px] lg:gap-[45px] xl:gap-[72px]"
             aria-label="Image pagination"
           >
             {slides.map((_, index) => {
@@ -64,7 +73,7 @@ export function HomepageCarousel({ slides }: HomepageCarouselProps) {
                   aria-label={`Show image ${index + 1}`}
                   aria-current={isActive ? "true" : undefined}
                   className={`
-                    text-left md:min-w-[34px] lg:min-w-[39px] xl:min-w-[56px]
+                    text-left
                     text-[16px] leading-[23px] text-text-primary
                     [font-feature-settings:'onum'_1,'pnum'_1]
                     [text-decoration-skip-ink:none]

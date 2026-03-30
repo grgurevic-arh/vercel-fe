@@ -47,57 +47,80 @@ function buildGalleryRows(projects: NormalizedProjectListing[]): GalleryRow[] {
 function GalleryItem({
   project,
   locale,
+  portrait,
 }: {
   project: NormalizedProjectListing;
   locale: string;
+  portrait: boolean;
 }) {
   const firstHero = project.heroImages?.[0];
   const heroMedia = firstHero?.image;
   const coverAttributes = getStrapiMediaAttributes(heroMedia);
   const coverUrl = getStrapiMediaUrl(heroMedia);
-  const coverWidth = coverAttributes?.width ?? 1200;
-  const coverHeight = coverAttributes?.height ?? 900;
   const coverAlt =
     coverAttributes?.alternativeText ?? `${project.title} cover image`;
   const href = `/${locale}/work/${project.slug}`;
+
+  const containerHeight = portrait
+    ? "md:h-[677px] lg:h-[448px]"
+    : "md:h-[598px] lg:h-[448px]";
 
   return (
     <Link
       href={href}
       className="
         group block
-        focus-visible:outline focus-visible:outline-2
+        focus-visible:outline
         focus-visible:outline-offset-2 focus-visible:outline-black
       "
     >
-      <div className="md:max-w-[448px] lg:max-w-[396px] mx-auto">
+      <div className={`flex flex-col ${containerHeight}`}>
         {coverUrl ? (
-          <Image
-            src={coverUrl}
-            alt={coverAlt}
-            width={coverWidth}
-            height={coverHeight}
-            sizes="(min-width: 1024px) 396px, (min-width: 768px) 448px, 100vw"
-            className="h-auto w-full"
-          />
+          <>
+            {/* Mobile: natural image sizing, no fixed container */}
+            <div className="md:hidden">
+              <Image
+                src={coverUrl}
+                alt={coverAlt}
+                width={coverAttributes?.width ?? 1200}
+                height={coverAttributes?.height ?? 900}
+                sizes="320px"
+                className="w-full h-auto"
+              />
+            </div>
+            {/* md+: fixed container with padding and centered image */}
+            <div className="relative flex-1 min-h-0 overflow-hidden hidden md:block">
+              <div className="absolute inset-[24px]">
+                <div className="relative h-full w-full">
+                  <Image
+                    src={coverUrl}
+                    alt={coverAlt}
+                    fill
+                    sizes="(min-width: 1024px) 416px, (min-width: 768px) 516px"
+                    className="object-contain"
+                  />
+                </div>
+              </div>
+            </div>
+          </>
         ) : (
-          <div className="flex aspect-[4/3] items-center justify-center bg-gray-100 text-[16px] text-text-primary">
+          <div className="flex flex-1 min-h-0 items-center justify-center bg-gray-100 text-[16px] text-text-primary md:h-full">
             No cover image
           </div>
         )}
+        <p
+          className="
+            mt-[16px]
+            text-[16px] leading-[23px] md:text-[20px] md:leading-[28px]
+            text-text-primary
+            [font-feature-settings:'onum'_1,'pnum'_1]
+            pl-[12px] md:pl-0
+            truncate
+          "
+        >
+          {project.title}
+        </p>
       </div>
-      <p
-        className="
-          mt-[12px] md:mt-[16px]
-          text-[16px] leading-[23px] md:text-[20px] md:leading-[28px]
-          text-text-primary
-          [font-feature-settings:'onum'_1,'pnum'_1]
-          pl-[12px] md:pl-0
-          truncate
-        "
-      >
-        {project.title}
-      </p>
     </Link>
   );
 }
@@ -123,7 +146,7 @@ export function ProjectGallery({ locale, projects }: ProjectGalleryProps) {
             key={`${project.slug}-${project.id}`}
             className="md:mx-auto md:w-[564px]"
           >
-            <GalleryItem project={project} locale={locale} />
+            <GalleryItem project={project} locale={locale} portrait={!isLandscape(project)} />
           </div>
         ))}
       </div>
@@ -142,6 +165,7 @@ export function ProjectGallery({ locale, projects }: ProjectGalleryProps) {
                     key={`${project.slug}-${project.id}`}
                     project={project}
                     locale={locale}
+                    portrait={!isLandscape(project)}
                   />
                 ))}
               </div>
@@ -151,7 +175,7 @@ export function ProjectGallery({ locale, projects }: ProjectGalleryProps) {
           return (
             <div key={`row-${rowIndex}`} className="flex justify-center">
               <div className="w-[464px]">
-                <GalleryItem project={row.projects[0]} locale={locale} />
+                <GalleryItem project={row.projects[0]} locale={locale} portrait={!isLandscape(row.projects[0])} />
               </div>
             </div>
           );

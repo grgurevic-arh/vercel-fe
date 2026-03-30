@@ -17,24 +17,39 @@ export function ProjectHeroCarousel({ slides }: ProjectHeroCarouselProps) {
   const current = slides[Math.min(activeIndex, slides.length - 1)];
 
   return (
-    <section className="content-wrapper pt-[138px] lg:pt-[144px] xl:pt-[152px]">
-      {/* Hero image — inset from left, NOT full-width */}
+    <section
+      className="
+        content-wrapper
+        pt-[138px] lg:pt-[144px] xl:pt-[152px]
+        md:px-[44px] lg:px-[100px] xl:px-0
+      "
+    >
+      {/* Hero image */}
       <div
         className="
           relative overflow-hidden
-          w-full md:w-[680px] lg:w-[824px] xl:w-[944px]
+          w-full xl:w-[944px]
           h-[208px] md:h-[440px] lg:h-[531px] xl:h-[608px]
-          ml-0 md:mx-auto xl:mx-0 xl:ml-[248px]
+          xl:ml-[248px]
         "
       >
-        <Image
-          src={current.url}
-          alt={current.alt}
-          fill
-          sizes="(min-width: 1440px) 944px, (min-width: 1024px) 824px, (min-width: 768px) 680px, 100vw"
-          className="object-cover"
-          priority
-        />
+        <div
+          className="flex h-full transition-transform duration-[1500ms] ease-in-out"
+          style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+        >
+          {slides.map((slide) => (
+            <div key={slide.url} className="relative h-full w-full shrink-0">
+              <Image
+                src={slide.url}
+                alt={slide.alt}
+                fill
+                sizes="(min-width: 1440px) 944px, (min-width: 1024px) calc(100vw - 200px), (min-width: 768px) calc(100vw - 88px), 100vw"
+                className="object-cover"
+                priority
+              />
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Caption + Pagination row */}
@@ -43,8 +58,7 @@ export function ProjectHeroCarousel({ slides }: ProjectHeroCarouselProps) {
           flex justify-start md:justify-between items-baseline
           mt-[12px] lg:mt-[8px]
           pl-[12px] md:pl-0 xl:pl-[248px]
-          w-full md:w-[680px] lg:w-[824px] xl:w-[calc(248px+944px)]
-          md:mx-auto xl:mx-0
+          w-full xl:w-[calc(248px+944px)]
         "
       >
         {/* Caption */}

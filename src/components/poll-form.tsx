@@ -318,7 +318,7 @@ export function PollForm({ poll, locale }: PollFormProps) {
                 text-[20px] leading-[28px]
                 [font-feature-settings:'onum'_1,'pnum'_1]
                 hover:opacity-80
-                focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-text-primary
+                focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-text-primary
                 disabled:opacity-50 disabled:cursor-not-allowed
               "
             >

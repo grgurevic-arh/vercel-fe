@@ -29,7 +29,7 @@ export function Pagination({
           h-[210px] lg:h-[340px] xl:h-[370px]
           pl-[12px] md:pl-[160px] lg:pl-[160px] xl:pl-[248px]
           pb-[89px]
-          gap-x-[24px] md:gap-x-[48px] lg:gap-x-[51px] xl:gap-x-[70px]
+          gap-x-[24px] md:gap-x-[32px]
         "
         aria-label="Pagination"
       >
@@ -48,7 +48,7 @@ export function Pagination({
                 text-[21px] leading-[100%] text-text-primary
                 [font-feature-settings:'lnum'_1,'tnum'_1]
                 ${isActive ? "underline underline-offset-4" : "hover:underline hover:underline-offset-4"}
-                focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black
+                focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-black
               `}
             >
               {page}
