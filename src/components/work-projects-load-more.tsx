@@ -64,19 +64,21 @@ export function WorkProjectsLoadMore({
               w-[200px]
               font-serif
               px-[20px] py-[10px]
-              bg-text-primary text-white
+              bg-white text-text-primary
+              border border-text-primary
               text-[20px] leading-[28px]
               [font-feature-settings:'onum'_1,'pnum'_1]
               hover:opacity-80
               focus-visible:outline focus-visible:outline-2
               focus-visible:outline-offset-2 focus-visible:outline-text-primary
+              cursor-pointer
               disabled:opacity-50 disabled:cursor-not-allowed
               flex items-center justify-center gap-[8px]
             "
           >
             {isPending ? (
               <svg
-                className="animate-spin h-[20px] w-[20px] text-white"
+                className="animate-spin h-[20px] w-[20px] text-text-primary"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
