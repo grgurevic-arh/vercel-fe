@@ -54,7 +54,6 @@ export default async function NewsListingPage({
       <section
         className="
           content-wrapper
-          min-h-[50vh]
           pt-[236px] md:pt-[114px] lg:pt-[156px] xl:pt-[130px]
           pl-[12px] md:pl-[160px] lg:pl-[160px] xl:pl-[408px]
           pr-[12px] md:pr-[44px] lg:pr-[160px] xl:pr-[248px]
@@ -70,12 +69,12 @@ export default async function NewsListingPage({
                   block
                   text-[20px] leading-[28px]
                   [font-feature-settings:'onum'_1,'pnum'_1]
-                  min-[320px]:text-[28px] min-[320px]:leading-[38px]
-                  md:text-[38px] md:leading-[50px]
+                  md:text-[28px] md:leading-[38px]
+                  lg:text-[38px] lg:leading-[50px]
                   md:[font-feature-settings:normal]
                   text-text-primary
                   hover:underline
-                  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black
+                  focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-black
                 "
               >
                 {article.title}

@@ -130,7 +130,7 @@ export default async function LocaleHomepage({ params }: PageProps) {
         "
       >
         {newsArticles.length > 0 ? (
-          <ul className="space-y-[47px] md:space-y-[40px] lg:space-y-[70px] xl:space-y-[54px]">
+          <ul className="space-y-[32px] md:space-y-[40px] lg:space-y-[70px] xl:space-y-[54px]">
             {newsArticles.map((article) => (
               <li key={article.slug}>
                 <Link
@@ -159,6 +159,7 @@ export default async function LocaleHomepage({ params }: PageProps) {
                         xl:text-[28px] xl:leading-[38px]
                         text-text-primary
                         group-hover:underline
+                        line-clamp-3
                       "
                     >
                       {article.summary}

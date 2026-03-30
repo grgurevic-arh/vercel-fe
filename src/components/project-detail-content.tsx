@@ -207,7 +207,7 @@ export function ProjectDetailContent({
             pb-[46px] md:pb-[114px] lg:pb-[134px]
           "
         >
-          <div className="max-w-[296px] md:max-w-[680px] lg:max-w-[824px] xl:max-w-[864px]">
+          <div className="md:max-w-[680px] lg:max-w-[824px] xl:max-w-[864px]">
             <BlocksRenderer
               content={project.description}
               className="

@@ -25,15 +25,11 @@ export function ProjectList({
 
   const gridClassName = `
     content-wrapper
-    grid items-center h-[60px] md:h-[80px]
+    flex items-center h-[60px] md:h-[80px]
     text-[16px] leading-[23px] text-text-primary
     [font-feature-settings:'onum'_1,'pnum'_1]
     pl-[12px] md:pl-[44px] lg:pl-[40px] xl:pl-[88px]
     pr-[12px] md:pr-[44px] lg:pr-[86px] xl:pr-[173px]
-    grid-cols-[77px_1fr] gap-x-0
-    md:grid-cols-[58px_174px_1fr] md:gap-x-0
-    lg:grid-cols-[120px_120px_384px_1fr_104px] lg:gap-x-0
-    xl:grid-cols-[160px_160px_480px_1fr_144px] xl:gap-x-0
   `;
 
   return (
@@ -48,16 +44,18 @@ export function ProjectList({
 
         const cells = (
           <>
-            <span className="truncate">{year}</span>
-            <span className="hidden md:inline lowercase [font-variant-caps:small-caps] tracking-[0.48px] truncate">
+            <span className="w-[37px] md:w-[33px] lg:w-[90px] xl:w-[90px] mr-[40px] md:mr-[25px] lg:mr-[30px] xl:mr-[70px] text-center lg:text-left">{year}</span>
+            <span className="w-[130px] mr-[39px] md:mr-[44px] lg:mr-[50px] xl:mr-[30px] hidden md:inline lowercase [font-variant-caps:small-caps] tracking-[0.48px] truncate">
               {discipline}
             </span>
-            <span className="truncate lg:max-w-[345px] xl:max-w-[390px]">
+            <span className="md:w-[438px] lg:w-[344px] xl:w-[384px] lg:mr-[16px] xl:mr-[96px] truncate">
               {title}
             </span>
-            <span className="hidden lg:inline truncate">{location}</span>
-            <span className="hidden lg:inline text-right truncate">
-              {size}
+            <span className="hidden lg:w-[238px] xl:w-[379px] lg:flex flex-row justify-between">
+              <span className=" truncate">{location}</span>
+              <span className="text-right truncate">
+                {size}
+              </span>
             </span>
           </>
         );
@@ -75,7 +73,7 @@ export function ProjectList({
               <Link
                 href={`/${locale}/work/${project.slug}`}
                 className={`${gridClassName}
-                  focus-visible:outline focus-visible:outline-2
+                  focus-visible:outline
                   focus-visible:outline-offset-2 focus-visible:outline-black
                 `}
               >

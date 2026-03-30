@@ -47,6 +47,7 @@ export function HomepageFeed({ locale, items }: HomepageFeedProps) {
                     lg:text-[26px] lg:leading-[36px]
                     xl:text-[28px] xl:leading-[38px]
                     text-text-primary
+                    line-clamp-3
                   "
                 >
                   {item.summary}

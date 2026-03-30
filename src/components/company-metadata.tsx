@@ -1,3 +1,5 @@
+import { BorderedSection } from "@/components/bordered-section";
+
 interface CompanyMetadataProps {
   bank: string | null;
   swift: string | null;
@@ -58,23 +60,61 @@ export function CompanyMetadata({
         border-t border-divider
       "
     >
+      {/* Mobile: BorderedSection rows (visible only on <md) */}
+      <div className="mb-[144px] md:hidden">
+        {bankingFields.map((f) => (
+          <BorderedSection
+            key={f.label}
+            border="border-b border-divider"
+            className="h-[70px] flex items-center pl-[12px] pr-[12px] pt-[12px] pb-[14px]"
+          >
+            <div className="flex flex-col text-[16px] text-text-primary">
+              <span className="tracking-[0.48px] [font-variant-caps:small-caps] leading-[22px]">
+                {f.label}
+              </span>
+              <span className="leading-[23px]">{f.value}</span>
+            </div>
+          </BorderedSection>
+        ))}
+        {companyFields.length > 0 && (
+          <>
+            <div className="h-[32px]" />
+            {companyFields.map((f, i) => (
+              <BorderedSection
+                key={f.label}
+                border={i < companyFields.length - 1 ? "border-b border-divider" : ""}
+                className="h-[70px] flex items-center pl-[12px] pr-[12px]"
+              >
+                <div className="flex flex-col text-[16px] text-text-primary">
+                  <span className="tracking-[0.48px] [font-variant-caps:small-caps] leading-[22px]">
+                    {f.label}
+                  </span>
+                  <span className="leading-[23px]">{f.value}</span>
+                </div>
+              </BorderedSection>
+            ))}
+          </>
+        )}
+      </div>
+
+      {/* Desktop: absolute-positioned layout (visible on md+) */}
       <div
         className="
-          content-wrapper relative
-          h-[550px] md:h-[522px] lg:h-[400px] xl:h-[544px]
+          content-wrapper relative hidden md:block
+          md:h-[522px] lg:h-[400px] xl:h-[544px]
         "
       >
         {/* Banking & Registration group */}
         <div
           className="
           absolute
-          left-[12px] md:left-[44px] lg:left-[40px] xl:left-[87px]
-          top-[75px] md:top-[100px] lg:top-[120px] xl:top-[152px]
+          md:left-[44px] lg:left-[40px] xl:left-[87px]
+          md:top-[100px] lg:top-[120px] xl:top-[152px]
         "
         >
           {bankingFields.map((f) => (
             <div key={f.label} className={rowBase}>
-              <span className={`${labelBase} w-[73px] md:w-[80px] xl:w-[97px]`}>
+              <span className={`${labelBase} md:w-[80px] xl:w-[97px]`}>
                 {f.label}
               </span>
               <span>{f.value}</span>
@@ -86,13 +126,13 @@ export function CompanyMetadata({
         <div
           className="
           absolute
-          left-[12px] md:left-[44px] lg:left-[540px] xl:left-[808px]
-          top-[246px] md:top-[264px] lg:top-[120px] xl:top-[152px]
+          md:left-[44px] lg:left-[540px] xl:left-[808px]
+          md:top-[264px] lg:top-[120px] xl:top-[152px]
         "
         >
           {companyFields.map((f) => (
             <div key={f.label} className={rowBase}>
-              <span className={`${labelBase} w-[73px] md:w-[80px] xl:w-[97px]`}>
+              <span className={`${labelBase} md:w-[80px] xl:w-[97px]`}>
                 {f.label}
               </span>
               <span>{f.value}</span>

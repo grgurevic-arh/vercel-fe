@@ -74,9 +74,9 @@ export default async function OfficePage({ params }: PageProps) {
         className="
           content-wrapper
           pt-[236px] md:pt-[184px] lg:pt-[184px] xl:pt-[190px]
-          pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[328px]
+          pl-[12px] md:pl-[102px] lg:pl-[220px] xl:pl-[328px]
           pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
-          pb-[93px] md:pb-[184px] lg:pb-[154px] xl:pb-[216px]
+          pb-[93px] md:pb-[124px] lg:pb-[154px] xl:pb-[216px]
         "
       >
         {data.description ? (
@@ -211,7 +211,7 @@ export default async function OfficePage({ params }: PageProps) {
         telephone={footer?.phoneNumber ?? null}
         companyName={footer?.companyName ?? undefined}
         address={footer?.address ?? undefined}
-        className="mt-[140px] md:mt-[240px] lg:mt-[240px] xl:mt-[240px] lg:mb-[330px] xl:mb-[250px]"
+        className="mt-[140px] md:mt-[140px] lg:mt-[240px] xl:mt-[240px] md:mb-[70px] lg:mb-[330px] xl:mb-[250px]"
       />
     </main>
   );
