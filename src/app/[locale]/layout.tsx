@@ -6,6 +6,7 @@ import { resolveLocaleParam } from "@/lib/request-helpers";
 import { t } from "@/lib/translations";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { PageTransition } from "@/components/page-transition";
 
 interface LocaleLayoutProps {
   children: ReactNode;
@@ -48,7 +49,7 @@ export default async function LocaleLayout({
       data-locale={locale}
     >
       <SiteHeader locale={locale} />
-      {children}
+      <PageTransition>{children}</PageTransition>
       <SiteFooter locale={locale} />
     </div>
   );
