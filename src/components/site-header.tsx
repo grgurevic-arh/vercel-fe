@@ -131,6 +131,7 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
       <header
         inert={menuOpen || undefined}
         className="
+        sticky top-0 z-40
         border-b-[0.5px] border-divider bg-white
         h-[54px] xl:h-[80px]
       "

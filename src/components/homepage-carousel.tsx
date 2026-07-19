@@ -60,7 +60,7 @@ export function HomepageCarousel({ slides }: HomepageCarouselProps) {
       >
         {slides.length > 1 ? (
           <nav
-            className="flex gap-[38px] md:gap-[50px] lg:gap-[45px] xl:gap-[72px]"
+            className="flex gap-[24px]"
             aria-label="Image pagination"
           >
             {slides.map((_, index) => {
