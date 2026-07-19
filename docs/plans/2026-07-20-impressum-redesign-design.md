@@ -63,6 +63,11 @@ New shared component `shared.labelled-value`:
 - `label` — string, required
 - `value` — text, required
 
+(No existing component fits: the closest, `eu.useful-link`, is `label` + `url`
+and is consumed by the EU projects page for real hyperlinks. Repeatable rows in
+Strapi require a component definition; this one follows the same pattern as
+`useful-link`.)
+
 `legal-page` single type gains three **localized repeatable** component fields
 (`shared.labelled-value`):
 
@@ -84,9 +89,19 @@ entries, so it cannot affect production.
 ### Data layer
 
 - `LegalPage` type: add `companyDetails`, `bankingDetails`, `credits` as
-  `Array<{ label: string; value: string }>`; drop the flat fields once the
-  CMS cleanup ships.
-- `getLegalPage` adds populate params for the three component fields.
+  optional `Array<{ label: string; value: string }>` alongside the existing
+  flat fields; the flat fields are dropped in the cleanup phase.
+- `getLegalPage` uses `populate=*` — NOT explicit
+  `populate[companyDetails]`-style params, because Strapi returns a 400
+  ValidationError when explicitly populating a field that does not exist in the
+  schema yet. `populate=*` succeeds both before and after the CMS deploy
+  (legal-page has no media, so it stays cheap).
+- **Fallback assembly:** if the three arrays are absent or empty, the page
+  builds the same three groups from the flat fields, using temporary
+  hardcoded HR/EN labels (from the Excel) in `translations.ts`. When the CMS
+  starts returning non-empty arrays, they take precedence — no FE change
+  needed at switchover. The fetch layer uses `cache: "no-store"`, so published
+  content appears immediately.
 
 ### Page & components
 
@@ -115,23 +130,29 @@ entries, so it cannot affect production.
 - Exact paddings/column widths are matched to the Figma during implementation,
   following the app's per-breakpoint arbitrary-value Tailwind convention.
 
-## Deployment order (expand → migrate → contract)
+## Deployment order (FE-first, works out of the box at switchover)
 
 Production must never break. Each step is backward-compatible:
 
-1. **CMS deploy (additive).** New component + three new fields; flat fields
-   untouched. Live frontend still reads flat fields — no visible change.
-2. **Content entry (production admin).** Fill and publish the three groups for
-   HR and EN from the Excel. Old frontend ignores the new fields — still no
-   visible change.
-3. **Frontend deploy.** New page reads only the component fields. Verify the
-   Vercel preview against production CMS (content already published), then
-   merge — production flips atomically with real data.
-4. **CMS cleanup deploy (contract).** Remove the 15 flat fields, their admin
-   metadata labels, and their seed entries. Nothing reads them anymore.
+1. **Frontend deploy.** New design ships immediately, rendered from the
+   existing flat fields via the fallback assembly (temporary FE labels).
+   Verified on the Vercel preview against production CMS before merge.
+   `populate=*` keeps the request valid against the current schema.
+2. **CMS deploy (additive).** New component + three new fields; flat fields
+   untouched. Arrays are empty, so the frontend keeps using the fallback —
+   no visible change.
+3. **Content entry (production admin).** Fill and publish the three groups for
+   HR and EN from the Excel. Because the fetch is `no-store`, the frontend
+   picks up the arrays on the next request and switches automatically —
+   no deploy involved.
+4. **Cleanup (contract).** CMS: remove the 15 flat fields, their admin
+   metadata labels, and their seed entries. FE: remove the fallback assembly,
+   temporary labels, and flat fields from the `LegalPage` type. Either order;
+   FE cleanup can simply accompany the next regular release.
 
-Rollback: until step 4, reverting the frontend deploy fully restores the old
-page because the flat fields remain populated.
+Rollback: before step 3, reverting the frontend deploy restores the old page
+(flat fields untouched). After step 3, the old page would also still work
+since flat fields remain populated until step 4.
 
 ## Testing
 
