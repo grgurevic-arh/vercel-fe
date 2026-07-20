@@ -98,7 +98,7 @@ export default async function LocaleHomepage({ params }: PageProps) {
       <section
         className="
           content-wrapper
-          pt-[156px] md:pt-[184px] lg:pt-[178px] xl:pt-[232px]
+          pt-[144px] md:pt-[184px] lg:pt-[178px] xl:pt-[232px]
           pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[408px]
           pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
           pb-[63px] md:pb-[148px] lg:pb-[204px] xl:pb-[169px]

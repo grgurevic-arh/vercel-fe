@@ -20,7 +20,7 @@ export function ProjectHeroCarousel({ slides }: ProjectHeroCarouselProps) {
     <section
       className="
         content-wrapper
-        pt-[138px] lg:pt-[144px] xl:pt-[152px]
+        pt-[144px] lg:pt-[144px] xl:pt-[152px]
         md:px-[44px] lg:px-[100px] xl:px-0
       "
     >

@@ -73,7 +73,7 @@ export default async function OfficePage({ params }: PageProps) {
       <section
         className="
           content-wrapper
-          pt-[236px] md:pt-[184px] lg:pt-[184px] xl:pt-[190px]
+          pt-[144px] md:pt-[184px] lg:pt-[184px] xl:pt-[190px]
           pl-[12px] md:pl-[102px] lg:pl-[220px] xl:pl-[328px]
           pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
           pb-[93px] md:pb-[124px] lg:pb-[154px] xl:pb-[216px]

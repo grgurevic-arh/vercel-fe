@@ -92,7 +92,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
       <h1
         className="
           content-wrapper
-          pt-[236px] md:pt-[95px] lg:pt-[184px] xl:pt-[148px]
+          pt-[144px] md:pt-[95px] lg:pt-[184px] xl:pt-[148px]
           pl-[12px] md:pl-[160px] lg:pl-[160px] xl:pl-[248px]
           pb-[20px] md:pb-[16px] lg:pb-[24px] xl:pb-[27px]
           text-[20px] leading-[28px]

@@ -135,7 +135,7 @@ export function ProjectGallery({ locale, projects }: ProjectGalleryProps) {
       className="
         content-wrapper
         px-0 md:px-0 lg:px-[40px] xl:px-[248px]
-        pt-[182px] md:pt-[160px] lg:pt-[208px] xl:pt-[208px]
+        pt-[144px] md:pt-[160px] lg:pt-[208px] xl:pt-[208px]
         space-y-[52px] md:space-y-[32px] lg:space-y-[40px]
       "
     >
