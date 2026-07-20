@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 
 import type { CarouselSlide } from "@/components/homepage-carousel";
 
@@ -11,6 +11,21 @@ interface ProjectHeroCarouselProps {
 
 export function ProjectHeroCarousel({ slides }: ProjectHeroCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerRatio, setContainerRatio] = useState<number | null>(null);
+
+  useLayoutEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const update = () => {
+      const { width, height } = el.getBoundingClientRect();
+      if (height > 0) setContainerRatio(width / height);
+    };
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   if (!slides.length) return null;
 
@@ -26,6 +41,7 @@ export function ProjectHeroCarousel({ slides }: ProjectHeroCarouselProps) {
     >
       {/* Hero image */}
       <div
+        ref={containerRef}
         className="
           relative overflow-hidden
           w-full xl:w-[944px]
@@ -37,18 +53,25 @@ export function ProjectHeroCarousel({ slides }: ProjectHeroCarouselProps) {
           className="flex h-full transition-transform duration-[1500ms] ease-in-out"
           style={{ transform: `translateX(-${activeIndex * 100}%)` }}
         >
-          {slides.map((slide) => (
-            <div key={slide.url} className="relative h-full w-full shrink-0">
-              <Image
-                src={slide.url}
-                alt={slide.alt}
-                fill
-                sizes="(min-width: 1440px) 944px, (min-width: 1024px) calc(100vw - 200px), (min-width: 768px) calc(100vw - 88px), 100vw"
-                className="object-cover"
-                priority
-              />
-            </div>
-          ))}
+          {slides.map((slide) => {
+            const fitClass =
+              containerRatio !== null &&
+              slide.width / slide.height <= containerRatio
+                ? "object-cover"
+                : "object-contain";
+            return (
+              <div key={slide.url} className="relative h-full w-full shrink-0">
+                <Image
+                  src={slide.url}
+                  alt={slide.alt}
+                  fill
+                  sizes="(min-width: 1440px) 944px, (min-width: 1024px) calc(100vw - 200px), (min-width: 768px) calc(100vw - 88px), 100vw"
+                  className={fitClass}
+                  priority
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
 
