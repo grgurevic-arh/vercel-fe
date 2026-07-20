@@ -1,3 +1,6 @@
+import { Fragment } from "react";
+
+import { BorderedSection } from "@/components/bordered-section";
 import type { Locale } from "@/lib/i18n";
 import { t } from "@/lib/translations";
 import type { LegalPage } from "@/types/cms";
@@ -62,55 +65,86 @@ export function ImpressumDetails({ locale, data }: ImpressumDetailsProps) {
     ],
   ];
 
-  const groups: Row[][] = rawGroups.map((group) =>
-    group.filter((row): row is Row => hasValue(row.value)),
-  );
+  const groups: Row[][] = rawGroups
+    .map((group) => group.filter((row): row is Row => hasValue(row.value)))
+    .filter((group) => group.length > 0);
 
-  if (!groups.some((group) => group.length > 0)) return null;
+  if (groups.length === 0) return null;
+
+  const lastGroup = groups[groups.length - 1];
 
   return (
-    <section className="bg-white border-t border-divider">
-      <div
-        className="
-          content-wrapper
-          pt-[54px] md:pt-[100px] lg:pt-[120px] xl:pt-[152px]
-          pb-[90px] md:pb-[124px] lg:pb-[154px] xl:pb-[216px]
-          pl-[12px] md:pl-[160px] lg:pl-[160px] xl:pl-[328px]
-          pr-[12px] md:pr-[44px] lg:pr-[160px] xl:pr-[248px]
-        "
-      >
-        {groups
-          .filter((group) => group.length > 0)
-          .map((group, groupIndex) => (
-            <div
-              key={group[0].label}
-              className={groupIndex > 0 ? "mt-[32px] md:mt-[23px]" : ""}
-            >
-              {group.map((row) => (
-                <div
-                  key={row.label}
-                  className="
-                    mb-[12px] last:mb-0 md:mb-0
-                    md:flex md:gap-x-[16px]
-                    text-[16px] leading-[23px] text-text-primary
-                  "
-                >
-                  <span
-                    className="
-                      block shrink-0
-                      tracking-[0.48px] lowercase [font-variant-caps:small-caps]
-                      md:w-[195px] lg:w-[243px] xl:w-[245px]
-                    "
-                  >
+    <section className="bg-white border-t border-b border-divider mb-[192px]">
+      {/* Mobile: BorderedSection rows (visible only on <md) */}
+      <div className="mb-[144px] md:hidden">
+        {groups.map((group, groupIndex) => (
+          <Fragment key={group[0].label}>
+            {groupIndex > 0 && <div className="h-[32px]" />}
+            {group.map((row, rowIndex) => (
+              <BorderedSection
+                key={row.label}
+                border={
+                  group === lastGroup && rowIndex === group.length - 1
+                    ? ""
+                    : "border-b border-divider"
+                }
+                className={`h-[70px] flex items-center pl-[12px] pr-[12px] ${
+                  groupIndex === 0 ? "pt-[12px] pb-[14px]" : ""
+                }`}
+              >
+                <div className="flex flex-col text-[16px] text-text-primary">
+                  <span className="tracking-[0.48px] lowercase [font-variant-caps:small-caps] leading-[22px]">
                     {row.label}
                   </span>
-                  <span className="block">
+                  <span className="leading-[23px]">
                     <SmallCapsValue text={row.value} />
                   </span>
                 </div>
-              ))}
-            </div>
-          ))}
+              </BorderedSection>
+            ))}
+          </Fragment>
+        ))}
+      </div>
+
+      {/* md+: label/value columns in three groups */}
+      <div
+        className="
+          hidden md:block content-wrapper
+          md:pt-[100px] lg:pt-[120px] xl:pt-[152px]
+          md:pb-[124px] lg:pb-[154px] xl:pb-[216px]
+          md:pl-[160px] lg:pl-[160px] xl:pl-[328px]
+          md:pr-[44px] lg:pr-[160px] xl:pr-[248px]
+        "
+      >
+        {groups.map((group, groupIndex) => (
+          <div
+            key={group[0].label}
+            className={groupIndex > 0 ? "mt-[23px]" : ""}
+          >
+            {group.map((row) => (
+              <div
+                key={row.label}
+                className="
+                  flex gap-x-[16px]
+                  text-[16px] leading-[23px] text-text-primary
+                "
+              >
+                <span
+                  className="
+                    block shrink-0
+                    tracking-[0.48px] lowercase [font-variant-caps:small-caps]
+                    md:w-[195px] lg:w-[243px] xl:w-[245px]
+                  "
+                >
+                  {row.label}
+                </span>
+                <span className="block">
+                  <SmallCapsValue text={row.value} />
+                </span>
+              </div>
+            ))}
+          </div>
+        ))}
       </div>
     </section>
   );
