@@ -76,7 +76,7 @@ export function ImpressumDetails({ locale, data }: ImpressumDetailsProps) {
   return (
     <section className="bg-white border-t border-b border-divider mb-[192px]">
       {/* Mobile: BorderedSection rows (visible only on <md) */}
-      <div className="mb-[144px] md:hidden">
+      <div className="md:hidden">
         {groups.map((group, groupIndex) => (
           <Fragment key={group[0].label}>
             {groupIndex > 0 && <div className="h-[32px]" />}
@@ -88,9 +88,8 @@ export function ImpressumDetails({ locale, data }: ImpressumDetailsProps) {
                     ? ""
                     : "border-b border-divider"
                 }
-                className={`h-[70px] flex items-center pl-[12px] pr-[12px] ${
-                  groupIndex === 0 ? "pt-[12px] pb-[14px]" : ""
-                }`}
+                className={`h-[70px] flex items-center pl-[12px] pr-[12px] ${groupIndex === 0 ? "pt-[12px] pb-[14px]" : ""
+                  }`}
               >
                 <div className="flex flex-col text-[16px] text-text-primary">
                   <span className="tracking-[0.48px] lowercase [font-variant-caps:small-caps] leading-[22px]">
@@ -110,10 +109,9 @@ export function ImpressumDetails({ locale, data }: ImpressumDetailsProps) {
       <div
         className="
           hidden md:block content-wrapper
-          md:pt-[100px] lg:pt-[120px] xl:pt-[152px]
-          md:pb-[124px] lg:pb-[154px] xl:pb-[216px]
-          md:pl-[160px] lg:pl-[160px] xl:pl-[328px]
-          md:pr-[44px] lg:pr-[160px] xl:pr-[248px]
+          md:pt-[80px]
+          md:pb-[120px] lg:pb-[130px]
+          md:pl-[44px] lg:pl-[160px] xl:pl-[328px]
         "
       >
         {groups.map((group, groupIndex) => (
@@ -133,7 +131,7 @@ export function ImpressumDetails({ locale, data }: ImpressumDetailsProps) {
                   className="
                     block shrink-0
                     tracking-[0.48px] lowercase [font-variant-caps:small-caps]
-                    md:w-[195px] lg:w-[243px] xl:w-[245px]
+                    md:w-[224px]
                   "
                 >
                   {row.label}

@@ -31,7 +31,7 @@ export function SiteFooter({ locale }: SiteFooterProps) {
       <div
         className="
           absolute
-          left-[12px] md:left-[450px] lg:left-[700px] xl:left-[968px]
+          left-[12px] md:left-[450px] lg:left-[520px] xl:left-[808px]
           top-[16px] md:top-[24px]
         "
       >
@@ -62,7 +62,7 @@ export function SiteFooter({ locale }: SiteFooterProps) {
       <div
         className="
           absolute
-          right-[94px] md:right-[44px] lg:right-[40px] xl:right-[92px]
+          left-[166px] md:left-[624px] lg:left-[760px] xl:left-[1128px]
           top-[16px] md:top-[24px]
         "
       >

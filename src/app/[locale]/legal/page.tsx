@@ -51,7 +51,7 @@ export default async function LegalPage({ params }: PageProps) {
           content-wrapper
           pt-[86px] md:pt-[184px] lg:pt-[216px] xl:pt-[190px]
           pl-[12px] md:pl-[160px] lg:pl-[160px] xl:pl-[328px]
-          pb-[54px] md:pb-[76px] lg:pb-[85px] xl:pb-[113px]
+          pb-[52px] md:pb-[80px] lg:pb-[90px] xl:pb-[90px]
         "
       >
         <h1

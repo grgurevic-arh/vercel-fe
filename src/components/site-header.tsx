@@ -11,8 +11,8 @@ interface SiteHeaderProps {
 }
 
 const languages = [
-  { label: "English", locale: "en" },
   { label: "Croatian", locale: "hr" },
+  { label: "English", locale: "en" },
 ];
 
 export function SiteHeader({ locale }: SiteHeaderProps) {
