@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { CompanyMetadata } from "@/components/company-metadata";
-import { ContactInfo } from "@/components/contact-info";
-import { getFooter, getLegalPage } from "@/lib/cms";
+import { ImpressumDetails } from "@/components/impressum-details";
+import { getLegalPage } from "@/lib/cms";
 import { SUPPORTED_LOCALES } from "@/lib/i18n";
 import { resolveLocaleParam } from "@/lib/request-helpers";
 import { t } from "@/lib/translations";
-import { requireStrapiEntity, unwrapStrapiEntity } from "@/lib/strapi-entity";
-import type { Footer, LegalPage } from "@/types/cms";
+import { requireStrapiEntity } from "@/lib/strapi-entity";
+import type { LegalPage } from "@/types/cms";
 
 export async function generateMetadata({
   params,
@@ -33,10 +32,7 @@ interface PageProps {
 
 export default async function LegalPage({ params }: PageProps) {
   const locale = await resolveLocaleParam(params);
-  const [legal, footerData] = await Promise.all([
-    getLegalPage(locale),
-    getFooter(locale),
-  ]);
+  const legal = await getLegalPage(locale);
 
   if (!legal) {
     notFound();
@@ -46,10 +42,6 @@ export default async function LegalPage({ params }: PageProps) {
     legal,
     "Legal entry missing attributes",
   );
-
-  const footer = footerData
-    ? (unwrapStrapiEntity(footerData) as Footer | null)
-    : null;
 
   return (
     <main>
@@ -72,30 +64,8 @@ export default async function LegalPage({ params }: PageProps) {
         </h1>
       </section>
 
-      {/* Company Metadata */}
-      <CompanyMetadata
-        bank={data.bank}
-        swift={data.swift}
-        iban={data.iban}
-        oib={data.oib}
-        mb={data.mb}
-        mbs={data.mbs}
-        vatId={data.vatId}
-        shareCapital={data.shareCapital}
-        board={data.board}
-        foto={data.foto}
-        website={data.website}
-      />
-
-      {/* Contact Info */}
-      <ContactInfo
-        email={footer?.email ?? null}
-        telephone={footer?.phoneNumber ?? null}
-        companyName={footer?.companyName ?? undefined}
-        address={footer?.address ?? undefined}
-        showTopBorder
-        className="mb-[90px] md:mb-0 xl:mb-[90px]"
-      />
+      {/* Impressum details */}
+      <ImpressumDetails locale={locale} data={data} />
     </main>
   );
 }
