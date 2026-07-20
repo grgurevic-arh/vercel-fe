@@ -1,117 +1,91 @@
 # Impressum Page Redesign — Design Spec
 
 Date: 2026-07-20
-Repos affected: `grgurevic/vercel-fe` (frontend), `grgurevic/strapi-cms` (CMS)
+Repos affected: `grgurevic/vercel-fe` only (no CMS code changes)
 
 ## Goal
 
-Rebuild the `/[locale]/legal` (Impressum) page to match the new design: a single
-metadata section with three visually separated groups of label/value rows, with
-**all labels and values managed in the CMS** so editors can change wording,
-order, and row count without a code deploy.
+Rebuild the `/[locale]/legal` (Impressum) page to match the new design: a
+single metadata section with three visually separated groups of label/value
+rows. Keep the current architecture — labels defined and grouped in the
+frontend, values supplied by the existing `legal-page` flat fields in Strapi.
 
 ## Content source of truth
 
-The client-provided Excel table is the source of truth for both locales.
-Content is used verbatim (including the `SWIFT/BIC:` label with trailing colon,
-which appears as-is in the Excel; since labels are CMS-editable this can be
-adjusted in the admin at any time).
+The client-provided Excel table is the source of truth for labels and values.
+Labels are used verbatim (including the `SWIFT/BIC:` trailing colon from the
+Excel).
 
-| EN label | EN value |
-|---|---|
-| Registered name | Grgurević & Partners LTD for Planning and Design |
-| Registered office | Gjure Čanića 6, HR-10000 Zagreb |
-| Tel. | +385 1 4843168 |
-| E-mail | mail@grgurevic.com |
-| Identification no. (OIB) | 38971455962 |
-| Board | Ivona Jerković, Hrvoje Vidović |
-| Court register no. (MBS) | 80100816, Zagreb Commercial Court |
-| Legacy ID (MB) | 3659186 |
-| Share capital | 2,667.73 EUR (fully paid) |
-| Bank | Erste & Steiermärkische Bank d.d., Rijeka |
-| IBAN | HR9024020061101162293 |
-| SWIFT/BIC: | ESBCHR22 |
-| VAT ID | HR 38971455962 |
-| Website | Mihovil Vargović, Tomislav Katalenić |
-| Photos | Ivan Dorotić, Maja Bosnić, Marko Jakelić |
+Row → CMS field mapping (all fields already exist on `legal-page`; the three
+that differ per locale — `name`, `mbs`, `shareCapital` — are already marked
+localized in the schema, so no Strapi changes are needed):
 
-| HR label | HR value |
-|---|---|
-| Tvrtka | Grgurević & partneri d.o.o. za planiranje i projektiranje |
-| Sjedište/adresa | Gjure Čanića 6, HR-10000 Zagreb |
-| Tel. | +385 1 4843168 |
-| E-mail | mail@grgurevic.com |
-| OIB | 38971455962 |
-| Uprava | Ivona Jerković, Hrvoje Vidović |
-| Sudski registar | MBS 80100816, Trgovački sud u Zagrebu |
-| Matični broj | 3659186 |
-| Temeljni kapital | 2.667,73 EUR (uplaćen u cijelosti) |
-| Banka | Erste & Steiermärkische Bank d.d., Rijeka |
-| IBAN | HR9024020061101162293 |
-| SWIFT/BIC: | ESBCHR22 |
-| PDV ID | HR 38971455962 |
-| Website | Mihovil Vargović, Tomislav Katalenić |
-| Fotografije | Ivan Dorotić, Maja Bosnić, Marko Jakelić |
+| # | Group | EN label | HR label | CMS field |
+|---|---|---|---|---|
+| 1 | company | Registered name | Tvrtka | `name` |
+| 2 | company | Registered office | Sjedište/adresa | `location` |
+| 3 | company | Tel. | Tel. | `tel` |
+| 4 | company | E-mail | E-mail | `email` |
+| 5 | company | Identification no. (OIB) | OIB | `oib` |
+| 6 | company | Board | Uprava | `board` |
+| 7 | company | Court register no. (MBS) | Sudski registar | `mbs` |
+| 8 | company | Legacy ID (MB) | Matični broj | `mb` |
+| 9 | banking | Share capital | Temeljni kapital | `shareCapital` |
+| 10 | banking | Bank | Banka | `bank` |
+| 11 | banking | IBAN | IBAN | `iban` |
+| 12 | banking | SWIFT/BIC: | SWIFT/BIC: | `swift` |
+| 13 | banking | VAT ID | PDV ID | `vatId` |
+| 14 | credits | Website | Website | `website` |
+| 15 | credits | Photos | Fotografije | `foto` |
+
+Values per the Excel (admin content edits, no deploy):
+
+- `name` (localized): EN "Grgurević & Partners LTD for Planning and Design",
+  HR "Grgurević & partneri d.o.o. za planiranje i projektiranje"
+- `mbs` (localized): EN "80100816, Zagreb Commercial Court",
+  HR "MBS 80100816, Trgovački sud u Zagrebu"
+- `shareCapital` (localized): EN "2,667.73 EUR (fully paid)",
+  HR "2.667,73 EUR (uplaćen u cijelosti)"
+- `tel` (shared): "+385 1 4843168" (currently "+385 (0)1 4843168")
+- All other shared fields already match the Excel.
 
 Page title stays in frontend translations (`pages.legal`: "Impressum" /
-"Impresum") — it is the route heading, not row content.
+"Impresum").
 
-## CMS model (strapi-cms)
+## CMS (strapi-cms)
 
-New shared component `shared.labelled-value`:
+**No code or schema changes.** All 15 fields exist, localization flags already
+match which values differ per locale, and flat fields need no populate params.
+The only CMS-side work is editing the values above in the production admin and
+publishing both locales — pure content, deployable any time before or after
+the FE change.
 
-- `label` — string, required
-- `value` — text, required
-
-(No existing component fits: the closest, `eu.useful-link`, is `label` + `url`
-and is consumed by the EU projects page for real hyperlinks. Repeatable rows in
-Strapi require a component definition; this one follows the same pattern as
-`useful-link`.)
-
-`legal-page` single type gains three **localized repeatable** component fields
-(`shared.labelled-value`):
-
-- `companyDetails` — rows 1–8 (Registered name → Legacy ID (MB))
-- `bankingDetails` — rows 9–13 (Share capital → VAT ID)
-- `credits` — rows 14–15 (Website, Photos)
-
-The existing 15 flat fields (`name`, `location`, `tel`, `email`, `oib`,
-`board`, `mbs`, `mb`, `shareCapital`, `bank`, `iban`, `swift`, `vatId`,
-`foto`, `website`) are **kept during rollout** and removed in a final cleanup
-deploy (see Deployment order).
-
-Dev seed (`demoContent.ts`) is updated to fill the three groups from the Excel
-content for both locales. Seeding is dev-only and never overwrites published
-entries, so it cannot affect production.
+The dev seed (`demoContent.ts`) may optionally be updated to the Excel values
+so local dev matches production content, but this is not required for the
+redesign.
 
 ## Frontend (vercel-fe)
 
-### Data layer
+### Labels
 
-- `LegalPage` type: add `companyDetails`, `bankingDetails`, `credits` as
-  optional `Array<{ label: string; value: string }>` alongside the existing
-  flat fields; the flat fields are dropped in the cleanup phase.
-- `getLegalPage` uses `populate=*` — NOT explicit
-  `populate[companyDetails]`-style params, because Strapi returns a 400
-  ValidationError when explicitly populating a field that does not exist in the
-  schema yet. `populate=*` succeeds both before and after the CMS deploy
-  (legal-page has no media, so it stays cheap).
-- **Fallback assembly:** if the three arrays are absent or empty, the page
-  builds the same three groups from the flat fields, using temporary
-  hardcoded HR/EN labels (from the Excel) in `translations.ts`. When the CMS
-  starts returning non-empty arrays, they take precedence — no FE change
-  needed at switchover. The fetch layer uses `cache: "no-store"`, so published
-  content appears immediately.
+Add the 15 localized labels to `src/lib/translations.ts` for both locales
+(e.g. under an `impressum` key), replacing the English-only labels hardcoded
+in `CompanyMetadata` today. This also fixes the existing bug where the HR page
+shows English labels.
 
 ### Page & components
 
-- `legal/page.tsx`: keeps the heading section (`t(locale).pages.legal`),
-  passes the three groups to a rebuilt metadata component, and **removes the
-  `ContactInfo` section and the `getFooter` call** — tel/email are now ordinary
-  rows.
-- `CompanyMetadata` is replaced by an `ImpressumDetails` component that renders
-  the three groups in order. Rows with an empty label **and** empty value are
-  skipped; groups with no rows are skipped.
+- `legal/page.tsx`: keeps the heading section, passes all 15 values from the
+  legal-page data (it already receives `name`, `location`, `tel`, `email` —
+  currently unused), and **removes the `ContactInfo` section and the
+  `getFooter` call** — tel/email are now ordinary rows.
+- `CompanyMetadata` is rebuilt (or replaced by `ImpressumDetails`) to render
+  the three groups in the design's order:
+  - company: rows 1–8, banking: rows 9–13, credits: rows 14–15
+- Rows with an empty/null value are skipped (current `hasValue` behavior);
+  groups with no rows are skipped.
+- No data-layer changes: `getLegalPage` and the `LegalPage` type already cover
+  every field.
 
 ### Layout per breakpoint (from Figma)
 
@@ -130,40 +104,33 @@ entries, so it cannot affect production.
 - Exact paddings/column widths are matched to the Figma during implementation,
   following the app's per-breakpoint arbitrary-value Tailwind convention.
 
-## Deployment order (FE-first, works out of the box at switchover)
+## Deployment
 
-Production must never break. Each step is backward-compatible:
+Only two independent actions, safe in either order:
 
-1. **Frontend deploy.** New design ships immediately, rendered from the
-   existing flat fields via the fallback assembly (temporary FE labels).
-   Verified on the Vercel preview against production CMS before merge.
-   `populate=*` keeps the request valid against the current schema.
-2. **CMS deploy (additive).** New component + three new fields; flat fields
-   untouched. Arrays are empty, so the frontend keeps using the fallback —
-   no visible change.
-3. **Content entry (production admin).** Fill and publish the three groups for
-   HR and EN from the Excel. Because the fetch is `no-store`, the frontend
-   picks up the arrays on the next request and switches automatically —
-   no deploy involved.
-4. **Cleanup (contract).** CMS: remove the 15 flat fields, their admin
-   metadata labels, and their seed entries. FE: remove the fallback assembly,
-   temporary labels, and flat fields from the `LegalPage` type. Either order;
-   FE cleanup can simply accompany the next regular release.
+1. **Frontend deploy** — the new layout renders whatever values the CMS holds;
+   until content is edited, current production values display in the new
+   design.
+2. **Admin content edits** — update the values listed above and publish both
+   locales; the fetch layer is `cache: "no-store"`, so changes appear
+   immediately.
 
-Rollback: before step 3, reverting the frontend deploy restores the old page
-(flat fields untouched). After step 3, the old page would also still work
-since flat fields remain populated until step 4.
+Rollback: revert the FE deploy; no CMS state depends on it.
+
+## Trade-off accepted
+
+Renaming a label or adding/reordering rows requires a frontend deploy (labels
+live in `translations.ts`). Chosen deliberately to keep the current
+architecture and avoid a CMS schema migration.
 
 ## Testing
 
-- `strapi-cms`: existing unit-test suite must pass (`pnpm test`); schema/seed
-  changes verified by booting dev Strapi and checking the API response shape
-  for `/api/legal-page?populate=...` in both locales.
 - `vercel-fe`: lint + typecheck; render verification of `/en/legal` and
   `/hr/legal` against local Strapi at all four breakpoints.
 
 ## Out of scope
 
+- Strapi code/schema changes.
 - Footer content/links (unchanged).
 - Privacy policy, participation, EU projects pages.
 - Page title/i18n route naming.
