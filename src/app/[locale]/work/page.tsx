@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { ProjectGallery } from "@/components/project-gallery";
-import { ProjectList } from "@/components/project-list";
-import { Pagination } from "@/components/pagination";
+import { WorkProjectsLoadMore } from "@/components/work-projects-load-more";
 import { getWorkProjects } from "@/lib/cms";
 import { SUPPORTED_LOCALES } from "@/lib/i18n";
 import { resolveLocaleParam, resolvePageParam } from "@/lib/request-helpers";
@@ -28,6 +27,7 @@ export async function generateMetadata({
 }
 
 const FEATURED_COUNT = 4;
+const PAGE_SIZE = 10;
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -41,16 +41,26 @@ export default async function WorkListingPage({
   const locale = await resolveLocaleParam(params);
   const requestedPage = await resolvePageParam(searchParams);
 
-  const workProjects = await getWorkProjects(locale, requestedPage);
-  const projects = normalizeProjectListings(workProjects.data);
-  const pagination = workProjects.meta.pagination;
+  // Fetch all pages from 1 to requestedPage in parallel
+  const pageNumbers = Array.from({ length: requestedPage }, (_, i) => i + 1);
+  const responses = await Promise.all(
+    pageNumbers.map((page) => getWorkProjects(locale, page, PAGE_SIZE)),
+  );
+
+  // Use the first response's meta for pageCount validation
+  const pagination = responses[0]?.meta.pagination;
   const pageCount = pagination?.pageCount ?? 1;
 
   if (pageCount > 0 && requestedPage > pageCount) {
     notFound();
   }
 
-  const featured = projects
+  // Combine all projects from all fetched pages
+  const allProjects = normalizeProjectListings(
+    responses.flatMap((r) => r.data),
+  );
+
+  const featured = allProjects
     .filter((p) => p.disableRedirect !== true)
     .slice(0, FEATURED_COUNT);
 
@@ -59,24 +69,22 @@ export default async function WorkListingPage({
       {/* Featured gallery */}
       <ProjectGallery locale={locale} projects={featured} />
 
-      {/* All projects table */}
+      {/* All projects table with load more */}
       <section
         className="
           mt-[140px] md:mt-[219px] lg:mt-[140px] xl:mt-[230px]
         "
       >
-        <ProjectList locale={locale} projects={projects} />
-      </section>
-
-      {/* Pagination */}
-      <div className="mb-[140px] lg:mb-[370px]">
-        <Pagination
+        <WorkProjectsLoadMore
           locale={locale}
-          basePath="/work"
-          currentPage={pagination?.page ?? requestedPage}
+          initialProjects={allProjects}
+          initialPage={requestedPage}
           pageCount={pageCount}
         />
-      </div>
+      </section>
+
+      {/* Bottom spacing (replaces old pagination spacing) */}
+      <div className="mb-[140px] lg:mb-[370px]" />
     </main>
   );
 }
