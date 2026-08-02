@@ -48,7 +48,7 @@ export default async function ResearchPage({ params }: PageProps) {
       <section
         className="
           content-wrapper
-          pt-[120px] md:pt-[148px] lg:pt-[148px] xl:pt-[180px]
+          pt-[86px] md:pt-[184px] lg:pt-[216px] xl:pt-[190px]
           pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[408px]
           pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
           pb-[80px] md:pb-[120px] lg:pb-[140px] xl:pb-[180px]
@@ -79,7 +79,7 @@ export default async function ResearchPage({ params }: PageProps) {
                     md:text-[38px] md:leading-[50px]
                     md:[font-feature-settings:normal]
                     text-text-primary
-                    hover:underline
+                    link-underline
                     focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-black
                   "
                 >

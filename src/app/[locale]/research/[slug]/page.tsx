@@ -62,17 +62,17 @@ export default async function PollDetailPage({ params }: PageProps) {
       <h1
         className="
           content-wrapper
+    text-left
           px-[12px] md:px-[44px] lg:px-[160px] xl:px-[328px]
           font-sans text-text-primary
           pt-[86px] md:pt-[184px] lg:pt-[216px] xl:pt-[190px]
           text-[28px] leading-[38px]
-          md:text-[38px] md:leading-[50px] md:text-center
-          lg:text-[66px] lg:leading-normal lg:text-center
-          xl:text-left
+          md:text-[38px] md:leading-[50px]
+          lg:text-[66px] lg:leading-normal
           mb-[34px] md:mb-[26px] lg:mb-[66px] xl:mb-[94px]
         "
       >
-        {t(locale).pages.yourOpinion}
+        {t("hr").pages.yourOpinion}
       </h1>
 
       {/* Divider — full width */}

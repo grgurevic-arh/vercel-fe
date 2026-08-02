@@ -40,7 +40,7 @@ export function SiteFooter({ locale }: SiteFooterProps) {
             <li key={label}>
               <Link
                 href={`/${locale}${path}`}
-                className={`text-[16px] leading-[23px] text-text-primary hover:underline ${pathname === `/${locale}${path}` ? "underline" : ""}`}
+                className={`text-[16px] leading-[23px] text-text-primary link-underline ${pathname === `/${locale}${path}` ? "link-underline-active" : ""}`}
               >
                 {path === "/eu-projects" ? (
                   <>
@@ -75,8 +75,8 @@ export function SiteFooter({ locale }: SiteFooterProps) {
                   `/${langLocale}`,
                 )}
                 className={`
-                  text-[16px] leading-[23px] text-text-primary text-right hover:underline
-                  ${langLocale === locale ? "underline" : ""}
+                  text-[16px] leading-[23px] text-text-primary text-right link-underline
+                  ${langLocale === locale ? "link-underline-active" : ""}
                 `}
               >
                 {label}

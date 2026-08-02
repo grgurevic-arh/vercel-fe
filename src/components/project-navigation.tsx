@@ -42,7 +42,7 @@ export function ProjectNavigation({
             lg:text-[28px] lg:leading-[38px]
             text-text-primary
             [font-feature-settings:'onum'_1,'pnum'_1]
-            hover:underline
+            link-underline
             focus-visible:outline focus-visible:outline-2
             focus-visible:outline-offset-2 focus-visible:outline-black
           "
@@ -62,7 +62,7 @@ export function ProjectNavigation({
             lg:text-[28px] lg:leading-[38px]
             text-text-primary
             [font-feature-settings:'onum'_1,'pnum'_1]
-            hover:underline
+            link-underline
             focus-visible:outline focus-visible:outline-2
             focus-visible:outline-offset-2 focus-visible:outline-black
           "
@@ -81,7 +81,7 @@ export function ProjectNavigation({
             lg:text-[28px] lg:leading-[38px]
             text-text-primary
             [font-feature-settings:'onum'_1,'pnum'_1]
-            hover:underline
+            link-underline
             focus-visible:outline focus-visible:outline-2
             focus-visible:outline-offset-2 focus-visible:outline-black
           "

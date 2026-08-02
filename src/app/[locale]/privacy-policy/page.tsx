@@ -49,7 +49,7 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
       <section
         className="
           content-wrapper
-          pt-[120px] md:pt-[144px] lg:pt-[154px] xl:pt-[270px]
+          pt-[86px] md:pt-[184px] lg:pt-[216px] xl:pt-[190px]
           pl-[12px] md:pl-[102px] lg:pl-[160px] xl:pl-[328px]
           pb-[24px] md:pb-[32px] lg:pb-[40px] xl:pb-[100px]
         "

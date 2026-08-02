@@ -31,6 +31,37 @@ body {
   margin-inline: auto;
 }
 
+/* Unified text-link underline: same offset and thickness everywhere,
+   continuous line (no skip-ink breaks), fades in on hover.
+   The underline is always present but transparent, so only its color
+   animates — the designer's ::after/opacity approach expressed in a way
+   that also works for multi-line and padded links. */
+@utility link-underline {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 4px;
+  text-decoration-skip-ink: none;
+  text-decoration-color: transparent;
+  transition: text-decoration-color 0.3s ease;
+
+  &:hover {
+    text-decoration-color: currentColor;
+  }
+}
+
+/* Card-style links underline their title when any part of the card is
+   hovered; active/current items keep the underline permanently. */
+.group:hover .link-underline,
+.link-underline.link-underline-active {
+  text-decoration-color: currentColor;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link-underline {
+    transition: none;
+  }
+}
+
 @keyframes page-fade-in {
   from {
     opacity: 0;

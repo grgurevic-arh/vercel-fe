@@ -17,6 +17,7 @@ const translations = {
       research: "Participation",
       euProjects: "EU projects",
       legal: "Impressum",
+      privacyPolicy: "Privacy",
     },
     footer: {
       legal: "Impressum",
@@ -112,6 +113,7 @@ const translations = {
       research: "Participacija",
       euProjects: "EU projekti",
       legal: "Impresum",
+      privacyPolicy: "Privatnost",
     },
     footer: {
       legal: "Impresum",

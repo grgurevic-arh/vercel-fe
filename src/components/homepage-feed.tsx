@@ -33,7 +33,7 @@ export function HomepageFeed({ locale, items }: HomepageFeedProps) {
                   lg:text-[26px] lg:leading-[36px] lg:tracking-[1px]
                   xl:text-[28px] xl:leading-[38px]
                   text-text-primary
-                  group-hover:underline
+                  link-underline
                 "
               >
                 {item.title}

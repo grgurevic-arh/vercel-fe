@@ -64,7 +64,7 @@ export default function LocaleNotFound() {
             lg:text-[22px] lg:leading-[32px]
             text-[var(--text-secondary,#636363)]
             hover:text-text-primary transition-colors
-            underline underline-offset-4
+            link-underline link-underline-active
             cursor-pointer
           "
         >

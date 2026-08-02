@@ -61,14 +61,14 @@ export function WorkProjectsLoadMore({
             onClick={handleLoadMore}
             aria-label={isPending ? "Loading..." : undefined}
             className="
-              w-[200px]
+              w-[200px] h-[50px]
               font-serif
-              px-[20px] py-[10px]
+              px-[20px]
               bg-white text-text-primary
               border border-text-primary
               text-[20px] leading-[28px]
               [font-feature-settings:'onum'_1,'pnum'_1]
-              hover:opacity-80
+              hover:text-text-primary/60 hover:border-text-primary/60
               focus-visible:outline focus-visible:outline-2
               focus-visible:outline-offset-2 focus-visible:outline-text-primary
               cursor-pointer

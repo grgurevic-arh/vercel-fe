@@ -28,6 +28,9 @@ export default function RootError({
             background: "none",
             border: "none",
             textDecoration: "underline",
+            textDecorationThickness: "1.5px",
+            textUnderlineOffset: "4px",
+            textDecorationSkipInk: "none",
             cursor: "pointer",
             fontSize: "inherit",
           }}

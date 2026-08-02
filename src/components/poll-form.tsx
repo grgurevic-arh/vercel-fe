@@ -135,7 +135,7 @@ export function PollForm({ poll, locale }: PollFormProps) {
           <button
             type="button"
             onClick={() => setShowBanner(false)}
-            className="ml-[12px] font-serif text-text-primary underline"
+            className="ml-[12px] font-serif text-text-primary link-underline link-underline-active"
           >
             {trans.pollForm.dismiss}
           </button>

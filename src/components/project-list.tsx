@@ -63,7 +63,7 @@ export function ProjectList({
         return (
           <li
             key={`${project.slug}-${project.id}`}
-            className={`border-b border-divider transition-colors ${
+            className={`border-b border-divider transition-colors duration-400 ease-[ease] ${
               disabled ? "" : "hover:bg-gray-50"
             }`}
           >

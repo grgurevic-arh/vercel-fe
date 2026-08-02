@@ -116,6 +116,7 @@ function GalleryItem({
             [font-feature-settings:'onum'_1,'pnum'_1]
             pl-[12px] md:pl-0
             truncate
+            link-underline
           "
         >
           {project.title}

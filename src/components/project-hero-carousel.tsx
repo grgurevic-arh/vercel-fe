@@ -115,9 +115,9 @@ export function ProjectHeroCarousel({ slides }: ProjectHeroCarouselProps) {
                     text-left
                     text-[16px] leading-[23px] text-text-primary
                     [font-feature-settings:'onum'_1,'pnum'_1]
-                    [text-decoration-skip-ink:none]
+                    link-underline
                     cursor-pointer
-                    ${isActive ? "underline underline-offset-[4px]" : "hover:underline hover:underline-offset-[4px]"}
+                    ${isActive ? "link-underline-active" : ""}
                   `}
                 >
                   {index + 1}

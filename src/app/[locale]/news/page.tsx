@@ -73,7 +73,7 @@ export default async function NewsListingPage({
                   lg:text-[38px] lg:leading-[50px]
                   md:[font-feature-settings:normal]
                   text-text-primary
-                  hover:underline
+                  link-underline
                   focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-black
                 "
               >

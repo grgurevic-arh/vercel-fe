@@ -47,7 +47,8 @@ export function Pagination({
               className={`
                 text-[21px] leading-[100%] text-text-primary
                 [font-feature-settings:'lnum'_1,'tnum'_1]
-                ${isActive ? "underline underline-offset-4" : "hover:underline hover:underline-offset-4"}
+                link-underline
+                ${isActive ? "link-underline-active" : ""}
                 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-black
               `}
             >

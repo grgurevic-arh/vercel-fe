@@ -42,7 +42,7 @@ export function NewsList({ locale, articles, emptyMessage }: NewsListProps) {
         return (
           <li
             key={`${article.slug}-${article.id}`}
-            className="border-b border-divider hover:bg-gray-50 transition-colors"
+            className="border-b border-divider hover:bg-gray-50 transition-colors duration-400 ease-[ease]"
           >
             <Link
               href={href}

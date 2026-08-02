@@ -25,9 +25,10 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
   ];
 
   const secondaryNavLinks = [
+    { label: trans.secondaryNav.legal, path: "/legal" },
     { label: trans.secondaryNav.research, path: "/research" },
     { label: trans.secondaryNav.euProjects, path: "/eu-projects" },
-    { label: trans.secondaryNav.legal, path: "/legal" },
+    { label: trans.secondaryNav.privacyPolicy, path: "/privacy-policy" },
   ];
 
   const [menuOpen, setMenuOpen] = useState(false);
@@ -161,8 +162,8 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
                 className={`
               text-[16px] leading-[23px] xl:text-[20px] xl:leading-[28px]
               text-text-primary py-[8px]
-              hover:underline hover:underline-offset-[4px]
-              ${isActive(path) ? "underline underline-offset-[4px]" : ""}
+              link-underline
+              ${isActive(path) ? "link-underline-active" : ""}
             `}
               >
                 {label}
@@ -235,7 +236,8 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
                   className={`
                   block text-right py-[8px]
                   text-[38px] leading-[50px] text-text-primary
-                  ${isActive(path) ? "underline" : ""}
+                  link-underline
+                  ${isActive(path) ? "link-underline-active" : ""}
                 `}
                 >
                   {label}
@@ -252,7 +254,8 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
                   className={`
                   block text-right py-[8px]
                   text-[20px] leading-[28px] text-text-primary
-                  ${isActive(path) ? "underline" : ""}
+                  link-underline
+                  ${isActive(path) ? "link-underline-active" : ""}
                 `}
                 >
                   {label}
@@ -269,7 +272,7 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
                   key={langLocale}
                   className="
                   block py-[8px]
-                  text-[16px] leading-[23px] text-text-primary underline
+                  text-[16px] leading-[23px] text-text-primary link-underline link-underline-active
                 "
                 >
                   {label}
@@ -283,7 +286,7 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
                   )}
                   className="
                   block py-[8px]
-                  text-[16px] leading-[23px] text-text-primary
+                  text-[16px] leading-[23px] text-text-primary link-underline
                 "
                 >
                   {label}

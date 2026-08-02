@@ -144,7 +144,7 @@ export default async function LocaleHomepage({ params }: PageProps) {
                       lg:text-[28px] lg:leading-[38px]
                       xl:text-[28px] xl:leading-[38px]
                       text-text-primary
-                      group-hover:underline
+                      link-underline
                     "
                   >
                     {article.title}
@@ -158,7 +158,7 @@ export default async function LocaleHomepage({ params }: PageProps) {
                         lg:text-[28px] lg:leading-[38px]
                         xl:text-[28px] xl:leading-[38px]
                         text-text-primary
-                        group-hover:underline
+                        link-underline
                         line-clamp-3
                       "
                     >
