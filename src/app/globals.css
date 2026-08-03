@@ -31,21 +31,36 @@ body {
   margin-inline: auto;
 }
 
-/* Unified text-link underline: same offset and thickness everywhere,
-   continuous line (no skip-ink breaks), fades in on hover.
-   The underline is always present but transparent, so only its color
-   animates — the designer's ::after/opacity approach expressed in a way
-   that also works for multi-line and padded links. */
+/* Unified text-link underline, aligned to the descender line: the flat
+   bottom of "p" in Untitled Serif sits 212/1024 = 0.207em below the
+   baseline; subtracting the 1.5px line thickness puts the line's bottom
+   edge exactly on that line, and the resulting overlap makes ink
+   skipping carve gaps around descender letters (p, j, g, y…) — the
+   designer's spec. Fades in on hover: the underline is always present
+   but transparent, so only its color animates, which also works for
+   multi-line and padded links. */
 @utility link-underline {
   text-decoration-line: underline;
   text-decoration-thickness: 1.5px;
-  text-underline-offset: 4px;
-  text-decoration-skip-ink: none;
+  text-underline-offset: calc(0.207em - 1.5px);
+  text-decoration-skip-ink: auto;
   text-decoration-color: transparent;
   transition: text-decoration-color 0.3s ease;
 
   &:hover {
     text-decoration-color: currentColor;
+  }
+}
+
+/* Safari measures text-underline-offset from the font's built-in
+   underline position instead of from the baseline, so it needs a
+   smaller value to land on the same descender line; 0.042em is the
+   empirically measured difference for Untitled Serif. The
+   hanging-punctuation property is only supported by Safari, which
+   makes it a reliable Safari-only gate. */
+@supports (hanging-punctuation: first) {
+  .link-underline {
+    text-underline-offset: calc(0.165em - 1.5px);
   }
 }
 

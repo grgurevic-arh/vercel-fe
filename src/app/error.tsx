@@ -29,8 +29,8 @@ export default function RootError({
             border: "none",
             textDecoration: "underline",
             textDecorationThickness: "1.5px",
-            textUnderlineOffset: "4px",
-            textDecorationSkipInk: "none",
+            textUnderlineOffset: "calc(0.207em - 1.5px)",
+            textDecorationSkipInk: "auto",
             cursor: "pointer",
             fontSize: "inherit",
           }}
