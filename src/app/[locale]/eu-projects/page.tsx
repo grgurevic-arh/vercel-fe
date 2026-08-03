@@ -160,7 +160,7 @@ export default async function EuProjectsPage({ params }: PageProps) {
                   {...(row.external
                     ? { target: "_blank", rel: "noopener noreferrer" }
                     : {})}
-                  className={`text-[16px] leading-[23px] text-text-primary xl:absolute xl:left-[45%] ${row.external ? "link-underline link-underline-active" : ""}`}
+                  className="text-[16px] leading-[23px] text-text-primary xl:absolute xl:left-[45%] link-underline"
                 >
                   {row.value}
                 </a>
