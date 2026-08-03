@@ -55,6 +55,7 @@ export function ContactInfo({
           text-[20px] leading-[28px]
           lg:text-[28px] lg:leading-[38px]
           xl:text-[28px] xl:leading-[38px]
+          md:max-w-[253px] lg:max-w-[391px] xl:max-w-[435px]
           text-text-primary
         "
         >

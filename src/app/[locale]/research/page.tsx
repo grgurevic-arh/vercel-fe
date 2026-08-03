@@ -49,8 +49,7 @@ export default async function ResearchPage({ params }: PageProps) {
         className="
           content-wrapper
           pt-[86px] md:pt-[184px] lg:pt-[216px] xl:pt-[190px]
-          pl-[12px] md:pl-[159px] lg:pl-[220px] xl:pl-[408px]
-          pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
+          px-[12px] md:px-[44px] lg:px-[160px] xl:px-[328px]
           pb-[80px] md:pb-[120px] lg:pb-[140px] xl:pb-[180px]
         "
       >

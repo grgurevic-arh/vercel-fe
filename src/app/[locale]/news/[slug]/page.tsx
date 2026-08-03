@@ -93,7 +93,8 @@ export default async function NewsDetailPage({ params }: PageProps) {
         className="
           content-wrapper
           pt-[144px] md:pt-[95px] lg:pt-[184px] xl:pt-[148px]
-          pl-[12px] md:pl-[160px] lg:pl-[160px] xl:pl-[248px]
+          pl-[12px] md:pl-[102px] lg:pl-[160px] xl:pl-[248px]
+          pr-[12px] md:pr-[102px] lg:pr-[160px] xl:pr-[248px]
           pb-[20px] md:pb-[16px] lg:pb-[24px] xl:pb-[27px]
           text-[20px] leading-[28px]
           [font-feature-settings:'onum'_1,'pnum'_1]
@@ -111,7 +112,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
         <div
           className="
             content-wrapper
-            pl-[12px] md:pl-[160px] lg:pl-[160px] xl:pl-[248px]
+            pl-[12px] md:pl-[102px] lg:pl-[160px] xl:pl-[248px]
             pr-[12px] md:pr-[102px] lg:pr-[160px] xl:pr-[248px]
             pb-[25px] md:pb-[16px] lg:pb-[20px] xl:pb-[52px]
             text-[16px] leading-[23px]
@@ -131,7 +132,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
           className="
             content-wrapper
             pl-[0px] md:pl-[102px] lg:pl-[160px] xl:pl-[248px]
-            pr-[0px] md:pr-[44px] lg:pr-[100px] xl:pr-[248px]
+            pr-[0px] md:pr-[102px] lg:pr-[160px] xl:pr-[248px]
             pb-[40px] md:pb-[48px] lg:pb-[56px]
           "
         >

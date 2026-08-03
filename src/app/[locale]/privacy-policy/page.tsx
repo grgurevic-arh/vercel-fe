@@ -69,7 +69,7 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
         className="
           content-wrapper
           pl-[34px] md:pl-[102px] lg:pl-[160px] xl:pl-[328px]
-          pr-[12px] md:pr-[102px] lg:pr-[160px] xl:pr-[408px]
+          pr-[12px] md:pr-[102px] lg:pr-[160px] xl:pr-[328px]
           pb-[130px] md:pb-[130px] lg:pb-[192px] xl:pb-[192px]
         "
       >

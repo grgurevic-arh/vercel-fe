@@ -75,7 +75,7 @@ export default async function OfficePage({ params }: PageProps) {
           content-wrapper
           pt-[144px] md:pt-[184px] lg:pt-[184px] xl:pt-[190px]
           pl-[12px] md:pl-[102px] lg:pl-[220px] xl:pl-[328px]
-          pr-[12px] md:pr-[103px] lg:pr-[160px] xl:pr-[248px]
+          pr-[12px] md:pr-[102px] lg:pr-[100px] xl:pr-[328px]
           pb-[93px] md:pb-[124px] lg:pb-[154px] xl:pb-[216px]
         "
       >
