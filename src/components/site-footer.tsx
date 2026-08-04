@@ -32,7 +32,7 @@ export function SiteFooter({ locale }: SiteFooterProps) {
         className="
           absolute
           left-[12px] md:left-[450px] lg:left-[520px] xl:left-[808px]
-          top-[16px] md:top-[24px]
+          top-[16px] md:top-[32px]
         "
       >
         <ul className="space-y-[16px]">
@@ -63,7 +63,7 @@ export function SiteFooter({ locale }: SiteFooterProps) {
         className="
           absolute
           left-[166px] md:left-[624px] lg:left-[760px] xl:left-[1128px]
-          top-[16px] md:top-[24px]
+          top-[8px] md:top-[24px]
         "
       >
         <ul className="space-y-[0]">

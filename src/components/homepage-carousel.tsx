@@ -28,7 +28,7 @@ export function HomepageCarousel({ slides }: HomepageCarouselProps) {
       <div
         className="
           relative w-full overflow-hidden
-          h-[300px] md:h-[632px] xl:h-[clamp(810px,56.25vw,70vh)]
+          h-[300px] md:h-[632px] xl:h-[max(810px,56.25vw)]
         "
       >
         <div
