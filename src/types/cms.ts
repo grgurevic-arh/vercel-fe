@@ -180,6 +180,7 @@ export interface NewsArticle extends LocalizedEntity {
   author: string | null;
   publishedAt: string;
   publishedAtCustom: string | null;
+  displayOrder: number | null;
   body: string | null;
   heroImage: StrapiMedia;
 }
