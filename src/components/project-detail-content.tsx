@@ -47,7 +47,9 @@ const buildMetaPairs = (project: ProjectDetail, locale: string) => {
   return [
     { label: hr ? "Lokacija" : "Location", value: project.location },
     { label: hr ? "Godina" : "Year", value: project.completed },
+    { label: hr ? "Vrsta" : "Type", value: project.discipline },
     { label: hr ? "Klijent" : "Client", value: project.investor },
+    { label: hr ? "Suradnici" : "Collaborators", value: project.collaborators },
     { label: hr ? "Trajanje" : "Duration", value: project.projectLength },
     { label: hr ? "Veličina" : "Size", value: project.siteArea },
     {
