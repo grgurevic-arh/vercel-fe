@@ -94,6 +94,7 @@ export function HomepageCarousel({ slides }: HomepageCarouselProps) {
               mt-[12px]
               text-[16px] leading-[23px] text-text-primary
               [font-feature-settings:'onum'_1,'pnum'_1]
+              first-letter:uppercase
             "
           >
             {current.description}

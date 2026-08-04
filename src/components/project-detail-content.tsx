@@ -49,7 +49,7 @@ const buildMetaPairs = (project: ProjectDetail, locale: string) => {
     { label: "Status", value: project.projectStatus },
     { label: hr ? "Završeno" : "Completed", value: project.completed },
     { label: hr ? "Veličina" : "Size", value: project.size },
-    { label: hr ? "Investitor" : "Investor", value: project.investor },
+    { label: hr ? "Klijent" : "Client", value: project.investor },
     { label: hr ? "Trajanje" : "Duration", value: project.projectLength },
     { label: hr ? "Površina" : "Site Area", value: project.siteArea },
     {
@@ -148,6 +148,7 @@ function CompositionImage({
               mt-[8px] md:mt-[12px]
               text-[16px] leading-[23px] text-text-primary
               [font-feature-settings:'onum'_1,'pnum'_1]
+              first-letter:uppercase
             "
           >
             {caption}
@@ -174,6 +175,8 @@ export function ProjectDetailContent({
   const floorPlans = project.floorPlans ?? [];
   const slug = project.slug;
 
+  console.log(siteImages)
+
   return (
     <>
       {/* Hero carousel */}
@@ -197,8 +200,8 @@ export function ProjectDetailContent({
 
       {/* Description */}
       {project.description &&
-      Array.isArray(project.description) &&
-      project.description.length > 0 ? (
+        Array.isArray(project.description) &&
+        project.description.length > 0 ? (
         <div
           className="
             content-wrapper

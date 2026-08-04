@@ -91,6 +91,7 @@ export function ProjectHeroCarousel({ slides }: ProjectHeroCarouselProps) {
               hidden md:block
               text-[16px] leading-[23px] text-text-primary
               [font-feature-settings:'onum'_1,'pnum'_1]
+              first-letter:uppercase
             "
           >
             {current.description}
