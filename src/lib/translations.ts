@@ -50,6 +50,11 @@ const translations = {
       tryAgain: "Try again",
       loadMore: "Load more",
     },
+    roles: {
+      client: "client",
+      partner: "partner",
+      project_partner: "project partner",
+    },
     euProjects: {
       projectWorth: "Project Worth",
       euFinanced: "EU Financed",
@@ -145,6 +150,11 @@ const translations = {
       unexpectedError: "Došlo je do neočekivane greške.",
       tryAgain: "Pokušaj ponovo",
       loadMore: "Učitaj više",
+    },
+    roles: {
+      client: "klijent",
+      partner: "partner",
+      project_partner: "projektni partner",
     },
     euProjects: {
       projectWorth: "Ukupna vrijednost projekta",

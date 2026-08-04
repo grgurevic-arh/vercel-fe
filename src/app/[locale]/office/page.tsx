@@ -61,6 +61,10 @@ export default async function OfficePage({ params }: PageProps) {
   const teamMembers = (data.team ?? []) as TeamMember[];
   const clients = (data.clients ?? []) as ClientPartnerCard[];
 
+  const roleLabels: Record<string, string> = t(locale).roles;
+  const roleLabel = (role: string) =>
+    roleLabels[role] ?? role.replaceAll("_", " ");
+
   const labelClass =
     "shrink-0 tracking-[0.03em] lowercase [font-variant-caps:small-caps] text-[16px] leading-[23px] text-text-primary lg:w-[180px] xl:w-[240px]";
   const itemInnerClass =
@@ -190,7 +194,7 @@ export default async function OfficePage({ params }: PageProps) {
                       className={`${itemInnerClass} ${i === 0 && row.length > 1 ? "border-b border-divider md:border-b-0" : ""}`}
                     >
                       <span className={labelClass}>
-                        {client.role.replaceAll("_", " ")}
+                        {roleLabel(client.role)}
                       </span>
                       <div>
                         <p className={textClass}>{client.title}</p>
