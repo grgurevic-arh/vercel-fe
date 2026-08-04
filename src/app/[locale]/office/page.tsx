@@ -189,7 +189,9 @@ export default async function OfficePage({ params }: PageProps) {
                       key={`${client.title}-${client.role}-${i}`}
                       className={`${itemInnerClass} ${i === 0 && row.length > 1 ? "border-b border-divider md:border-b-0" : ""}`}
                     >
-                      <span className={labelClass}>{client.role}</span>
+                      <span className={labelClass}>
+                        {client.role.replaceAll("_", " ")}
+                      </span>
                       <div>
                         <p className={textClass}>{client.title}</p>
                         {client.subtitle ? (

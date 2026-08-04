@@ -74,7 +74,7 @@ export interface TeamMember {
 }
 
 export interface ClientPartnerCard {
-  role: "client" | "partner";
+  role: "client" | "partner" | "project_partner";
   title: string;
   subtitle: string | null;
   url: string | null;
