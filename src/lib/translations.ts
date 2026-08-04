@@ -58,6 +58,7 @@ const translations = {
     euProjects: {
       projectWorth: "Project Worth",
       euFinanced: "EU Financed",
+      contractedGrants: "Contracted grants",
       timeOfProject: "Time of Project",
       contact: "Contact",
       usefulLinks: "Useful Links",
@@ -159,6 +160,7 @@ const translations = {
     euProjects: {
       projectWorth: "Ukupna vrijednost projekta",
       euFinanced: "Iznos koji sufinancira EU",
+      contractedGrants: "Ugovorena bespovratna sredstva",
       timeOfProject: "Razdoblje provedbe projekta",
       contact: "Kontakt za više informacija",
       usefulLinks: "Korisni linkovi",

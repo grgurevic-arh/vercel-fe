@@ -237,6 +237,7 @@ export interface EuProjectPage extends LocalizedEntity {
   contentBlocks: EuContentBlock[];
   projectWorth: string;
   euFinanced: string;
+  contractedGrants: string;
   timeOfProject: string;
   contact: string;
   usefulLinks: EuUsefulLink[];

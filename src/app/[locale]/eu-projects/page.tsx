@@ -54,6 +54,10 @@ export default async function EuProjectsPage({ params }: PageProps) {
       label: t(locale).euProjects.euFinanced,
       value: data.euFinanced,
     },
+    data.contractedGrants && {
+      label: t(locale).euProjects.contractedGrants,
+      value: data.contractedGrants,
+    },
     data.timeOfProject && {
       label: t(locale).euProjects.timeOfProject,
       value: data.timeOfProject,
