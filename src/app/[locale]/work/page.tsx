@@ -29,6 +29,12 @@ export async function generateMetadata({
 const FEATURED_COUNT = 4;
 const PAGE_SIZE = 10;
 
+// year can be a range like "2016 - 2021"; sort by its first year
+function firstYear(year: string | null): number {
+  const match = year?.match(/\d{4}/);
+  return match ? Number(match[0]) : Infinity;
+}
+
 interface PageProps {
   params: Promise<{ locale: string }>;
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
@@ -62,7 +68,8 @@ export default async function WorkListingPage({
 
   const featured = allProjects
     .filter((p) => p.disableRedirect !== true)
-    .slice(0, FEATURED_COUNT);
+    .slice(0, FEATURED_COUNT)
+    .sort((a, b) => firstYear(a.year) - firstYear(b.year));
 
   return (
     <main>
