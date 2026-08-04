@@ -44,7 +44,7 @@ export function ProjectList({
 
         const cells = (
           <>
-            <span className="w-[37px] md:w-[33px] lg:w-[90px] xl:w-[90px] mr-[40px] md:mr-[25px] lg:mr-[30px] xl:mr-[70px] text-center lg:text-left">{year}</span>
+            <span className="w-[37px] md:w-[33px] lg:w-[92px] xl:w-[92px] mr-[40px] md:mr-[25px] lg:mr-[28px] xl:mr-[68px] text-center lg:text-left">{year}</span>
             <span className="w-[130px] mr-[39px] md:mr-[44px] lg:mr-[50px] xl:mr-[30px] hidden md:inline lowercase [font-variant-caps:small-caps] tracking-[0.48px] truncate">
               {discipline}
             </span>
@@ -63,9 +63,8 @@ export function ProjectList({
         return (
           <li
             key={`${project.slug}-${project.id}`}
-            className={`border-b border-divider transition-colors duration-400 ease-[ease] ${
-              disabled ? "" : "hover:bg-gray-50"
-            }`}
+            className={`border-b border-divider transition-colors duration-400 ease-[ease] ${disabled ? "" : "hover:bg-gray-50"
+              }`}
           >
             {disabled ? (
               <div className={gridClassName}>{cells}</div>
