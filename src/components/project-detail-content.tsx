@@ -46,13 +46,10 @@ const buildMetaPairs = (project: ProjectDetail, locale: string) => {
   const hr = locale === "hr";
   return [
     { label: hr ? "Lokacija" : "Location", value: project.location },
-    { label: "Status", value: project.projectStatus },
-    { label: hr ? "Završeno" : "Completed", value: project.completed },
-    { label: hr ? "Vrsta" : "Type", value: project.discipline },
+    { label: hr ? "Godina" : "Year", value: project.completed },
     { label: hr ? "Klijent" : "Client", value: project.investor },
-    { label: hr ? "Suradnici" : "Collaborators", value: project.collaborators },
     { label: hr ? "Trajanje" : "Duration", value: project.projectLength },
-    { label: hr ? "Površina" : "Site Area", value: project.siteArea },
+    { label: hr ? "Veličina" : "Size", value: project.siteArea },
     {
       label: hr ? "Investicija" : "Investment",
       value: project.investmentValue,
