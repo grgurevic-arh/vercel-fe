@@ -48,8 +48,9 @@ const buildMetaPairs = (project: ProjectDetail, locale: string) => {
     { label: hr ? "Lokacija" : "Location", value: project.location },
     { label: "Status", value: project.projectStatus },
     { label: hr ? "Završeno" : "Completed", value: project.completed },
-    { label: hr ? "Veličina" : "Size", value: project.size },
+    { label: hr ? "Vrsta" : "Type", value: project.discipline },
     { label: hr ? "Klijent" : "Client", value: project.investor },
+    { label: hr ? "Suradnici" : "Collaborators", value: project.collaborators },
     { label: hr ? "Trajanje" : "Duration", value: project.projectLength },
     { label: hr ? "Površina" : "Site Area", value: project.siteArea },
     {
@@ -174,8 +175,6 @@ export function ProjectDetailContent({
   const siteImages = project.siteImages ?? [];
   const floorPlans = project.floorPlans ?? [];
   const slug = project.slug;
-
-  console.log(siteImages)
 
   return (
     <>

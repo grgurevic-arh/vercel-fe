@@ -165,6 +165,7 @@ export interface ProjectDetail extends ProjectListing {
   projectStatus: string | null;
   completed: string | null;
   investor: string | null;
+  collaborators: string | null;
   projectLength: string | null;
   siteArea: string | null;
   investmentValue: string | null;
